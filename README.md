@@ -10,6 +10,7 @@
 * [Roadmap](#roadmap)
 * [Team Members](#team-members)
 * [Contributing](#contributing)
+* [Contact Us](#contact)
 * [License](#license)
 
 ## Installation
@@ -72,6 +73,9 @@ If you'd like to contribute to Pontys, please follow these guidelines:
 * Make your changes and commit them with clear commit messages.
 * Push your changes to the development branch.
 * Submit a pull request to the main branch.
+
+## Contact 
+filll in later
 
 ## License  
 _No license added yet_
