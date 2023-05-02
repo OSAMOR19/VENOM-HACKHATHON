@@ -7,7 +7,8 @@
 * [Installation](#installation)
 * [Features](#features)
 * [Technical Stack](#technical-stack)
-* [Usage](#usage)
+* [Roadmap](#roadmap)
+* [Team Members](#team-members)
 * [Contributing](#contributing)
 * [License](#license)
 
@@ -57,7 +58,7 @@ To start the development server:
 * Partner with other blockchain companies to provide additional services and features
 * Explore new opportunities for growth and expansion
 
-## Team
+## Team Members
 * _Johnex_
 * _Benard_
 * _Isaac_
