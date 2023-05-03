@@ -21,18 +21,18 @@ const Index = () => {
             <div className="gap-[3rem]  mt-[4rem] flex w-[80%] mx-auto">
                 <div className="p-4 flex-1 space-y-[1rem] border-[1px] border-[#808080]">
                     <Image src="/images/vyperium-logo.svg" width={40} height={1} />
-                    <h3 className=" w-[40%] text-[1rem] font-openSans font-[700]">Control your crypto</h3>
-                    <p>Venom Wallet is a self-custody wallet, giving you complete control of your crypto.</p>
+                    <h3 className=" w-[40%] text-[1rem] font-poppins font-[700]">Control your crypto</h3>
+                    <p className="font-openSans">Venom Wallet is a self-custody wallet, giving you complete control of your crypto.</p>
                 </div>
                 <div className="p-4 flex-1 space-y-[1rem] border-[1px] border-[#808080]">
                     <Image src="/images/vyperium-logo.svg" width={40} height={1} />
-                    <h3 className=" w-[40%] text-[1rem] font-openSans font-[700]">Store all of your NFTs</h3>
-                    <p>Safely store and easily view all of your Ethereum and Polygon NFTs right in your Wallet.</p>
+                    <h3 className=" w-[40%] text-[1rem] font-poppins font-[700]">Store all of your NFTs</h3>
+                    <p className="font-openSans">Safely store and easily view all of your Ethereum and Polygon NFTs right in your Wallet.</p>
                 </div>
                 <div className="p-4 flex-1 space-y-[1rem] border-[1px] border-[#808080]">
                     <Image src="/images/vyperium-logo.svg" width={40} height={1} />
-                    <h3 className=" w-[40%] text-[1rem] font-openSans font-[700]">Industry-leading security</h3>
-                    <p>Additional security options on all of your devices provide more ways to keep your crypto safe and secure.</p>
+                    <h3 className=" w-[50%] text-[1rem] font-poppins font-[700]">Industry-leading security</h3>
+                    <p className="font-openSans">Additional security options on all of your devices provide more ways to keep your crypto safe and secure.</p>
                 </div>
             </div>
         </section>
@@ -65,7 +65,7 @@ const Index = () => {
         </section>
         <section className="pt-[13rem]">
             <div className=" w-[70%] mx-auto flex flex-col gap-10 items-center">
-                <Image src="/images/img-landing.svg" height={1} width={600} alt="img-landing" />
+                <Image src="/images/img-landing.svg" height={1} width={650} alt="img-landing" />
                 <div className="w-[70%] flex gap-4">
                     <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr1.svg" alt="landing-pageImg" height={1} width={100} /></div>
                     <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr2.svg" alt="landing-pageImg" height={1} width={100} /></div>
