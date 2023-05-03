@@ -66,7 +66,7 @@ const Index = () => {
         <section className="pt-[13rem]">
             <div className=" w-[70%] mx-auto flex flex-col gap-10 items-center">
                 <Image src="/images/img-landing.svg" height={1} width={650} alt="img-landing" />
-                <div className="w-[70%] flex gap-4">
+                <div className="w-[70%] justify-evenly flex gap-4">
                     <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr1.svg" alt="landing-pageImg" height={1} width={100} /></div>
                     <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr2.svg" alt="landing-pageImg" height={1} width={100} /></div>
                     <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr3.svg" alt="landing-pageImg" height={1} width={100} /></div>
