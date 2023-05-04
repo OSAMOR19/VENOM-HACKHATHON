@@ -1,5 +1,6 @@
 import Image from "next/image"
 
+
 const Navigation = () => {
   return (
     <header className="pt-[2rem] flex items-center w-[80%] justify-between text-white mx-auto">

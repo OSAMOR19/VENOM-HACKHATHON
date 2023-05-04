@@ -1,7 +1,7 @@
 import HeadComp from "@/layout/HeadComp";
 import Index from "./components/Index";
-import ConnectWallet from "./venom-connect/ConnectWallet";
-
+import { VenomConnect } from 'venom-connect';
+import ConnectWallet from "./venom-connect/configure";
 
 export default function Home() {
   return (
