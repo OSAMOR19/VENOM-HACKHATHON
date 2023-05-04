@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Connectwallet from "@/pages/venom-connect/connectwallet"
 
 
 const Navigation = () => {
@@ -15,7 +16,7 @@ const Navigation = () => {
           <li>Help Center</li>
           <li>Community</li>
         </ul>
-        <button className=" bg-[#0052FF] px-4 py-2 rounded-[5px]">Connect Wallet</button>
+        <Connectwallet/>
       </nav>
     </header>
   )
