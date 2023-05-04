@@ -1,9 +1,8 @@
 import { VenomConnect } from 'venom-connect';
 import { ProviderRpcClient } from 'everscale-inpage-provider';
 import { EverscaleStandaloneClient } from 'everscale-standalone-client';
-import { useState } from 'react';x
 
-const initVenomConnect = async () => {
+export const initVenomConnect = async () => {
   return new VenomConnect({
     theme: 'dark',
     checkNetworkId: 1010,
@@ -45,25 +44,3 @@ const initVenomConnect = async () => {
     },
   });
 };
-
-const ConnectWallet = () => {
-  const [venomConnect, setVenomConnect] = useState();
-
-
-  const onConnectButtonClick = async () => {
-    venomConnect?.connect();
-  };
-
-  const onDisconnectButtonClick = async () => {
-    venomProvider?.disconnect();
-  };
-
-  return(
-    <div>
-      <button onClick={onConnectButtonClick}>
-        Connect Wallet
-      </button>
-    </div>
-  )
-}
-export default ConnectWallet;
