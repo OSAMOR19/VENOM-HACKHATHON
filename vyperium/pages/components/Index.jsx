@@ -1,4 +1,5 @@
 import Image from "next/image"
+import Connectwallet from "../venom-connect/connectwallet"
 
 const Index = () => {
   return (
@@ -8,7 +9,7 @@ const Index = () => {
                 <div className="w-[50%]">
                     <p className=" text-[#808080] font-raleway">Smart, Social Web3 Wallet</p>
                     <p className=" font-openSans mb-[2rem] text-[2rem]">Manage your DeFi and NFT portfolios, trade across 10+ networks and connect to any decentralized application with one wallet</p>
-                    <button className="font-raleway bg-[#0052FF] px-4 py-2 rounded-[5px]">Connect Wallet</button>
+                    <Connectwallet />
                 </div>
                 <div className=" ">
                     <Image src = "/images/landing-pageImg.svg" alt="landing-pageImg" height={1} width={300} />
@@ -44,7 +45,7 @@ const Index = () => {
                 <div className="w-[46%]">
                     <h3 className=" font-poppins font-[700] pb-[2rem] text-[2rem]">Explore the decentralized web with confidence</h3>
                     <p className=" font-openSans mb-[2rem] text-[1.2rem]">VENOM Wallet is your passport to the decentralized web. Harness the power of DeFi to earn yield, grow your NFT collection, and much more.</p>
-                    <button className="font-raleway bg-[#0052FF] px-4 py-2 rounded-[5px]">Connect Wallet</button>
+                    <Connectwallet />
                 </div>
             </div>
         </section>
