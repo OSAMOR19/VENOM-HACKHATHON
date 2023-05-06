@@ -48,9 +48,9 @@ const Index = () => {
                 <div className=" wow slideInLeft">
                     <Image src = "/images/landing-pageImg2.png" alt="landing-pageImg" height={1} width={300} />
                 </div>
-                <div className="w-[46%] wow slideInDown">
-                    <h3 className=" font-poppins font-[700] pb-[2rem] text-[2rem]">Explore the decentralized web with confidence</h3>
-                    <p className=" font-openSans mb-[2rem] text-[1.2rem]">VENOM Wallet is your passport to the decentralized web. Harness the power of DeFi to earn yield, grow your NFT collection, and much more.</p>
+                <div className="w-[46%] ">
+                    <h3 className="wow flipInX font-poppins font-[700] pb-[2rem] text-[2rem]">Explore the decentralized web with confidence</h3>
+                    <p className="wow slideInDown font-openSans mb-[2rem] text-[1.2rem]">VENOM Wallet is your passport to the decentralized web. Harness the power of DeFi to earn yield, grow your NFT collection, and much more.</p>
                     <Connectwallet />
                 </div>
             </div>
@@ -65,20 +65,20 @@ const Index = () => {
                         <li className=" font-openSans mb-[2rem] text-[1.2rem]">Store, view, and discover NFTs, DeFi, and thousands of Dapps!</li>
                     </ul>
                 </div>
-                <div className="wow slideInUp">
+                <div className="wow slideInDown">
                     <Image src = "/images/phone-lp.svg" alt="landing-pageImg" height={1} width={250} />
                 </div>
             </div>
         </section>
         <section className="pt-[8rem] pb-[5rem]">
             <div className=" w-[70%] mx-auto flex flex-col gap-10 items-center">
-                <Image src="/images/img-landing.svg" height={1} width={650} alt="img-landing" />
+                <Image src="/images/img-landing.svg" className=" wow flipInY" height={1} width={650} alt="img-landing" />
                 <div className="w-[70%] justify-evenly flex gap-4">
-                    <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr1.svg" alt="landing-pageImg" height={1} width={100} /></div>
-                    <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr2.svg" alt="landing-pageImg" height={1} width={100} /></div>
+                    <div className="wow bounceInDown p-3 bg-[#1A1A26]"><Image src = "/images/ptnr1.svg" alt="landing-pageImg" height={1} width={100} /></div>
+                    <div data-wow-delay=".2s" className="wow bounceInDown p-3 bg-[#1A1A26]"><Image src = "/images/ptnr2.svg" alt="landing-pageImg" height={1} width={100} /></div>
                     <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr3.svg" alt="landing-pageImg" height={1} width={100} /></div>
-                    <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr4.svg" alt="landing-pageImg" height={1} width={100} /></div>
-                    <div className=" p-3 bg-[#1A1A26]"><Image src = "/images/ptnr1.svg" alt="landing-pageImg" height={1} width={100} /></div>
+                    <div data-wow-delay=".2s" className="wow bounceInUp p-3 bg-[#1A1A26]"><Image src = "/images/ptnr4.svg" alt="landing-pageImg" height={1} width={100} /></div>
+                    <div className="wow bounceInUp p-3 bg-[#1A1A26]"><Image src = "/images/ptnr1.svg" alt="landing-pageImg" height={1} width={100} /></div>
                 </div>
             </div>
         </section>
