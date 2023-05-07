@@ -1,8 +1,23 @@
 import React, { useState, useEffect } from 'react';
+import axios from 'axios';
 
 const Test = () =>{
     const [address, setAddress] = useState("");
+    const [balance, setBalance] = useState(null);
 
+    const handleChange = (event) => {
+        setAddress(event.target.value);
+      };
+
+      const handleSearch = async () => {
+        try {
+          const response = await axios.post('/api/search', { query: address });
+          setBalance(response.data.balance);
+        } catch (error) {
+          console.error(error);
+          setBalance(null);
+        }
+      };
 
     return(
         <div>
@@ -11,11 +26,18 @@ const Test = () =>{
             type='integer'
             placeholder='input Address'
             value={address}
-            onChange={handleChange}></input>
+            onChange={handleChange}>
+                
+            </input>
+            <button onClick={handleSearch} >Search</button>
             </div>
             <div>
-                <div>Address:</div>
-                <div>Balance:</div>
+            {balance !== null && (
+                <div>
+                <div>Address: {address}</div>
+                <div>Balance: {balance}</div>
+                </div>
+            )}
             </div>
         </div>
 
@@ -23,34 +45,6 @@ const Test = () =>{
 }
 export default Test;
 
-import React, { useState } from "react";
 
-function SearchInput() {
-  const [value, setValue] = useState("");
-  const [options, setOptions] = useState(["Option 1", "Option 2", "Option 3"]);
-  const [filteredOptions, setFilteredOptions] = useState([]);
 
-  const handleChange = (event) => {
-    const inputValue = event.target.value;
-    setValue(inputValue);
-    const filteredOptions = options.filter((option) =>
-      option.toLowerCase().includes(inputValue.toLowerCase())
-    );
-    setFilteredOptions(filteredOptions);
-  };
 
-  return (
-    <div>
-      <input type="text" value={value} onChange={handleChange} />
-      {filteredOptions.length > 0 && (
-        <ul>
-          {filteredOptions.map((option) => (
-            <li key={option}>{option}</li>
-          ))}
-        </ul>
-      )}
-    </div>
-  );
-}
-
-export default SearchInput;

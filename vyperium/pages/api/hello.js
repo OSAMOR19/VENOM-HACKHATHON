@@ -7,7 +7,7 @@ export default async function runApp(req, res){
 const endpoint = 'https://testnet-api.venomscan.com/v1/search';
 
 const data = {
-    query: '0:82b4baf4eac3e1deadc00e11c49d42f97c1a247f2fa3a42f60471024eddccfed'
+      query: req.body.query,
   };
 
 const headers = {
