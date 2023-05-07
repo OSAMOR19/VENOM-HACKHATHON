@@ -1,7 +1,7 @@
 import  { NextApiRequest, NextApiResponse } from 'next';
 import axios from 'axios';
 
-export default async function runApp(){
+export default async function runApp(req, res){
 const endpoint = 'https://testnet-api.venomscan.com/v1/search';
 
 const data = {
@@ -23,4 +23,10 @@ const headers = {
     // Handle any errors
   });
 
+}
+
+// Next.js API route support: https://nextjs.org/docs/api-routes/introduction
+
+export default function handler(req, res) {
+  res.status(200).json({ name: 'John Doe' })
 }
