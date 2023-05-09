@@ -12,5 +12,37 @@ body {
     background-size: cover;
     background-position: center;
     background-repeat: no-repeat;
-    background-blend-mode: overlay;
+}
+.burgerNav svg {
+    transition: .6s;
+}
+.burgerNav svg:first-child {
+    transform: rotate(45deg) translateX(20%);
+}
+.burgerNav svg:nth-child(2) {
+    display: none;
+}
+.burgerNav svg:last-child {
+    transform: rotate(-45deg) translateX(20%);
+}
+@media all and (max-width: 768px){
+    .mainNav{
+      position: fixed;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100vh;
+      transform: translateX(-100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      transition: all .5s;
+    }
+    .showNav{
+        transform: translateX(0);
+
+    }
+    .bg-wp {
+        background-size: contain !important;
+    }
 }
