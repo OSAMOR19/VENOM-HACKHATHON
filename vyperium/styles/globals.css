@@ -25,6 +25,12 @@ body {
 .burgerNav svg:last-child {
     transform: rotate(-45deg) translateX(20%);
 }
+.input:focus {
+    -webkit-box-shadow: 1px 2px 15px -4px rgba(128,128,128,0.76);
+    -moz-box-shadow: 1px 2px 15px -4px rgba(128,128,128,0.76);
+    box-shadow: 1px 2px 15px -4px rgba(128,128,128,0.76);
+    background-color: transparent;
+}
 @media all and (max-width: 768px){
     .mainNav{
       position: fixed;

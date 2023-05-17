@@ -15,7 +15,7 @@ const AppNav = () => {
 	];
 	const links = navLinks.map((link) => (
 		<li key={link.key} className={router.pathname === link.path ? "active" : ""}>
-			<Link className="pl-[1rem] flex gap-3" href={link.path}>
+			<Link className="pl-[1rem] font-Inter flex items-center hover:text-[#008000] transition-[.5s] gap-3" href={link.path}>
                 <Image src = {link.iconSrc} alt = "appIcon" height ={1} width = {20} />
                 {link.title}
             </Link>
@@ -36,6 +36,32 @@ const AppNav = () => {
                 </ul>
             </nav>
         </aside>
+        <header className="flex justify-between pt-[1rem] border-b border-b-[#808080] pb-3 text-white fixed left-[22%] right-[7%]">
+            <div className=" flex items-center">
+                <input type="text" className="bg-[#29292C] hover:bg-transparent outline-none input transition-[.5s] w-[22rem] pl-[1rem] pr-[2rem] py-1 text-[#808080] font-Inter rounded-[5px]"  placeholder="Asset, wallet, domain or identity"/>
+                <button className=" translate-x-[-120%] bg-[#45464A] p-[5px] h-[80%] rounded-[3px]">
+                    <Image src= "/images/search.svg" alt ="Search" height={1} width={15}/>
+                </button>
+            </div>
+            <div className=" flex items-center gap-2">
+                <div className=" flex gap-1 items-center">
+                    <Image src= "/images/gas.svg" alt ="gas" height={1} width={20}/>
+                    85
+                    <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
+                </div>
+                <div className="font-poppins flex items-center">
+                    USD
+                    <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
+                </div>
+                <div className=" flex items-center">
+                    <Image src= "/images/help.svg" alt ="gas" height={1} width={20}/>
+                    <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
+                </div>
+                <div>
+                    <Image src= "/images/eye.svg" alt ="gas" height={1} width={20}/>
+                </div>
+            </div>
+        </header>
     </>
   )
 }
