@@ -23,7 +23,7 @@ const AppNav = () => {
 	));
   return (
     <>
-        <aside className=" text-white bg-[#1D1D21] fixed h-[100vh] w-[15%]">
+        <aside className="top-0 bottom-0 text-white bg-[#1D1D21] fixed h-[100vh] w-[15%]">
             <h1 className=" font-instrumentSerif font-[500]">Vyperium</h1>
             <div className="text-center border-b pb-[1.5rem]">
                 <h2 className="px-2 mt-[2.5rem] font-Inter">Welcome to Vyperium</h2>
@@ -36,7 +36,7 @@ const AppNav = () => {
                 </ul>
             </nav>
         </aside>
-        <header className="flex justify-between pt-[1rem] border-b border-b-[#808080] pb-3 text-white fixed left-[22%] right-[7%]">
+        <header className="flex justify-between pt-[1rem] border-b border-b-[#808080] pb-3 text-white fixed top-0 left-[22%] right-[7%]">
             <div className=" flex items-center">
                 <input type="text" className="bg-[#29292C] hover:bg-transparent outline-none input transition-[.5s] w-[22rem] pl-[1rem] pr-[2rem] py-1 text-[#808080] font-Inter rounded-[5px]"  placeholder="Asset, wallet, domain or identity"/>
                 <button className=" translate-x-[-120%] bg-[#45464A] p-[5px] h-[80%] rounded-[3px]">
@@ -44,7 +44,7 @@ const AppNav = () => {
                 </button>
             </div>
             <div className=" flex items-center gap-2">
-                <div className=" flex gap-1 items-center">
+                <div className="font-poppins flex gap-1 items-center">
                     <Image src= "/images/gas.svg" alt ="gas" height={1} width={20}/>
                     85
                     <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
