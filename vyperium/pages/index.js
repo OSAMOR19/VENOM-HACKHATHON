@@ -5,8 +5,8 @@ import Test from '@/layout/Test'
 export default function Home() {
   return (
     <>
-    <HeadComp title="Vyperium - Home" />
-    <Index />
+      <HeadComp title="Vyperium - Home" />
+      {/* <Index /> */}
     </>
   )
 }

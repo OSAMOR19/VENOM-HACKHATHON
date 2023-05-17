@@ -18,6 +18,7 @@ module.exports = {
         raleway: ["Raleway", "sans-serif"],
         openSans: ["Open Sans", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
+        Inter: ["Inter", "sans-serif"],
       },
     },
   },

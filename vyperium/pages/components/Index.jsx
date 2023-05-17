@@ -1,13 +1,9 @@
 import Image from "next/image"
 import Connectwallet from "../venom-connect/connectwallet"
 import { useEffect } from "react"
-const isServer = typeof window === 'undefined'
-const WOW = !isServer ? require('wow.js') : null
 
 const Index = () => {
-    useEffect (() => {
-        new WOW().init()
-    }, [])
+    
   return (
     <>
         <section className="mt-2 bg-wp mx-auto pt-[8rem] text-white">

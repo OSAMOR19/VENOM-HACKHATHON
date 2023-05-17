@@ -3,6 +3,9 @@ import Layout from '@/layout/Layout';
 import '@/styles/globals.css';
 import { initVenomConnect } from './venom-connect/configure';
 
+const isServer = typeof window === 'undefined'
+const WOW = !isServer ? require('wow.js') : null
+
 
 
 export default function App({ Component, pageProps }) {
@@ -12,6 +15,7 @@ const init = async () => {
   setVenomConnect(_venomConnect);
 };
 useEffect(() => {
+  new WOW().init()
   init();
 }, []);
   return <Layout venomConnect={venomConnect}><Component {...pageProps} /></Layout>
