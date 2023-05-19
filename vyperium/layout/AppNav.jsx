@@ -1,7 +1,9 @@
-import Connectwallet from "@/pages/venom-connect/connectwallet"
+import Connectwallet from "@/pages/venom-connect/connectwallet";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
+
+
 
 
 const AppNav = () => {
@@ -13,6 +15,8 @@ const AppNav = () => {
 		{ key: 3, title: "Swap", path: "", iconSrc: "/images/swap.svg"},
 		{ key: 3, title: "Settings", path: "", iconSrc: "/images/setting.svg" },
 	];
+
+
 	const links = navLinks.map((link) => (
 		<li key={link.key} className={router.pathname === link.path ? "active" : ""}>
 			<Link className="pl-[1rem] font-Inter flex items-center hover:text-[#008000] transition-[.5s] gap-3" href={link.path}>
@@ -21,6 +25,8 @@ const AppNav = () => {
             </Link>
 		</li>
 	));
+
+ 
   return (
     <>
         <aside className="top-0 bottom-0 text-white bg-[#1D1D21] fixed h-[100vh] w-[15%]">
@@ -38,7 +44,11 @@ const AppNav = () => {
         </aside>
         <header className="flex bg-[#0C0C0C] justify-between pt-[1rem] border-b border-b-[#808080] pb-3 text-white fixed top-0 left-[22%] right-[7%]">
             <div className=" flex items-center">
-                <input type="text" className="bg-[#29292C] hover:bg-transparent outline-none input transition-[.5s] w-[22rem] pl-[1rem] pr-[2rem] py-1 text-[#808080] font-Inter rounded-[5px]"  placeholder="Asset, wallet, domain or identity"/>
+                <input 
+                    type="text"
+                     className="bg-[#29292C] hover:bg-transparent outline-none input transition-[.5s] w-[22rem] pl-[1rem] pr-[2rem] py-1 text-[#808080] font-Inter rounded-[5px]"
+                       placeholder="Asset, wallet, domain or identity"
+                       />
                 <button className=" translate-x-[-120%] bg-[#45464A] p-[5px] h-[80%] rounded-[3px]">
                     <Image src= "/images/search.svg" alt ="Search" height={1} width={15}/>
                 </button>
