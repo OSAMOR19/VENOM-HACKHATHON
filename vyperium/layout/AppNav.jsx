@@ -36,7 +36,7 @@ const AppNav = () => {
                 </ul>
             </nav>
         </aside>
-        <header className="flex justify-between pt-[1rem] border-b border-b-[#808080] pb-3 text-white fixed top-0 left-[22%] right-[7%]">
+        <header className="flex bg-[#0C0C0C] justify-between pt-[1rem] border-b border-b-[#808080] pb-3 text-white fixed top-0 left-[22%] right-[7%]">
             <div className=" flex items-center">
                 <input type="text" className="bg-[#29292C] hover:bg-transparent outline-none input transition-[.5s] w-[22rem] pl-[1rem] pr-[2rem] py-1 text-[#808080] font-Inter rounded-[5px]"  placeholder="Asset, wallet, domain or identity"/>
                 <button className=" translate-x-[-120%] bg-[#45464A] p-[5px] h-[80%] rounded-[3px]">
