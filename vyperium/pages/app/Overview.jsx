@@ -1,6 +1,93 @@
 import Image from "next/image"
+import axios from "axios";
+import React, { useState } from 'react'
 
 const Overview = () => {
+    //This is the begining of what Bernard.O Added 
+const [balance, setBalance] = useState(null);
+const [data, setData] = useState(null);
+const [error, setError] = useState(null);
+
+//On call of this Function it returns the values of the tokens and Balance of the wallet
+const BalanceandToken = async (e) => {
+e.preventDefault();
+try {
+    const response = await fetch(`/api/search?ownerAddress=${includeAccounts}`);
+    const result = await response.json();
+
+    if (response.ok) {
+      setBalance(result.balance);
+      setData(result.data);
+      setError(null);
+    } else {
+      setError(result.error);
+      setBalance(null);
+      setData(null);
+    }
+  } catch (error) {
+    console.error(error);
+    setError('Internal Server Error');
+    setBalance(null);
+    setData(null);
+  }
+};
+
+//This section contains details about transaction history.
+const [dataTest, setDataTest] = useState(null);
+const [includeAccounts, setIncludeAccounts] = useState([
+  '0:33478651d9c7b44c1b45c2dfe85edf7a5d24692f5222f0a25c176b1abfd95e51'
+]);
+const [txTypes, setTxTypes] = useState(['Ordinary']);
+const [timeGe, setTimeGe] = useState(0);
+const [timeLe, setTimeLe] = useState(0);
+const [balanceChangeGe, setBalanceChangeGe] = useState(0);
+const [balanceChangeLe, setBalanceChangeLe] = useState(0);
+const [limit, setLimit] = useState(10);
+const [offset, setOffset] = useState(0);
+
+//On call of this function it returns the transaction history of the inputed Address
+const transactionHistory = async (e) => {
+    e.preventDefault();
+
+    const countRequest = axios.post('/api/count', {
+        includeAccounts,
+        txTypes,
+        timeGe,
+        timeLe,
+        balanceChangeGe,
+        balanceChangeLe,
+      });
+  
+      const listRequest = axios.post('/api/list', {
+        includeAccounts,
+        txTypes,
+        timeGe,
+        timeLe,
+        balanceChangeGe,
+        balanceChangeLe,
+        limit,
+        offset,
+      });
+          
+      try {
+        const [countResponse, listResponse] = await axios.all([
+          countRequest,
+          listRequest
+        ]);
+        const countData = countResponse.data;
+        const listData = listResponse.data;
+        setDataTest({ count: countData, list: listData });
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    const  getResult =(e) => {
+        e.preventDefault();
+        BalanceandToken(e);
+        transactionHistory(e);
+    }
+//This is the end of what Bernard added in this section     
   return (
     <section className="overflow-y-auto ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
         <div className="flex items-center justify-between text-white">
@@ -21,6 +108,131 @@ const Overview = () => {
                 </div>
             </div>
         </div>
+        <div> 
+      <div className='bg-gray-600'>
+      <div className='pointer ' onClick={getResult}>
+            WORK
+        </div>
+        <h1>Backend API Example</h1>
+        <form onSubmit={BalanceandToken}>
+          <label>
+            Owner Address:
+            <input
+              type="text"
+              value={includeAccounts}
+              onChange={(e) => setIncludeAccounts(e.target.value)}
+              className='text-black'
+            />
+          </label>
+          <button type="submit">Submit</button>
+        </form>
+
+        {balance !== null && (
+          <div>
+            <h2>Balance:</h2>
+            <p>{balance}</p>
+          </div>
+        )}
+
+        {data !== null && (
+          <div>
+            <h2>Data:</h2>
+            <pre>{JSON.stringify(data, null, 2)}</pre>
+          </div>
+        )}
+
+        {error && (
+          <div>
+            <h2>Error:</h2>
+            <p>{error}</p>
+          </div>
+        )}
+      </div>
+
+      <div className='bg-gray-500'>
+        <form onSubmit={transactionHistory}>
+          <div>
+            
+          </div>
+          <div>
+            <label>
+              Transaction Types:
+              <input
+                type="text"
+                value={txTypes}
+                onChange={(e) => setTxTypes(e.target.value)}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Time Greater or Equal:
+              <input
+                type="number"
+                value={timeGe}
+                onChange={(e) => setTimeGe(parseInt(e.target.value))}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Time Less or Equal:
+              <input
+                type="number"
+                value={timeLe}
+                onChange={(e) => setTimeLe(parseInt(e.target.value))}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Balance Change Greater or Equal:
+              <input
+                type="number"
+                value={balanceChangeGe}
+                onChange={(e) => setBalanceChangeGe(parseInt(e.target.value))}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Balance Change Less or Equal:
+              <input
+                type="number"
+                value={balanceChangeLe}
+                onChange={(e) => setBalanceChangeLe(parseInt(e.target.value))}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Limit:
+              <input
+                type="number"
+                value={limit}
+                onChange={(e) => setLimit(parseInt(e.target.value))}
+              />
+            </label>
+          </div>
+          <div>
+            <label>
+              Offset:
+              <input
+                type="number"
+                value={offset}
+                onChange={(e) => setOffset(parseInt(e.target.value))}
+              />
+            </label>
+          </div>
+          <button type="submit">Fetch Data</button>
+        </form>
+        {dataTest ? (
+          <pre>{JSON.stringify(dataTest, null, 2)}</pre>
+        ) : (
+          <p>Loading...</p>
+        )}
+      </div>
+      </div>
     </section>
   )
 }
