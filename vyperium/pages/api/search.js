@@ -34,8 +34,14 @@ export default async function handler(req, res) {
         'Content-Type': 'application/json'
       }
     });
+    const { balances } = response2.data;
+    const extractedData = balances.filter(balance => balance.amount !== "0").map(balance => ({
+    token: balance.token,
+    amount: balance.amount,
+    ownerAddress: balance.ownerAddress
+    }));
 
-    res.json({ balance, data: response2.data });
+    res.json({ balance, extractedData});
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'Internal Server Error' });

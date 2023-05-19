@@ -3,9 +3,9 @@ import axios from "axios";
 import React, { useState } from 'react'
 
 const Overview = () => {
-    //This is the begining of what Bernard.O Added 
+//This is the begining of what Bernard.O Added 
 const [balance, setBalance] = useState(null);
-const [data, setData] = useState(null);
+const [extractedData, setExtractedData] = useState([]);
 const [error, setError] = useState(null);
 
 //On call of this Function it returns the values of the tokens and Balance of the wallet
@@ -17,18 +17,18 @@ try {
 
     if (response.ok) {
       setBalance(result.balance);
-      setData(result.data);
+      setExtractedData(result.extractedData);
       setError(null);
     } else {
       setError(result.error);
       setBalance(null);
-      setData(null);
+      setExtractedData(null);
     }
   } catch (error) {
     console.error(error);
     setError('Internal Server Error');
     setBalance(null);
-    setData(null);
+    setExtractedData(null);
   }
 };
 
@@ -98,17 +98,44 @@ const transactionHistory = async (e) => {
             </div>
             <div className="font-Inter flex gap-5">
                 <Image src= "/images/user_img.svg" alt ="gas" height={1} width={100}/>
+{/**This is the input section */}                
                 <div className="">
-                    <div className="flex items-center">
-                        <span>0xd869…aafb</span>
-                        <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
-                    </div>
-                    <p className="text-[2.6rem] font-[600]">$0.00 ...</p>
+                    <div className="flex items-center">                       
+                    <input
+                    type="text"
+                    value={includeAccounts}
+                    onChange={(e) => setIncludeAccounts(e.target.value)}
+                    className="text-black"
+              
+            />
+            <Image 
+            src= "/images/angle-down.svg" 
+            alt ="gas" height={1} width={30}
+            onClick={getResult}
+            className="cursor-pointer"/>
+                </div>
+                    <p className="text-[2.6rem] font-[600]">{balance / 1000000000}</p>
                     <p className="text-[.9rem] text-[#01A643]">+0% ($0.00)</p>
                 </div>
             </div>
         </div>
-        <div> 
+{/**This returns the tokens in the wallet section */}         
+        <div className="grid grid-cols-4 gap-4 text-white">
+      <div className="font-bold">Asset</div>
+      <div className="font-bold">Balance</div>
+      <div className="font-bold">Price</div>
+      <div className="font-bold">Value</div>
+      {extractedData.map((data, index) => (
+        <React.Fragment key={index}>
+          <div>{data.token}</div>
+          <div>{data.amount}</div>
+          <div></div>
+          <div></div>
+        </React.Fragment>
+      ))}         
+    </div>
+{/**To be continued from here for history */} 
+   {/*<div> 
       <div className='bg-gray-600'>
       <div className='pointer ' onClick={getResult}>
             WORK
@@ -117,12 +144,7 @@ const transactionHistory = async (e) => {
         <form onSubmit={BalanceandToken}>
           <label>
             Owner Address:
-            <input
-              type="text"
-              value={includeAccounts}
-              onChange={(e) => setIncludeAccounts(e.target.value)}
-              className='text-black'
-            />
+            
           </label>
           <button type="submit">Submit</button>
         </form>
@@ -130,16 +152,12 @@ const transactionHistory = async (e) => {
         {balance !== null && (
           <div>
             <h2>Balance:</h2>
-            <p>{balance}</p>
+            {balance}
+            <p></p>
           </div>
         )}
 
-        {data !== null && (
-          <div>
-            <h2>Data:</h2>
-            <pre>{JSON.stringify(data, null, 2)}</pre>
-          </div>
-        )}
+       
 
         {error && (
           <div>
@@ -231,8 +249,8 @@ const transactionHistory = async (e) => {
         ) : (
           <p>Loading...</p>
         )}
-      </div>
-      </div>
+        </div>
+      </div>*/}
     </section>
   )
 }
