@@ -27,9 +27,17 @@ export default async function handler(req, res) {
     offset
   };
 
+
+
   try {
     const response = await axios.post(url, requestBody);
-    const data = response.data;
+    const data = response.data.list.map(({ txType, hash, balanceChange, time, exitCode }) => ({
+      txType,
+      hash,
+      balanceChange,
+      time,
+      exitCode
+    }));
     res.status(200).json(data);
   } catch (error) {
     console.error(error);

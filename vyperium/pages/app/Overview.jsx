@@ -8,6 +8,7 @@ const [balance, setBalance] = useState(null);
 const [extractedData, setExtractedData] = useState([]);
 const [error, setError] = useState(null);
 
+
 //On call of this Function it returns the values of the tokens and Balance of the wallet
 const BalanceandToken = async (e) => {
 e.preventDefault();
@@ -34,6 +35,7 @@ try {
 
 //This section contains details about transaction history.
 const [dataTest, setDataTest] = useState(null);
+const [transactions, setTransactions] = useState([]);
 const [includeAccounts, setIncludeAccounts] = useState([
   '0:33478651d9c7b44c1b45c2dfe85edf7a5d24692f5222f0a25c176b1abfd95e51'
 ]);
@@ -76,7 +78,7 @@ const transactionHistory = async (e) => {
         ]);
         const countData = countResponse.data;
         const listData = listResponse.data;
-        setDataTest({ count: countData, list: listData });
+        setTransactions({ count: countData, list: listData });
       } catch (error) {
         console.error(error);
       }
@@ -119,8 +121,9 @@ const transactionHistory = async (e) => {
                 </div>
             </div>
         </div>
-{/**This returns the tokens in the wallet section */}         
-        <div className="grid grid-cols-4 gap-4 text-white">
+{/**This returns the tokens in the wallet section */}
+<div>         
+      <div className="grid grid-cols-4 gap-4 text-white">
       <div className="font-bold">Asset</div>
       <div className="font-bold">Balance</div>
       <div className="font-bold">Price</div>
@@ -134,8 +137,27 @@ const transactionHistory = async (e) => {
         </React.Fragment>
       ))}         
     </div>
+  </div>  
 {/**To be continued from here for history */} 
-   {/*<div> 
+<div className="text-white">
+  <div>History</div>
+  <div className="grid grid-cols-4 gap-4 text-white">
+      <div className="font-bold">Transaction</div>
+      <div className="font-bold">Hash</div>
+      <div className="font-bold">Balance Change</div>
+      <div className="font-bold">Time</div>
+      {transactions.map((transaction, index) => (
+        <React.Fragment key={index}>
+          <div>{transaction.txType}</div>
+          <div>{transaction.hash}</div>
+          <div>{transaction.balanceChange}</div>
+          <div>{transaction.time}</div>
+        </React.Fragment>
+      ))}         
+    </div>
+</div>
+
+   <div> 
       <div className='bg-gray-600'>
       <div className='pointer ' onClick={getResult}>
             WORK
@@ -244,13 +266,14 @@ const transactionHistory = async (e) => {
           </div>
           <button type="submit">Fetch Data</button>
         </form>
-        {dataTest ? (
+
+        {/*{dataTest ? (
           <pre>{JSON.stringify(dataTest, null, 2)}</pre>
         ) : (
           <p>Loading...</p>
-        )}
+        )}*/}
         </div>
-      </div>*/}
+      </div>
     </section>
   )
 }

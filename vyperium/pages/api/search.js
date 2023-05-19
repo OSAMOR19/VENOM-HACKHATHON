@@ -44,6 +44,6 @@ export default async function handler(req, res) {
     res.json({ balance, extractedData});
   } catch (error) {
     console.error(error);
-    res.status(500).json({ error: 'Internal Server Error' });
+    res.status(500).json({ error: 'Interna Server Error' });
   }
 }
