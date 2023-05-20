@@ -60,7 +60,7 @@ useEffect(() => {
     <>
      <div>
      {address ? (
-    <button onClick={onDisconnect} className="bg-[#0052FF] px-4 py-2 rounded-[5px]">
+    <button onClick={onDisconnect} className="bg-[#008000] px-4 py-2 rounded-[5px]">
       {`${address.slice(0, 6)}...${address.slice(-4)}`}
     </button>
     ) : (

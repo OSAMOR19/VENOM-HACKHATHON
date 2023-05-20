@@ -10,7 +10,7 @@ const AppNav = () => {
     const router = useRouter();
     const navLinks = [
 		{ key: 1, title: "Overview", path: "/app/Overview", iconSrc: "/images/eye.svg"},
-		{ key: 2, title: "Explore", path: "", iconSrc: "/images/compass.svg" },
+		{ key: 2, title: "Explore", path: "/app/Explore", iconSrc: "/images/compass.svg" },
 		{ key: 3, title: "Favourites", path: "", iconSrc: "/images/star.svg" },
 		{ key: 3, title: "Swap", path: "", iconSrc: "/images/swap.svg"},
 		{ key: 3, title: "Settings", path: "", iconSrc: "/images/setting.svg" },
@@ -19,7 +19,7 @@ const AppNav = () => {
 
 	const links = navLinks.map((link) => (
 		<li key={link.key} className={router.pathname === link.path ? "active" : ""}>
-			<Link className="pl-[1rem] font-Inter flex items-center hover:text-[#008000] transition-[.5s] gap-3" href={link.path}>
+			<Link className="pl-[1rem] font-Inter flex items-center hover:bg-[#008000] hover:rounded-[5px] py-[.7rem] transition-[.5s] gap-3" href={link.path}>
                 <Image src = {link.iconSrc} alt = "appIcon" height ={1} width = {20} />
                 {link.title}
             </Link>
@@ -37,7 +37,7 @@ const AppNav = () => {
                 <Connectwallet />
             </div>
             <nav className=" pt-[2rem]">
-                <ul className=" space-y-[1.5rem]">
+                <ul className=" ">
                     {links}
                 </ul>
             </nav>
