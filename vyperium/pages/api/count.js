@@ -24,8 +24,8 @@ export default async function handler(req, res) {
 
   try {
     const response = await axios.post(url, requestBody);
-    const data = response.data;
-    res.status(200).json(data);
+    const { count } = response.data; // Extract the count from the response data
+    res.status(200).json({ count }); 
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: 'An error occurred' });

@@ -7,6 +7,19 @@ const Overview = () => {
 const [balance, setBalance] = useState(null);
 const [extractedData, setExtractedData] = useState([]);
 const [error, setError] = useState(null);
+const formatDateTime = (timestamp) => {
+  const dateObj = new Date(timestamp * 1000);
+  const options = {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric',
+    hour: 'numeric',
+    minute: 'numeric',
+    second: 'numeric',
+  };
+  return dateObj.toLocaleDateString(undefined, options);
+};
 
 
 //On call of this Function it returns the values of the tokens and Balance of the wallet
@@ -34,8 +47,7 @@ try {
 };
 
 //This section contains details about transaction history.
-const [dataTest, setDataTest] = useState(null);
-const [transactions, setTransactions] = useState([]);
+const [dataTest, setDataTest] = useState({count: null, list: []});
 const [includeAccounts, setIncludeAccounts] = useState([
   '0:33478651d9c7b44c1b45c2dfe85edf7a5d24692f5222f0a25c176b1abfd95e51'
 ]);
@@ -76,9 +88,9 @@ const transactionHistory = async (e) => {
           countRequest,
           listRequest
         ]);
-        const countData = countResponse.data;
+        const countData = countResponse.data.count;
         const listData = listResponse.data;
-        setTransactions({ count: countData, list: listData });
+        setDataTest({ count: countData, list: listData });
       } catch (error) {
         console.error(error);
       }
@@ -123,7 +135,7 @@ const transactionHistory = async (e) => {
         </div>
 {/**This returns the tokens in the wallet section */}
 <div>         
-      <div className="grid grid-cols-4 gap-4 text-white">
+      <div className="grid grid-cols-4 gap-4 text-white bg-neutral-800 rounded">
       <div className="font-bold">Asset</div>
       <div className="font-bold">Balance</div>
       <div className="font-bold">Price</div>
@@ -138,25 +150,34 @@ const transactionHistory = async (e) => {
       ))}         
     </div>
   </div>  
-{/**To be continued from here for history */} 
+{/**This returns thetransactions of the wallet address*/}
+
 <div className="text-white">
   <div>History</div>
-  <div className="grid grid-cols-4 gap-4 text-white">
-      <div className="font-bold">Transaction</div>
+  {dataTest.count !== null && <p>Total number of Transaction: {dataTest.count}</p>}
+<div>
+<div className="grid grid-cols-4 gap-4 text-white bg-neutral-800 rounded">
       <div className="font-bold">Hash</div>
+      <div className="font-bold">Transaction Type</div>
       <div className="font-bold">Balance Change</div>
       <div className="font-bold">Time</div>
-      {transactions.map((transaction, index) => (
+      {dataTest.list.map((transaction, index) => (
         <React.Fragment key={index}>
+          <div>{transaction.hash.slice(0, 10)}...</div>
           <div>{transaction.txType}</div>
-          <div>{transaction.hash}</div>
-          <div>{transaction.balanceChange}</div>
-          <div>{transaction.time}</div>
+          <div
+          className={`text-lg ${
+            transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'
+          }`}
+        >{transaction.balanceChange / 1000000000}</div>
+          <div>{formatDateTime(transaction.time)}</div>
         </React.Fragment>
       ))}         
     </div>
-</div>
+  </div> 
 
+    
+</div>
    <div> 
       <div className='bg-gray-600'>
       <div className='pointer ' onClick={getResult}>
@@ -266,12 +287,6 @@ const transactionHistory = async (e) => {
           </div>
           <button type="submit">Fetch Data</button>
         </form>
-
-        {/*{dataTest ? (
-          <pre>{JSON.stringify(dataTest, null, 2)}</pre>
-        ) : (
-          <p>Loading...</p>
-        )}*/}
         </div>
       </div>
     </section>

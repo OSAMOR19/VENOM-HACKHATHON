@@ -4,7 +4,6 @@ import axios from 'axios';
 export default async function handler(req, res) {
   const url = 'https://devnet-api.venomscan.com/v1/transactions/list';
 
- 
   const {
     includeAccounts,
     txTypes,
@@ -27,16 +26,13 @@ export default async function handler(req, res) {
     offset
   };
 
-
-
   try {
     const response = await axios.post(url, requestBody);
-    const data = response.data.list.map(({ txType, hash, balanceChange, time, exitCode }) => ({
-      txType,
-      hash,
-      balanceChange,
-      time,
-      exitCode
+    const data = response.data.map(transaction => ({
+      balanceChange: transaction.balanceChange,
+      txType: transaction.txType,
+      hash: transaction.hash,
+      time: transaction.time,
     }));
     res.status(200).json(data);
   } catch (error) {
@@ -44,3 +40,4 @@ export default async function handler(req, res) {
     res.status(500).json({ error: 'An error occurred' });
   }
 }
+
