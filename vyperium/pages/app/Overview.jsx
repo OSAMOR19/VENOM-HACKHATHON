@@ -96,6 +96,11 @@ const transactionHistory = async (e) => {
       }
     };
 
+    const handleShowMore = () => {
+      setLimit(prevLimit => prevLimit + 10);
+      transactionHistory(new Event('click')); // Call transactionHistory function
+    };
+
     const  getResult =(e) => {
         e.preventDefault();
         BalanceandToken(e);
@@ -176,40 +181,13 @@ const transactionHistory = async (e) => {
     </div>
   </div> 
 
+<div className="text-center bg-green-500 rounded p-5 rounded cursor-pointer w-40"
+ onClick={handleShowMore}>
+Show More
+</div>
     
 </div>
-   <div> 
-      <div className='bg-gray-600'>
-      <div className='pointer ' onClick={getResult}>
-            WORK
-        </div>
-        <h1>Backend API Example</h1>
-        <form onSubmit={BalanceandToken}>
-          <label>
-            Owner Address:
-            
-          </label>
-          <button type="submit">Submit</button>
-        </form>
-
-        {balance !== null && (
-          <div>
-            <h2>Balance:</h2>
-            {balance}
-            <p></p>
-          </div>
-        )}
-
-       
-
-        {error && (
-          <div>
-            <h2>Error:</h2>
-            <p>{error}</p>
-          </div>
-        )}
-      </div>
-
+<div>
       <div className='bg-gray-500'>
         <form onSubmit={transactionHistory}>
           <div>
