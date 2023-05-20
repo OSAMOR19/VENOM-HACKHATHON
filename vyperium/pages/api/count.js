@@ -4,6 +4,8 @@ import axios from 'axios';
 export default async function handler(req, res) {
   const url = 'https://devnet-api.venomscan.com/v1/transactions/count';
 
+  /*const includeAccounts = ['0:4d94957e0d7fc89deffe626f282cbdc683e1bb5f92c37f160ee298dae702df17']*/
+
   const {
     includeAccounts,
     txTypes,

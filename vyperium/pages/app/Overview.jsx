@@ -35,7 +35,7 @@ try {
       setError(null);
     } else {
       setError(result.error);
-      setBalance(null);
+      setBalance(null); 
       setExtractedData(null);
     }
   } catch (error) {
@@ -48,9 +48,7 @@ try {
 
 //This section contains details about transaction history.
 const [dataTest, setDataTest] = useState({count: null, list: []});
-const [includeAccounts, setIncludeAccounts] = useState([
-  '0:33478651d9c7b44c1b45c2dfe85edf7a5d24692f5222f0a25c176b1abfd95e51'
-]);
+const [includeAccounts, setIncludeAccounts] = useState([]);
 const [txTypes, setTxTypes] = useState(['Ordinary']);
 const [timeGe, setTimeGe] = useState(0);
 const [timeLe, setTimeLe] = useState(0);
@@ -58,6 +56,13 @@ const [balanceChangeGe, setBalanceChangeGe] = useState(0);
 const [balanceChangeLe, setBalanceChangeLe] = useState(0);
 const [limit, setLimit] = useState(10);
 const [offset, setOffset] = useState(0);
+
+const handleInputChange = (e) => {
+  const inputValue = e.target.value;
+    const arrayValue = inputValue.split(',');
+
+    setIncludeAccounts(arrayValue);
+}
 
 //On call of this function it returns the transaction history of the inputed Address
 const transactionHistory = async (e) => {
@@ -123,7 +128,7 @@ const transactionHistory = async (e) => {
                     <input
                     type="text"
                     value={includeAccounts}
-                    onChange={(e) => setIncludeAccounts(e.target.value)}
+                    onChange={handleInputChange}
                     className="text-black"
               
             />
