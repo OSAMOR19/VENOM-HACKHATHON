@@ -1,9 +1,10 @@
 import Image from "next/image"
 import axios from "axios";
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 
 const Overview = () => {
 //This is the begining of what Bernard.O Added 
+const [includeAccounts, setIncludeAccounts] = useState([]);
 const [balance, setBalance] = useState(null);
 const [extractedData, setExtractedData] = useState([]);
 const [error, setError] = useState(null);
@@ -20,6 +21,61 @@ const formatDateTime = (timestamp) => {
   };
   return dateObj.toLocaleDateString(undefined, options);
 };
+
+
+
+const fetchData = async () => {
+  try {
+    if (includeAccounts.length > 0) {
+      const response = await axios.get(`/api/search?ownerAddress=${includeAccounts}`);
+      const { balance } = response.data;
+      setBalance(balance);
+    }
+  } catch (error) {
+    console.error(error);
+    // Handle error
+  }
+};
+
+useEffect(() => {
+  fetchData();
+}, [includeAccounts]);
+
+const handleInputChange1 = (event) => {
+  const { value } = event.target;
+  const accounts = value.split(',').map((account) => account.trim());
+  setIncludeAccounts(accounts);
+};
+
+useEffect(() => {
+  fetchData();
+}, []);
+
+const renderBalance = () => {
+  if (balance === null) {
+    return null;
+  }
+
+  return <p>Balance: {balance}</p>;
+};
+
+const renderOwnerAddresses = () => {
+  if (balance === 0) {
+    return null;
+  }
+
+  return (
+    <div>
+      <p>Owner Addresses:</p>
+      <ul>
+        {includeAccounts.map((address) => (
+          <li key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</li>
+        ))}
+      </ul>
+    </div>
+  );
+};
+
 
 
 //On call of this Function it returns the values of the tokens and Balance of the wallet
@@ -48,7 +104,7 @@ try {
 
 //This section contains details about transaction history.
 const [dataTest, setDataTest] = useState({count: null, list: []});
-const [includeAccounts, setIncludeAccounts] = useState([]);
+
 const [txTypes, setTxTypes] = useState(['Ordinary']);
 const [timeGe, setTimeGe] = useState(0);
 const [timeLe, setTimeLe] = useState(0);
@@ -57,6 +113,7 @@ const [balanceChangeLe, setBalanceChangeLe] = useState(0);
 const [limit, setLimit] = useState(10);
 const [offset, setOffset] = useState(0);
 
+{/* Converts includeAccounts to Array */}
 const handleInputChange = (e) => {
   const inputValue = e.target.value;
     const arrayValue = inputValue.split(',');
@@ -103,8 +160,10 @@ const transactionHistory = async (e) => {
 
     const handleShowMore = () => {
       setLimit(prevLimit => prevLimit + 10);
-      transactionHistory(new Event('click')); // Call transactionHistory function
     };
+    useEffect(() => {
+      transactionHistory(new Event('click'));
+    }, [limit]);
 
     const  getResult =(e) => {
         e.preventDefault();
@@ -143,6 +202,18 @@ const transactionHistory = async (e) => {
                 </div>
             </div>
         </div>
+        <div>
+      <input
+        type="text"
+        placeholder="Enter Owner Addresses (comma-separated)"
+        value={includeAccounts.join(',')}
+        onChange={handleInputChange1}
+      />
+      <div className="bg-green-500 rounded text-white cursor-pointer w-50"
+        onClick={getResult}
+      >{renderOwnerAddresses()}
+      {renderBalance()}</div>
+    </div>
 {/**This returns the tokens in the wallet section */}
 <div>         
       <div className="grid grid-cols-4 gap-4 text-white bg-neutral-800 rounded">
@@ -160,7 +231,7 @@ const transactionHistory = async (e) => {
       ))}         
     </div>
   </div>  
-{/**This returns thetransactions of the wallet address*/}
+{/*This returns thetransactions of the wallet address*/}
 
 <div className="text-white">
   <div>History</div>
