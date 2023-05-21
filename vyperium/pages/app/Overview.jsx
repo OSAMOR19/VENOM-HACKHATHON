@@ -1,6 +1,30 @@
+import React, { useState, useEffect } from 'react'
+import {
+  Chart as ChartJS,
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend,
+} from 'chart.js';
+import { Line } from 'react-chartjs-2';
+
+ChartJS.register(
+  CategoryScale,
+  LinearScale,
+  PointElement,
+  LineElement,
+  Title,
+  Tooltip,
+  Filler,
+  Legend
+);
 import Image from "next/image"
 import axios from "axios";
-import React, { useState, useEffect } from 'react'
+
 
 const Overview = () => {
 //This is the begining of what Bernard.O Added 
@@ -60,7 +84,7 @@ const renderBalance = () => {
 };
 
 const renderOwnerAddresses = () => {
-  if (balance === 0) {
+  if (balance === null || balance === 0) {
     return null;
   }
 
@@ -112,6 +136,7 @@ const [balanceChangeGe, setBalanceChangeGe] = useState(0);
 const [balanceChangeLe, setBalanceChangeLe] = useState(0);
 const [limit, setLimit] = useState(10);
 const [offset, setOffset] = useState(0);
+const [chartData, setChartData] = useState(null);
 
 {/* Converts includeAccounts to Array */}
 const handleInputChange = (e) => {
@@ -153,6 +178,7 @@ const transactionHistory = async (e) => {
         const countData = countResponse.data.count;
         const listData = listResponse.data;
         setDataTest({ count: countData, list: listData });
+        setChartData(listData);
       } catch (error) {
         console.error(error);
       }
@@ -170,6 +196,48 @@ const transactionHistory = async (e) => {
         BalanceandToken(e);
         transactionHistory(e);
     }
+
+    const Chart = ({ data }) => {
+      const options = {
+        responsive: true,
+        plugins: {
+          legend: {
+            position: 'top',
+          },
+          title: {
+            display: true,
+            text: 'Chart.js Line Chart',
+          },
+        },
+      };
+    
+      const chartLabels = data.map(transaction => formatDateTime(transaction.time));
+      const chartValues = data.map(transaction => transaction.balanceChange / 1000000000);
+    
+      const chartData = {
+        labels: chartLabels,
+        datasets: [
+          {
+            fill: true,
+            label: 'Balance Change',
+            data: chartValues,
+            borderColor: 'rgb(53, 162, 235)',
+            backgroundColor: 'rgba(53, 162, 235, 0.5)',
+          },
+        ],
+      };
+
+    return (
+      <Line options={options} data={chartData} />
+    );
+    };
+
+
+  
+
+
+
+
 //This is the end of what Bernard added in this section     
   return (
     <section className="overflow-y-auto ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
@@ -182,21 +250,18 @@ const transactionHistory = async (e) => {
             <div className="font-Inter flex gap-5">
                 <Image src= "/images/user_img.svg" alt ="gas" height={1} width={100}/>
 {/**This is the input section */}                
-                <div className="">
-                    <div className="flex items-center">                       
-                    <input
-                    type="text"
-                    value={includeAccounts}
-                    onChange={handleInputChange}
-                    className="text-black"
-              
-            />
+            <div className="">
+            {balance !== null && (
+            <div className="flex items-center">
+            {includeAccounts.map((address) => (
+          <div key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</div>
+        ))}                     
             <Image 
             src= "/images/angle-down.svg" 
             alt ="gas" height={1} width={30}
             onClick={getResult}
             className="cursor-pointer"/>
-                </div>
+                </div>)}
                     <p className="text-[2.6rem] font-[600]">{balance / 1000000000}</p>
                     <p className="text-[.9rem] text-[#01A643]">+0% ($0.00)</p>
                 </div>
@@ -261,6 +326,9 @@ const transactionHistory = async (e) => {
  onClick={handleShowMore}>
 Show More
 </div>
+
+<Chart data={chartData}/>
+
     
 </div>
 <div>
