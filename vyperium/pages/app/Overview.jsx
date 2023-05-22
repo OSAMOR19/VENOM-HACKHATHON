@@ -1,27 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import {
-  Chart as ChartJS,
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend,
-} from 'chart.js';
-import { Line } from 'react-chartjs-2';
-
-ChartJS.register(
-  CategoryScale,
-  LinearScale,
-  PointElement,
-  LineElement,
-  Title,
-  Tooltip,
-  Filler,
-  Legend
-);
+import { AreaChart, LineChart, Line, linearGradient, Area , Tooltip ,XAxis ,YAxis ,CartesianGrid } from 'recharts';
 import Image from "next/image"
 import axios from "axios";
 
@@ -136,15 +114,10 @@ const [balanceChangeGe, setBalanceChangeGe] = useState(0);
 const [balanceChangeLe, setBalanceChangeLe] = useState(0);
 const [limit, setLimit] = useState(10);
 const [offset, setOffset] = useState(0);
-const [chartData, setChartData] = useState(null);
+
 
 {/* Converts includeAccounts to Array */}
-const handleInputChange = (e) => {
-  const inputValue = e.target.value;
-    const arrayValue = inputValue.split(',');
 
-    setIncludeAccounts(arrayValue);
-}
 
 //On call of this function it returns the transaction history of the inputed Address
 const transactionHistory = async (e) => {
@@ -197,42 +170,14 @@ const transactionHistory = async (e) => {
         transactionHistory(e);
     }
 
-    const Chart = ({ data }) => {
-      const options = {
-        responsive: true,
-        plugins: {
-          legend: {
-            position: 'top',
-          },
-          title: {
-            display: true,
-            text: 'Chart.js Line Chart',
-          },
-        },
-      };
     
-      const chartLabels = data.map(transaction => formatDateTime(transaction.time));
-      const chartValues = data.map(transaction => transaction.balanceChange / 1000000000);
-    
-      const chartData = {
-        labels: chartLabels,
-        datasets: [
-          {
-            fill: true,
-            label: 'Balance Change',
-            data: chartValues,
-            borderColor: 'rgb(53, 162, 235)',
-            backgroundColor: 'rgba(53, 162, 235, 0.5)',
-          },
-        ],
-      };
-
-    return (
-      <Line options={options} data={chartData} />
-    );
-    };
 
 
+
+    const scaledData = dataTest.list.map((transaction) => ({
+      ...transaction,
+      balanceChange: transaction.balanceChange / 1000000000,
+    }));
   
 
 
@@ -327,7 +272,26 @@ const transactionHistory = async (e) => {
 Show More
 </div>
 
-<Chart data={chartData}/>
+
+
+
+<LineChart width={730} height={250} data={scaledData}
+  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+  <defs>
+    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+      <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+    </linearGradient>
+    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
+    </linearGradient>
+  </defs>
+  <XAxis  dataKey="time" tickFormatter={formatDateTime} />
+  <YAxis />
+  <Tooltip />
+  <Line type="monotone" dataKey="balanceChange" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+</LineChart>
+
 
     
 </div>
