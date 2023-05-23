@@ -19,6 +19,7 @@ module.exports = {
         openSans: ["Open Sans", "sans-serif"],
         poppins: ["Poppins", "sans-serif"],
         Inter: ["Inter", "sans-serif"],
+        Oswald: ["Oswald", "sans-serif"],
       },
     },
   },

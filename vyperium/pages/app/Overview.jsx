@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react'
 import { AreaChart, LineChart, Line, linearGradient, Area , Tooltip ,XAxis ,YAxis ,CartesianGrid } from 'recharts';
 import Image from "next/image"
 import axios from "axios";
+import Link from 'next/link';
+import BreadCrumb from '@/pure components/BreadCrumb';
+import HeadComp from '@/layout/HeadComp';
 
 
 const Overview = () => {
@@ -112,7 +115,7 @@ const [timeGe, setTimeGe] = useState(0);
 const [timeLe, setTimeLe] = useState(0);
 const [balanceChangeGe, setBalanceChangeGe] = useState(0);
 const [balanceChangeLe, setBalanceChangeLe] = useState(0);
-const [limit, setLimit] = useState(10);
+const [limit, setLimit] = useState(3);
 const [offset, setOffset] = useState(0);
 
 
@@ -157,12 +160,12 @@ const transactionHistory = async (e) => {
       }
     };
 
-    const handleShowMore = () => {
-      setLimit(prevLimit => prevLimit + 10);
-    };
-    useEffect(() => {
-      transactionHistory(new Event('click'));
-    }, [limit]);
+    // const handleShowMore = () => {
+    //   setLimit(prevLimit => prevLimit + 10);
+    // };
+    // useEffect(() => {
+    //   transactionHistory(new Event('click'));
+    // }, [limit]);
 
     const  getResult =(e) => {
         e.preventDefault();
@@ -185,197 +188,235 @@ const transactionHistory = async (e) => {
 
 //This is the end of what Bernard added in this section     
   return (
-    <section className="overflow-y-auto ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
-        <div className="flex items-center justify-between text-white">
-            <div className=" flex items-center gap-5">
-                <button className="font-Inter border-[1px] rounded-[6px] h-[3rem] px-[1rem] border-[#008000]">Add Wallet</button>
-                <Image src= "/images/share.svg" alt ="gas" height={1} width={20}/>
-                <Image src= "/images/tg.svg" alt ="gas" height={1} width={20}/>
+    <>
+      <HeadComp title="Vyperium - Overview" />
+      <BreadCrumb 
+        includeAccounts={includeAccounts} 
+        handleInputChange1={handleInputChange1} 
+        getResult={getResult} 
+        renderOwnerAddresses={renderOwnerAddresses()}
+        renderBalance={renderBalance()}
+        balance={balance}
+        textColor="#008000">
+        {/**This returns the tokens in the wallet section */}
+        {/* <div>         
+              <div className="grid grid-cols-4 gap-4 text-white bg-neutral-800 rounded">
+              <div className="font-bold">Asset</div>
+              <div className="font-bold">Balance</div>
+              <div className="font-bold">Price</div>
+              <div className="font-bold">Value</div>
+              {extractedData.map((data, index) => (
+                <React.Fragment key={index}>
+                  <div>{data.token}</div>
+                  <div>{data.amount}</div>
+                  <div></div>
+                  <div></div>
+                </React.Fragment>
+              ))}         
             </div>
-            <div className="font-Inter flex gap-5">
-                <Image src= "/images/user_img.svg" alt ="gas" height={1} width={100}/>
-{/**This is the input section */}                
-            <div className="">
-            {balance !== null && (
-            <div className="flex items-center">
-            {includeAccounts.map((address) => (
-          <div key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</div>
-        ))}                     
-            <Image 
-            src= "/images/angle-down.svg" 
-            alt ="gas" height={1} width={30}
-            onClick={getResult}
-            className="cursor-pointer"/>
-                </div>)}
-                    <p className="text-[2.6rem] font-[600]">{balance / 1000000000}</p>
-                    <p className="text-[.9rem] text-[#01A643]">+0% ($0.00)</p>
-                </div>
+          </div>   */}
+        {/*This returns thetransactions of the wallet address*/}
+        <div className="flex gap-[1rem] text-white">
+          <div className="">
+            <h3 className="font-[600] font-Oswald text-[1.5rem]">Performance</h3>
+            <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
+              <p className="text-[2rem] font-poppins font-[600]">${balance / 1000000000}</p>
+              <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
+              <LineChart 
+                className=" font-Oswald"
+                width={580} 
+                height={250} 
+                data={scaledData}
+                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                <defs>
+                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                  </linearGradient>
+                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
+                  </linearGradient>
+                </defs>
+                <XAxis  dataKey="time" tickFormatter={formatDateTime} />
+                {/* <YAxis /> */}
+                <Tooltip />
+                <Line type="monotone" dataKey="balanceChange" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+              </LineChart>
             </div>
+          </div>
+          <div className="text-white flex-1">
+            <h3 className="font-[600] mb-[8px] font-Oswald text-[1.5rem]">History</h3>
+            {/* {dataTest.count !== null && <p>Total number of Transaction: {dataTest.count}</p>} */}
+            <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
+              <table className="w-full">
+                <tr className="border-b-[1px]">
+                  <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
+                  <th align="right" className=" font-poppins pb-[10px]">Balance</th>
+                </tr>
+                {dataTest.list.map((transaction, index) => (
+                  <React.Fragment key={index}>
+                    <tr>
+                      <td align="left" className=" font-Inter pt-[10px]">
+                        <p className=" font-poppins font-bold">
+                          {transaction.txType}
+                        </p>
+                        {formatDateTime(transaction.time)}
+                      </td>
+                      <td
+                        align="right"
+                        className={`text-lg font-poppins ${
+                        transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'}`}>
+                          {transaction.balanceChange / 1000000000}
+                      </td>
+                    </tr>
+                  </React.Fragment>
+                ))}
+              </table>
+              <div className=" border-t mt-3 flex items-center justify-center">
+                <Link href="/app/History">
+                  <button className="mt-[.6rem] hover:bg-[#000] transition-[.5s] py-[.35rem] text-[.8rem] px-3 border-[1px] rounded-[.3rem]">See More</button>
+                </Link>
+              </div>
+                    {/* {dataTest.list.map((transaction, index) => (
+                      <React.Fragment key={index}>
+                        <div>{transaction.hash.slice(0, 10)}...</div>
+                        <div>{transaction.txType}</div>
+                        <div
+                        className={`text-lg ${
+                          transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'
+                        }`}
+                      >{transaction.balanceChange / 1000000000}</div>
+                        <div>{formatDateTime(transaction.time)}</div>
+                      </React.Fragment>
+                    ))} */}
+            </div> 
+
+            {/* <div className="text-center bg-green-500 p-5 rounded cursor-pointer w-40"
+            onClick={handleShowMore}>
+            Show More
+            </div> */}
+          </div>
         </div>
-        <div>
-      <input
-        type="text"
-        placeholder="Enter Owner Addresses (comma-separated)"
-        value={includeAccounts.join(',')}
-        onChange={handleInputChange1}
-      />
-      <div className="bg-green-500 rounded text-white cursor-pointer w-50"
-        onClick={getResult}
-      >{renderOwnerAddresses()}
-      {renderBalance()}</div>
-    </div>
-{/**This returns the tokens in the wallet section */}
-<div>         
-      <div className="grid grid-cols-4 gap-4 text-white bg-neutral-800 rounded">
-      <div className="font-bold">Asset</div>
-      <div className="font-bold">Balance</div>
-      <div className="font-bold">Price</div>
-      <div className="font-bold">Value</div>
-      {extractedData.map((data, index) => (
-        <React.Fragment key={index}>
-          <div>{data.token}</div>
-          <div>{data.amount}</div>
-          <div></div>
-          <div></div>
-        </React.Fragment>
-      ))}         
-    </div>
-  </div>  
-{/*This returns thetransactions of the wallet address*/}
-
-<div className="text-white">
-  <div>History</div>
-  {dataTest.count !== null && <p>Total number of Transaction: {dataTest.count}</p>}
-<div>
-<div className="grid grid-cols-4 gap-4 text-white bg-neutral-800 rounded">
-      <div className="font-bold">Hash</div>
-      <div className="font-bold">Transaction Type</div>
-      <div className="font-bold">Balance Change</div>
-      <div className="font-bold">Time</div>
-      {dataTest.list.map((transaction, index) => (
-        <React.Fragment key={index}>
-          <div>{transaction.hash.slice(0, 10)}...</div>
-          <div>{transaction.txType}</div>
-          <div
-          className={`text-lg ${
-            transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'
-          }`}
-        >{transaction.balanceChange / 1000000000}</div>
-          <div>{formatDateTime(transaction.time)}</div>
-        </React.Fragment>
-      ))}         
-    </div>
-  </div> 
-
-<div className="text-center bg-green-500 rounded p-5 rounded cursor-pointer w-40"
- onClick={handleShowMore}>
-Show More
-</div>
-
-
-
-
-<LineChart width={730} height={250} data={scaledData}
-  margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-  <defs>
-    <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-      <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-    </linearGradient>
-    <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-      <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-    </linearGradient>
-  </defs>
-  <XAxis  dataKey="time" tickFormatter={formatDateTime} />
-  <YAxis />
-  <Tooltip />
-  <Line type="monotone" dataKey="balanceChange" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-</LineChart>
-
-
-    
-</div>
-<div>
-      <div className='bg-gray-500'>
-        <form onSubmit={transactionHistory}>
-          <div>
-            
+        <div className=" text-white">
+          <div className="mb-[1rem] mt-[2rem]">
+            <h3 className="font-[600] font-Oswald text-[1.5rem]">
+              Assets
+            </h3>
           </div>
-          <div>
-            <label>
-              Transaction Types:
-              <input
-                type="text"
-                value={txTypes}
-                onChange={(e) => setTxTypes(e.target.value)}
-              />
-            </label>
+          <div className=" border-[1px] rounded-[10px] h-fit p-6">
+            <div className="pb-[1rem] flex items-center">
+              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="tm5rm07">
+                <rect width="32" height="32" rx="2" fill="#2558D9"></rect>
+                <path d="M7 11h15a3 3 0 013 3v8a3 3 0 01-3 3H8a1 1 0 01-1-1V11z" stroke="#fff" stroke-width="2"></path>
+                <path d="M6 9a2 2 0 012-2h12a2 2 0 012 2H6z" fill="#fff"></path>
+              </svg>&nbsp;
+              <p className="font-poppins text-[1.3rem] font-bold">Wallet - ${balance / 1000000000}</p> 
+            </div>
+            <table className="w-[100%]">
+              <tr>
+                <th className=" font-poppins text-sm" align="left">ASSET</th>
+                <th className=" font-poppins text-sm font-[300]" align="left">PRICE</th>
+                <th className=" font-poppins text-sm font-[300]" align="left">BALANCE</th>
+                <th className=" font-poppins text-sm font-[300]" align="left">VALUE</th>
+              </tr>
+              {extractedData.map((data, index) => (
+                <React.Fragment key={index}>
+                  <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">
+                    <td className="py-[1rem] font-Inter pl-[8px]" align="left">
+                      <p className="font-poppins font-bold">{data.token}</p>
+                      Venom
+                    </td>
+                    <td className="font-Inter" align="left">Coming Soon</td>
+                    <td className="" align="left">{data.amount}</td>
+                    <td className="font-Inter" align="left">Coming Soon</td>
+                  </tr>
+                </React.Fragment>
+              ))}
+            </table>
           </div>
-          <div>
-            <label>
-              Time Greater or Equal:
-              <input
-                type="number"
-                value={timeGe}
-                onChange={(e) => setTimeGe(parseInt(e.target.value))}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Time Less or Equal:
-              <input
-                type="number"
-                value={timeLe}
-                onChange={(e) => setTimeLe(parseInt(e.target.value))}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Balance Change Greater or Equal:
-              <input
-                type="number"
-                value={balanceChangeGe}
-                onChange={(e) => setBalanceChangeGe(parseInt(e.target.value))}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Balance Change Less or Equal:
-              <input
-                type="number"
-                value={balanceChangeLe}
-                onChange={(e) => setBalanceChangeLe(parseInt(e.target.value))}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Limit:
-              <input
-                type="number"
-                value={limit}
-                onChange={(e) => setLimit(parseInt(e.target.value))}
-              />
-            </label>
-          </div>
-          <div>
-            <label>
-              Offset:
-              <input
-                type="number"
-                value={offset}
-                onChange={(e) => setOffset(parseInt(e.target.value))}
-              />
-            </label>
-          </div>
-          <button type="submit">Fetch Data</button>
-        </form>
         </div>
-      </div>
-    </section>
+  {/* <div>
+        <div className='bg-gray-500'>
+          <form onSubmit={transactionHistory}>
+            <div>
+              
+            </div>
+            <div>
+              <label>
+                Transaction Types:
+                <input
+                  type="text"
+                  value={txTypes}
+                  onChange={(e) => setTxTypes(e.target.value)}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Time Greater or Equal:
+                <input
+                  type="number"
+                  value={timeGe}
+                  onChange={(e) => setTimeGe(parseInt(e.target.value))}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Time Less or Equal:
+                <input
+                  type="number"
+                  value={timeLe}
+                  onChange={(e) => setTimeLe(parseInt(e.target.value))}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Balance Change Greater or Equal:
+                <input
+                  type="number"
+                  value={balanceChangeGe}
+                  onChange={(e) => setBalanceChangeGe(parseInt(e.target.value))}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Balance Change Less or Equal:
+                <input
+                  type="number"
+                  value={balanceChangeLe}
+                  onChange={(e) => setBalanceChangeLe(parseInt(e.target.value))}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Limit:
+                <input
+                  type="number"
+                  value={limit}
+                  onChange={(e) => setLimit(parseInt(e.target.value))}
+                />
+              </label>
+            </div>
+            <div>
+              <label>
+                Offset:
+                <input
+                  type="number"
+                  value={offset}
+                  onChange={(e) => setOffset(parseInt(e.target.value))}
+                />
+              </label>
+            </div>
+            <button type="submit">Fetch Data</button>
+          </form>
+          </div>
+        </div> */}
+      </BreadCrumb>
+    </>
   )
 }
 
