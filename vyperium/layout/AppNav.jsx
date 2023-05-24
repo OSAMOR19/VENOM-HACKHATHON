@@ -1,4 +1,5 @@
-import Connectwallet from "@/pages/venom-connect/connectwallet";
+//import Connectwallet from "@/pages/venom-connect/connectwallet";
+import Button from "@/pages/venom-connect/button";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
@@ -33,7 +34,7 @@ const AppNav = () => {
             <div className="text-center border-b pb-[1.5rem]">
                 <h2 className="px-2 mt-[2.5rem] font-Inter">Welcome to Vyperium</h2>
                 <p className="px-2 text-[.8rem] font-Inter pt-[1rem] pb-[1rem]">Connect an Venom wallet to manage your DeFi portfolio</p>
-                <Connectwallet />
+                <Button />
             </div>
             <nav className=" pt-[2rem]">
                 <ul className=" ">

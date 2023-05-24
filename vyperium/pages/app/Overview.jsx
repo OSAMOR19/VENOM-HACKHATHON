@@ -1,10 +1,11 @@
 import React, { useState, useEffect } from 'react'
-import { AreaChart, LineChart, Line, linearGradient, Area , Tooltip ,XAxis ,YAxis ,CartesianGrid } from 'recharts';
+import { AreaChart,  Area , Tooltip ,XAxis ,YAxis } from 'recharts';
 import Image from "next/image"
 import axios from "axios";
 import Link from 'next/link';
 import BreadCrumb from '@/pure components/BreadCrumb';
 import HeadComp from '@/layout/HeadComp';
+import Button from '../venom-connect/button';
 
 
 const Overview = () => {
@@ -253,6 +254,9 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             </div>
           </div>   */}
         {/*This returns thetransactions of the wallet address*/}
+        <div className='flex align-center justify-center'>
+        <Button/>
+        </div>
         <div className="flex gap-[1rem] text-white">
           <div className="">
             <h3 className="font-[600] font-Oswald text-[1.5rem]">Performance</h3>

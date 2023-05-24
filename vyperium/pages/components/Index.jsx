@@ -1,6 +1,6 @@
 import Image from "next/image"
-import Connectwallet from "../venom-connect/connectwallet"
 import { useEffect } from "react"
+import Button from "../venom-connect/button"
 
 const Index = () => {
     
@@ -11,7 +11,9 @@ const Index = () => {
                 <div className="wow fadeInUp w-[90%] md:w-[50%]">
                     <p className=" text-[#808080] font-raleway">Smart, Social Web3 Wallet</p>
                     <p className="font-openSans mb-[2rem] text-[2rem]">Manage your DeFi and NFT portfolios, trade across 10+ networks and connect to any decentralized application with one wallet</p>
-                    <Connectwallet />
+                    <div>
+                    <Button />
+                    </div>
                 </div>
                 <div className=" wow slideInLeft ">
                     <Image src = "/images/landing-pageImg.png" alt="landing-pageImg" height={1} width={300} />
@@ -47,7 +49,7 @@ const Index = () => {
                 <div className="md:w-[46%] w-[90%] ">
                     <h3 className="wow flipInX font-poppins font-[700] pb-[2rem] text-[2rem]">Explore the decentralized web with confidence</h3>
                     <p className="wow slideInDown font-openSans mb-[2rem] text-[1.2rem]">VENOM Wallet is your passport to the decentralized web. Harness the power of DeFi to earn yield, grow your NFT collection, and much more.</p>
-                    <Connectwallet />
+                    <Button />
                 </div>
             </div>
         </section>

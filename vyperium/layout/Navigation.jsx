@@ -1,5 +1,6 @@
 import Image from "next/image"
-import Connectwallet from "@/pages/venom-connect/connectwallet"
+//import Connectwallet from "@/pages/venom-connect/connectwallet"
+import Button from "@/pages/venom-connect/button"
 import { useRef } from "react"
 
 
@@ -25,7 +26,7 @@ const Navigation = () => {
           <li>Help Center</li>
           <li>Community</li>
         </ul>
-        <Connectwallet/>
+        <Button/>
       </nav>
       <div onClick={handleClick} ref={burgerRef} className=" pr-4 space-y-1 block md:hidden z-[999] fixed right-0">
         <svg width="21" className=" " height="2" viewBox="0 0 21 2" fill="none" xmlns="http://www.w3.org/2000/svg">
