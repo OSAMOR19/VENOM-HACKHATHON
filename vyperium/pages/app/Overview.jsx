@@ -271,8 +271,8 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                     <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
                   </linearGradient>
                 </defs>
-                <XAxis  dataKey="time" tickFormatter={formatDateTime} />
-                {/* <YAxis /> */}
+                <XAxis  dataKey="time" tickFormatter={formatDateTime} axisLine={false} tickLine={false} />
+                <YAxis hide />
                 <Tooltip />
                 <Area type="monotone" dataKey="Balance" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
               </AreaChart>
