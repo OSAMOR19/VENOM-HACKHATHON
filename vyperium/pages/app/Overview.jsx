@@ -14,6 +14,7 @@ const [includeAccounts, setIncludeAccounts] = useState([]);
 const [balance, setBalance] = useState(null);
 const [extractedData, setExtractedData] = useState([]);
 const [error, setError] = useState(null);
+const [spinner, setSpinner] = useState(false);
 const formatDateTime = (timestamp) => {
   const dateObj = new Date(timestamp * 1000);
   const options = {
@@ -28,14 +29,13 @@ const formatDateTime = (timestamp) => {
   return dateObj.toLocaleDateString(undefined, options);
 };
 
-
-
 const fetchData = async () => {
   try {
     if (includeAccounts.length > 0) {
       const response = await axios.get(`/api/search?ownerAddress=${includeAccounts}`);
       const { balance } = response.data;
       setBalance(balance);
+      setSpinner(false);
     }
   } catch (error) {
     console.error(error);
@@ -75,7 +75,7 @@ const renderOwnerAddresses = () => {
       <p>Owner Addresses:</p>
       <ul>
         {includeAccounts.map((address) => (
-          <li key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</li>
+          <li key={address}>{address}</li>
         ))}
       </ul>
     </div>
@@ -235,6 +235,8 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         renderOwnerAddresses={renderOwnerAddresses()}
         renderBalance={renderBalance()}
         balance={balance}
+        spinnerProp = {spinner}
+        spinnerSetter= {() => setSpinner(true)}
         textColor="#008000">
         {/**This returns the tokens in the wallet section */}
         {/* <div>         
