@@ -27,8 +27,6 @@ const formatDateTime = (timestamp) => {
   return dateObj.toLocaleDateString(undefined, options);
 };
 
-
-
 const fetchData = async () => {
   try {
     if (includeAccounts.length > 0) {
@@ -118,7 +116,6 @@ const [balanceChangeLe, setBalanceChangeLe] = useState(0);
 const [limit, setLimit] = useState(3);
 const [offset, setOffset] = useState(0);
 const [loading, setLoading] = useState(false);
-
 
 
 {/* Converts includeAccounts to Array */}

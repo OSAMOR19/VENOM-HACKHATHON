@@ -1,25 +1,50 @@
 import Image from "next/image"
 import Link from "next/link"
+import { CSSProperties, useState } from "react";
+import { PulseLoader } from "react-spinners";
 
 const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor}) => {
+    
+    const [loading, setLoading] = useState(false);
+    const [Lcolor, setColor] = useState("#008000");
+
+    const override = {
+        display: "block",
+        margin: "auto",
+    };
+
   return (
     <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
       <div className=" mb-[2rem]">
-        <div className=' flex items-center'>
-          <input
-            type="text"
-            placeholder="Enter Owner Addresses (comma-separated)"
-            value={includeAccounts.join(',')}
-            onChange={handleInputChange1}
-            className= " w-[100%] bg-[#29292C] hover:bg-transparent outline-none input transition-[.5s] pl-[1rem] pr-[2rem] py-1 text-[#808080] font-Inter rounded-[5px]"
-          />
-          <button className=" translate-x-[-120%] bg-[#45464A] p-[5px] h-[80%] rounded-[3px]">
-              <Image src= "/images/search.svg" alt ="Search" height={1} width={15}/>
-          </button>
-        </div>
-        <div className="bg-green-500 rounded text-white cursor-pointer w-50" onClick={getResult}>
-          {renderOwnerAddresses}
-          {renderBalance}
+        <div className="input-container">
+            <div 
+                className='relative flex items-center'>
+            <input
+                type="text"
+                placeholder="Enter Owner Addresses (comma-separated)"
+                value={includeAccounts.join(',')}
+                onChange={handleInputChange1}
+                onInput={() => setLoading(true) }
+                className= "w-[100%] bg-[#29292C] hover:bg-transparent outline-none transition-[.5s] pl-[1rem] pr-[2rem] py-1 text-[#808080] font-Inter rounded-[5px]"
+            />
+            <button className="right-1 absolute bg-[#45464A] p-[5px] h-[80%] rounded-[3px]">
+                <Image src= "/images/search.svg" alt ="Search" height={1} width={15}/>
+            </button>
+            </div>
+            <div className="text-center">
+                <PulseLoader
+                    color={Lcolor}
+                    loading={loading}
+                    cssOverride={override}
+                    size={15}
+                    aria-label="Loading Spinner"
+                    data-testid="loader"
+                />
+                <div tabIndex={0} className="rounded text-white cursor-pointer w-50" onClick={getResult}>
+                    {renderOwnerAddresses}
+                    {renderBalance}
+                </div>
+            </div>
         </div>
       </div>
         
