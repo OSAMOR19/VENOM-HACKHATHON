@@ -3,9 +3,8 @@ import Link from "next/link"
 import { CSSProperties, useState } from "react";
 import { PulseLoader } from "react-spinners";
 
-const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor}) => {
+const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter}) => {
     
-    const [loading, setLoading] = useState(false);
     const [Lcolor, setColor] = useState("#008000");
 
     const override = {
@@ -24,7 +23,7 @@ const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, r
                 placeholder="Enter Owner Addresses (comma-separated)"
                 value={includeAccounts.join(',')}
                 onChange={handleInputChange1}
-                onInput={() => setLoading(true) }
+                onInput={spinnerSetter}
                 className= "w-[100%] bg-[#29292C] hover:bg-transparent outline-none transition-[.5s] pl-[1rem] pr-[2rem] py-1 text-[#808080] font-Inter rounded-[5px]"
             />
             <button className="right-1 absolute bg-[#45464A] p-[5px] h-[80%] rounded-[3px]">
@@ -34,7 +33,7 @@ const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, r
             <div className="text-center">
                 <PulseLoader
                     color={Lcolor}
-                    loading={loading}
+                    loading={spinnerProp}
                     cssOverride={override}
                     size={15}
                     aria-label="Loading Spinner"
