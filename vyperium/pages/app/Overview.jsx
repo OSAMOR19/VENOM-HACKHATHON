@@ -108,7 +108,7 @@ try {
 };
 
 //This section contains details about transaction history.
-const [dataTest, setDataTest] = useState({count: null, list: []});
+const [dataTest, setDataTest] = useState({count: null, list: [], graph: []});
 
 const [txTypes, setTxTypes] = useState(['Ordinary']);
 const [timeGe, setTimeGe] = useState(0);
@@ -117,6 +117,8 @@ const [balanceChangeGe, setBalanceChangeGe] = useState(0);
 const [balanceChangeLe, setBalanceChangeLe] = useState(0);
 const [limit, setLimit] = useState(3);
 const [offset, setOffset] = useState(0);
+const [loading, setLoading] = useState(false);
+
 
 
 {/* Converts includeAccounts to Array */}
@@ -124,63 +126,98 @@ const [offset, setOffset] = useState(0);
 
 //On call of this function it returns the transaction history of the inputed Address
 const transactionHistory = async (e) => {
-    e.preventDefault();
+  e.preventDefault();
 
-    const countRequest = axios.post('/api/count', {
-        includeAccounts,
-        txTypes,
-        timeGe,
-        timeLe,
-        balanceChangeGe,
-        balanceChangeLe,
-      });
-  
-      const listRequest = axios.post('/api/list', {
-        includeAccounts,
-        txTypes,
-        timeGe,
-        timeLe,
-        balanceChangeGe,
-        balanceChangeLe,
-        limit,
-        offset,
-      });
-          
-      try {
-        const [countResponse, listResponse] = await axios.all([
-          countRequest,
-          listRequest
-        ]);
-        const countData = countResponse.data.count;
-        const listData = listResponse.data;
-        setDataTest({ count: countData, list: listData });
-        setChartData(listData);
-      } catch (error) {
-        console.error(error);
-      }
-    };
+  let countData = null;
 
-    // const handleShowMore = () => {
-    //   setLimit(prevLimit => prevLimit + 10);
-    // };
-    // useEffect(() => {
-    //   transactionHistory(new Event('click'));
-    // }, [limit]);
+  const countRequest = axios.post('/api/count', {
+    includeAccounts,
+    txTypes,
+    timeGe,
+    timeLe,
+    balanceChangeGe,
+    balanceChangeLe,
+  });
 
-    const  getResult =(e) => {
-        e.preventDefault();
-        BalanceandToken(e);
-        transactionHistory(e);
-    }
-
-    
+  try {
+    const countResponse = await countRequest;
+    countData = countResponse.data.count;
 
 
+  const graphRequest = axios.post('/api/graph', {
+    includeAccounts,
+    txTypes,
+    timeGe,
+    timeLe,
+    balanceChangeGe,
+    balanceChangeLe,
+    limit: countData,
+    offset,
+  });
 
-    const scaledData = dataTest.list.map((transaction) => ({
-      ...transaction,
-      balanceChange: transaction.balanceChange / 1000000000,
-    }));
+  const listRequest = axios.post('/api/list', {
+    includeAccounts,
+    txTypes,
+    timeGe,
+    timeLe,
+    balanceChangeGe,
+    balanceChangeLe,
+    limit,
+    offset,
+  });
+
+ 
+  const [graphResponse, listResponse] = await axios.all([
+    graphRequest,
+    listRequest
+  ]);
+
+  const listData = listResponse.data;
+  const graphData = graphResponse.data.data2;
+
+    setDataTest({ count: countData, list: listData, graph:graphData });
+    setLoading(false);
+  } catch (error) {
+    console.error(error);
+    const errorMessage = error.response?.data?.error || 'An error occurred. Please try again later.';
+    setError(errorMessage);
+    setLoading(false);
+  }
+};
+
+// const handleShowMore = () => {
+//  setLimit(prevLimit => prevLimit + 10);
+// };
+
+// useEffect(() => {
+//  transactionHistory(new Event('click'));
+// }, [limit]);
+
+const getResult = (e) => {
+  e.preventDefault();
+  BalanceandToken(e);
+  transactionHistory(e);
+};
+
+ 
+
+
+
+const scaledData = dataTest.graph.map((transaction, index) => {
+  const previousBalance = index > 0 ? dataTest.graph[index - 1].cumulativeBalance : null;
+  const currentBalance = transaction.cumulativeBalance / 1000000000;
+
+  let areaColor = null;
+  if (previousBalance !== null) {
+    areaColor = currentBalance > previousBalance ? 'green' : 'red';
+  }
+
+  return {
+    time: transaction.time,
+    Balance: currentBalance,
+    areaColor: areaColor,
+  };
+});
   
 
 
@@ -222,7 +259,7 @@ const transactionHistory = async (e) => {
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <p className="text-[2rem] font-poppins font-[600]">${balance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
-              <LineChart 
+              <AreaChart 
                 className=" font-Oswald"
                 width={580} 
                 height={250} 
@@ -240,8 +277,8 @@ const transactionHistory = async (e) => {
                 <XAxis  dataKey="time" tickFormatter={formatDateTime} />
                 {/* <YAxis /> */}
                 <Tooltip />
-                <Line type="monotone" dataKey="balanceChange" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-              </LineChart>
+                <Area type="monotone" dataKey="Balance" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+              </AreaChart>
             </div>
           </div>
           <div className="text-white flex-1">
