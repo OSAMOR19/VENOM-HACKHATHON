@@ -5,7 +5,6 @@ import axios from "axios";
 import Link from 'next/link';
 import BreadCrumb from '@/pure components/BreadCrumb';
 import HeadComp from '@/layout/HeadComp';
-import Button from '../venom-connect/button';
 
 
 const Overview = () => {
@@ -257,7 +256,6 @@ const scaledData = dataTest.graph.map((transaction, index) => {
           </div>   */}
         {/*This returns thetransactions of the wallet address*/}
         <div className='flex align-center justify-center'>
-        <Button/>
         </div>
         <div className="flex gap-[1rem] text-white">
           <div className="">
