@@ -1,251 +1,9 @@
 import React, { useState, useEffect } from 'react'
-import { AreaChart,  Area , Tooltip ,XAxis ,YAxis } from 'recharts';
-import Image from "next/image"
-import axios from "axios";
-import Link from 'next/link';
-import BreadCrumb from '@/pure components/BreadCrumb';
-import HeadComp from '@/layout/HeadComp';
-//import Button from '../venom-connect/button';
-
 
 const Overview = () => {
-//This is the begining of what Bernard.O Added 
-const [includeAccounts, setIncludeAccounts] = useState([]);
-const [balance, setBalance] = useState(null);
-const [extractedData, setExtractedData] = useState([]);
-const [error, setError] = useState(null);
-const [addr, setAddr] = useState();
-const [spinner, setSpinner] = useState(false);
-const formatDateTime = (timestamp) => {
-  const dateObj = new Date(timestamp * 1000);
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
-  };
-  return dateObj.toLocaleDateString(undefined, options);
-};
-
-const [clickedIncludeAccounts, setClickedIncludeAccounts] = useState(null);
-const [clickedBalance, setClickedBalance] = useState(null);
-
-const fetchData = async () => {
-  try {
-    if (includeAccounts.length > 0 && includeAccounts.join(',').length >= 50)  {
-      const response = await axios.get(`/api/search?ownerAddress=${includeAccounts}`);
-      const { balance } = response.data;
-      setBalance(balance);
-      setSpinner(false);
-    }
-  } catch (error) {
-    console.error(error);
-    setBalance([])
-    // Handle error
-  }
-};
-
-useEffect(() => {
-  fetchData();
-}, [includeAccounts]);
-
-const handleInputChange1 = (event) => {
-  const { value } = event.target;
-  const accounts = value.split(',').map((account) => account.trim());
-  setIncludeAccounts(accounts);
-};
-
-useEffect(() => {
-  fetchData();
-}, []);
-
-const renderBalance = () => {
-  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
-    return null;
-  }
-  return <p> {balance / 1000000000}</p>;
-};
-
-const renderOwnerAddresses = () => {
-  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
-    return null;
-  }
-
-  return (
-    <div>
-      <ul>
-        {includeAccounts.map((address) => (
-          <li key={address}>{address}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-useEffect(() => {
-  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
-    setSpinner(false);
-  } else {
-    setSpinner(true);
-  }
-}, [includeAccounts, balance]);
-
-
-
-
-//On call of this Function it returns the values of the tokens and Balance of the wallet
-const BalanceandToken = async (e) => {
-e.preventDefault();
-try {
-    const response = await fetch(`/api/search?ownerAddress=${includeAccounts}`);
-    const result = await response.json();
-
-    if (response.ok) {
-      setBalance(result.balance);
-      setExtractedData(result.extractedData);
-      setError(null);
-    } else {
-      setError(result.error);
-      setBalance([]); 
-      setExtractedData([]);
-    }
-  } catch (error) {
-    console.error(error);
-    setError('Internal Server Error');
-    setBalance([]);
-    setExtractedData([]);
-  }
-};
-
-//This section contains details about transaction history.
-const [dataTest, setDataTest] = useState({count: null, list: [], graph: []});
-
-const [txTypes, setTxTypes] = useState(['Ordinary']);
-const [timeGe, setTimeGe] = useState(0);
-const [timeLe, setTimeLe] = useState(0);
-const [balanceChangeGe, setBalanceChangeGe] = useState(0);
-const [balanceChangeLe, setBalanceChangeLe] = useState(0);
-const [limit, setLimit] = useState(3);
-const [offset, setOffset] = useState(0);
-const [loading, setLoading] = useState(false);
-
-
-
-
-{/* Converts includeAccounts to Array */}
-
-
-//On call of this function it returns the transaction history of the inputed Address
-const transactionHistory = async (e) => {
-  e.preventDefault();
-
-  let countData = null;
-
-  const countRequest = axios.post('/api/count', {
-    includeAccounts,
-    txTypes,
-    timeGe,
-    timeLe,
-    balanceChangeGe,
-    balanceChangeLe,
-  });
-
-  try {
-    const countResponse = await countRequest;
-    countData = countResponse.data.count;
-
-
-  const graphRequest = axios.post('/api/graph', {
-    includeAccounts,
-    txTypes,
-    timeGe,
-    timeLe,
-    balanceChangeGe,
-    balanceChangeLe,
-    limit: countData,
-    offset,
-  });
-
-  const listRequest = axios.post('/api/list', {
-    includeAccounts,
-    txTypes,
-    timeGe,
-    timeLe,
-    balanceChangeGe,
-    balanceChangeLe,
-    limit,
-    offset,
-  });
-
- 
-  const [graphResponse, listResponse] = await axios.all([
-    graphRequest,
-    listRequest
-  ]);
-
-  const listData = listResponse.data;
-  const graphData = graphResponse.data.data2;
-
-    setDataTest({ count: countData, list: listData, graph:graphData });
-    setLoading(false);
-    setClickedIncludeAccounts(includeAccounts);
-    setClickedBalance(balance);
-    setIncludeAccounts([]);
-    setBalance(null)
-  } catch (error) {
-    console.error(error);
-    const errorMessage = error.response?.data?.error || 'An error occurred. Please try again later.';
-    setError(errorMessage);
-    setLoading(false);
-  }
-};
-
-// const handleShowMore = () => {
-//  setLimit(prevLimit => prevLimit + 10);
-// };
-
-// useEffect(() => {
-//  transactionHistory(new Event('click'));
-// }, [limit]);
-
-const getResult = (e) => {
-  e.preventDefault();
-  BalanceandToken(e);
-  transactionHistory(e);
-};
-
- 
-
-
-
-const scaledData = dataTest.graph.map((transaction, index) => {
-  const previousBalance = index > 0 ? dataTest.graph[index - 1].cumulativeBalance : null;
-  const currentBalance = transaction.cumulativeBalance / 1000000000;
-
-  let areaColor = null;
-  if (previousBalance !== null) {
-    areaColor = currentBalance > previousBalance ? 'green' : 'red';
-  }
-
-  return {
-    time: transaction.time,
-    Balance: currentBalance,
-    areaColor: areaColor,
-  };
-});
-  
-
-
-
-
-//This is the end of what Bernard added in this section     
-  return (
-    <>
-      <HeadComp title="Vyperium - Overview" />
-      <BreadCrumb 
+    return(
+        <>
+        <BreadCrumb 
         includeAccounts={includeAccounts} 
         clickedBalance={clickedBalance}
         clickedIncludeAccounts = {clickedIncludeAccounts}
@@ -278,8 +36,9 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         <div className='flex align-center justify-center'>
         {/*<h3 className="font-[600] font-Oswald text-[1.5rem]">
         <Button onAddrChange={newAddr => setAddr(newAddr)}/>
-              Assets: {addr}
+              
             </h3>*/}
+            Assets: {addr}
         </div>
         <div className="flex gap-[1rem] text-white">
           <div className="">
@@ -314,7 +73,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
           </div>
           <div className="text-white flex-1">
             <h3 className="font-[600] mb-[8px] font-Oswald text-[1.5rem]">History</h3>
-            {/* {dataTest.count !== null && <p>Total number of Transaction: {dataTest.count}</p>} */}
+            
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <table className="w-full">
                 <tr className="border-b-[1px]">
@@ -345,24 +104,8 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                   <button className="mt-[.6rem] hover:bg-[#000] transition-[.5s] py-[.35rem] text-[.8rem] px-3 border-[1px] rounded-[.3rem]">See More</button>
                 </Link>
               </div>
-                    {/* {dataTest.list.map((transaction, index) => (
-                      <React.Fragment key={index}>
-                        <div>{transaction.hash.slice(0, 10)}...</div>
-                        <div>{transaction.txType}</div>
-                        <div
-                        className={`text-lg ${
-                          transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'
-                        }`}
-                      >{transaction.balanceChange / 1000000000}</div>
-                        <div>{formatDateTime(transaction.time)}</div>
-                      </React.Fragment>
-                    ))} */}
-            </div> 
-
-            {/* <div className="text-center bg-green-500 p-5 rounded cursor-pointer w-40"
-            onClick={handleShowMore}>
-            Show More
-            </div> */}
+                    
+          </div>
           </div>
         </div>
         <div className=" text-white">
@@ -484,8 +227,179 @@ const scaledData = dataTest.graph.map((transaction, index) => {
           </div>
         </div> */}
       </BreadCrumb>
-    </>
-  )
+        </>
+    );
 }
 
-export default Overview
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+
+function App() {
+  const [ownerAddress, setOwnerAddress] = useState('');
+  const [balance, setBalance] = useState('');
+  const [extractedData, setExtractedData] = useState([]);
+
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        const response = await axios.get(`/api/wallet?ownerAddress=${encodeURIComponent(ownerAddress)}`);
+        const { balance, extractedData } = response.data;
+
+        setBalance(balance);
+        setExtractedData(extractedData);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    if (ownerAddress) {
+      fetchData();
+    }
+  }, [ownerAddress]);
+
+  const handleInputChange = (event) => {
+    setOwnerAddress(event.target.value);
+  };
+
+  return (
+    <div>
+      <h1>Venom Wallet App</h1>
+      <form>
+        <label>
+          Owner Address:
+          <input type="text" value={ownerAddress} onChange={handleInputChange} />
+        </label>
+      </form>
+
+      {balance && (
+        <div>
+          <h2>Balance: {balance}</h2>
+          <h2>Tokens:</h2>
+          <ul>
+            {extractedData.map((data) => (
+              <li key={data.token}>
+                Token: {data.token}, Amount: {data.amount}, Owner Address: {data.ownerAddress}
+              </li>
+            ))}
+          </ul>
+        </div>
+      )}
+    </div>
+  );
+}
+
+export default App;
+
+
+useEffect(() => {
+    // Function to make the API call and update the values
+    const fetchData = async () => {
+      const countUrl = 'YOUR_COUNT_API_URL';
+      const listUrl = 'YOUR_LIST_API_URL';
+
+      // Request body for count API
+      const countRequestBody = {
+        includeAccounts,
+        txTypes,
+        timeGe,
+        timeLe,
+        balanceChangeGe,
+        balanceChangeLe,
+      };
+
+      // Request body for list API
+      const listRequestBody = {
+        includeAccounts,
+        txTypes,
+        timeGe,
+        timeLe,
+        balanceChangeGe,
+        balanceChangeLe,
+        limit,
+        offset,
+      };
+
+      try {
+        // Make the count API call
+        const countResponse = await axios.post(countUrl, countRequestBody);
+        const { count } = countResponse.data;
+        setCount(count);
+
+        // Make the list API call
+        const listResponse = await axios.post(listUrl, listRequestBody);
+        const transactions = listResponse.data;
+        setTransactions(transactions);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    // Call the fetchData function when any of the inputs or states change
+    fetchData();
+  }, [includeAccounts, txTypes, timeGe, timeLe, balanceChangeGe, balanceChangeLe, limit, offset]);
+
+
+
+  
+  try {
+    const countResponse = await axios.post('/api/count', {
+      includeAccounts,
+      txTypes,
+      timeGe,
+      timeLe,
+      balanceChangeGe,
+      balanceChangeLe,
+    });
+    countData = countResponse.data.count;
+
+    const graphResponse = await axios.post('/api/graph', {
+      includeAccounts,
+      txTypes,
+      timeGe,
+      timeLe,
+      balanceChangeGe,
+      balanceChangeLe,
+      limit: countData,
+      offset,
+    });
+    const listResponse = await axios.post('/api/list', {
+      includeAccounts,
+      txTypes,
+      timeGe,
+      timeLe,
+      balanceChangeGe,
+      balanceChangeLe,
+      limit,
+      offset,
+    });
+
+    const listData = listResponse.data;
+    const graphData = graphResponse.data.data2;
+
+    setDataTest({ count: countData, list: listData, graph: graphData });
+    setLoading(false);
+    setBalance(null);
+  } catch (error) {
+    console.error(error);
+    const errorMessage = error.response?.data?.error || 'An error occurred. Please try again later.';
+    setError(errorMessage);
+    setLoading(false);
+  }
+};
+
+useEffect(() => {
+  transactionHistory();
+}, [includeAccounts, txTypes, timeGe, timeLe, balanceChangeGe, balanceChangeLe, limit, offset]);
+
+const getResult = (e) => {
+  if (e) {
+    e.preventDefault();
+  }
+  BalanceandToken();
+  transactionHistory();
+};
+
+useEffect(() => {
+  getResult(null); // Pass null explicitly to indicate no event object
+}, []);
+/*}

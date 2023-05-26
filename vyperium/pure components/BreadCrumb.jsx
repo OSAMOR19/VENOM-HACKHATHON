@@ -3,18 +3,9 @@ import Link from "next/link"
 import { CSSProperties, useState } from "react";
 import { PulseLoader } from "react-spinners";
 
-const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, value}) => {
+const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, value}) => {
     
     const [Lcolor, setColor] = useState("#008000");
-
-    const IncludedAcc = () => {
-        return (
-            includeAccounts.map((address) => (
-                <p key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</p>
-            ))
-        )
-    }
-
     const override = {
         display: "block",
         margin: "auto",
@@ -48,8 +39,12 @@ const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, r
                     data-testid="loader"
                 />
                 <div tabIndex={0} className="rounded text-white cursor-pointer w-50" onClick={getResult}>
+                    <div className="flex px-5">
                     {renderOwnerAddresses}
+                    <div className="text-green-800 px-5 font-bold"> 
                     {renderBalance}
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -65,7 +60,7 @@ const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, r
                 <Image src= "/images/user_img.svg" alt ="user_img" height={1} width={100}/>
             {/**This is the input section */}                
                 <div className="">
-                    {balance !== null && (
+                    
                         <div className="flex items-center">
                         {value ? IncludedAcc() : null}                     
                         <Image 

@@ -8,7 +8,7 @@ import HeadComp from '@/layout/HeadComp';
 //import Button from '../venom-connect/button';
 
 
-const Overview = () => {
+const Overview1 = () => {
 //This is the begining of what Bernard.O Added 
 const [includeAccounts, setIncludeAccounts] = useState([]);
 const [balance, setBalance] = useState(null);
@@ -488,4 +488,4 @@ const scaledData = dataTest.graph.map((transaction, index) => {
   )
 }
 
-export default Overview
+export default Overview1
