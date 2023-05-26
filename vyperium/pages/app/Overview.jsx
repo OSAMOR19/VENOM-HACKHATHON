@@ -8,220 +8,282 @@ import HeadComp from '@/layout/HeadComp';
 
 
 const Overview = () => {
-//This is the begining of what Bernard.O Added 
-const [includeAccounts, setIncludeAccounts] = useState([]);
-const [balance, setBalance] = useState(null);
-const [extractedData, setExtractedData] = useState([]);
-const [error, setError] = useState(null);
-const [spinner, setSpinner] = useState(false);
-const formatDateTime = (timestamp) => {
-  const dateObj = new Date(timestamp * 1000);
-  const options = {
-    weekday: 'long',
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric',
-    hour: 'numeric',
-    minute: 'numeric',
-    second: 'numeric',
+
+  const [includeAccounts, setIncludeAccounts] = useState([]);
+  const [balance, setBalance] = useState(null);
+  const [extractedData, setExtractedData] = useState([]);
+  const [error, setError] = useState(null);
+  const [spinner, setSpinner] = useState(false);
+  const [value, setValue] = useState(false);
+
+
+  const [dataTest, setDataTest] = useState({count: null, list: [], graph: []});
+  const [txTypes, setTxTypes] = useState(['Ordinary']);
+  const [timeGe, setTimeGe] = useState(0);
+  const [timeLe, setTimeLe] = useState(0);
+  const [balanceChangeGe, setBalanceChangeGe] = useState(0);
+  const [balanceChangeLe, setBalanceChangeLe] = useState(0);
+  const [limit, setLimit] = useState(3);
+  const [offset, setOffset] = useState(0);
+  const [loading, setLoading] = useState(false);
+  
+  useEffect(() => {
+    fetchData();
+  }, [includeAccounts]);
+
+  const formatDateTime = (timestamp) => {
+    const dateObj = new Date(timestamp * 1000);
+    const options = {
+      weekday: 'long',
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+      hour: 'numeric',
+      minute: 'numeric',
+      second: 'numeric',
+    };
+    return dateObj.toLocaleDateString(undefined, options);
   };
-  return dateObj.toLocaleDateString(undefined, options);
-};
 
-const fetchData = async () => {
-  try {
-    if (includeAccounts.length > 0) {
-      const response = await axios.get(`/api/search?ownerAddress=${includeAccounts}`);
-      const { balance } = response.data;
-      setBalance(balance);
-      setSpinner(false);
+  const fetchData = async () => {
+    try {
+      if (includeAccounts.length > 0) {
+        const response = await axios.get(`/api/search?ownerAddress=${includeAccounts}`);
+        const { balance } = response.data;
+        setBalance(balance);
+        setSpinner(false);
+      }
+    } catch (error) {
+      console.error(error);
+      // Handle error
     }
-  } catch (error) {
-    console.error(error);
-    // Handle error
-  }
-};
+  };
 
-useEffect(() => {
-  fetchData();
-}, [includeAccounts]);
+  const handleInputChange1 = (event) => {
+    const { value } = event.target;
+    const accounts = value.split(',').map((account) => account.trim());
+    setIncludeAccounts(accounts);
+  };
 
-const handleInputChange1 = (event) => {
-  const { value } = event.target;
-  const accounts = value.split(',').map((account) => account.trim());
-  setIncludeAccounts(accounts);
-};
+  const renderBalance = () => {
+    if (balance === null) {
+      return null;
+    }
 
-useEffect(() => {
-  fetchData();
-}, []);
+    return <p>Balance: {balance}</p>;
+  };
 
-const renderBalance = () => {
-  if (balance === null) {
-    return null;
-  }
+  const renderOwnerAddresses = () => {
+    if (balance === null || balance === 0) {
+      return null;
+    }
 
-  return <p>Balance: {balance}</p>;
-};
-
-const renderOwnerAddresses = () => {
-  if (balance === null || balance === 0) {
-    return null;
-  }
-
-  return (
-    <div>
-      <p>Owner Addresses:</p>
-      <ul>
-        {includeAccounts.map((address) => (
-          <li key={address}>{address}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
+    return (
+      <div>
+        <p>Owner Addresses:</p>
+        <ul>
+          {includeAccounts.map((address) => (
+            <li key={address}>{address}</li>
+          ))}
+        </ul>
+      </div>
+    );
+  };
 
 
 
-//On call of this Function it returns the values of the tokens and Balance of the wallet
-const BalanceandToken = async (e) => {
-e.preventDefault();
-try {
-    const response = await fetch(`/api/search?ownerAddress=${includeAccounts}`);
-    const result = await response.json();
+  //On call of this Function it returns the values of the tokens and Balance of the wallet
+  const BalanceandToken = async (e) => {
+  e.preventDefault();
+  try {
+      const response = await fetch(`/api/search?ownerAddress=${includeAccounts}`);
+      const result = await response.json();
 
-    if (response.ok) {
-      setBalance(result.balance);
-      setExtractedData(result.extractedData);
-      setError(null);
-    } else {
-      setError(result.error);
-      setBalance(null); 
+      if (response.ok) {
+        setBalance(result.balance);
+        setExtractedData(result.extractedData);
+        setValue(true);
+        setError(null);
+      } else {
+        setError(result.error);
+        setBalance(null); 
+        setExtractedData(null);
+      }
+    } catch (error) {
+      console.error(error);
+      setError('Internal Server Error');
+      setBalance(null);
       setExtractedData(null);
     }
-  } catch (error) {
-    console.error(error);
-    setError('Internal Server Error');
-    setBalance(null);
-    setExtractedData(null);
-  }
-};
-
-//This section contains details about transaction history.
-const [dataTest, setDataTest] = useState({count: null, list: [], graph: []});
-
-const [txTypes, setTxTypes] = useState(['Ordinary']);
-const [timeGe, setTimeGe] = useState(0);
-const [timeLe, setTimeLe] = useState(0);
-const [balanceChangeGe, setBalanceChangeGe] = useState(0);
-const [balanceChangeLe, setBalanceChangeLe] = useState(0);
-const [limit, setLimit] = useState(3);
-const [offset, setOffset] = useState(0);
-const [loading, setLoading] = useState(false);
-
-
-
-{/* Converts includeAccounts to Array */}
-
-
-//On call of this function it returns the transaction history of the inputed Address
-const transactionHistory = async (e) => {
-  e.preventDefault();
-
-  let countData = null;
-
-  const countRequest = axios.post('/api/count', {
-    includeAccounts,
-    txTypes,
-    timeGe,
-    timeLe,
-    balanceChangeGe,
-    balanceChangeLe,
-  });
-
-  try {
-    const countResponse = await countRequest;
-    countData = countResponse.data.count;
-
-
-  const graphRequest = axios.post('/api/graph', {
-    includeAccounts,
-    txTypes,
-    timeGe,
-    timeLe,
-    balanceChangeGe,
-    balanceChangeLe,
-    limit: countData,
-    offset,
-  });
-
-  const listRequest = axios.post('/api/list', {
-    includeAccounts,
-    txTypes,
-    timeGe,
-    timeLe,
-    balanceChangeGe,
-    balanceChangeLe,
-    limit,
-    offset,
-  });
-
- 
-  const [graphResponse, listResponse] = await axios.all([
-    graphRequest,
-    listRequest
-  ]);
-
-  const listData = listResponse.data;
-  const graphData = graphResponse.data.data2;
-
-    setDataTest({ count: countData, list: listData, graph:graphData });
-    setLoading(false);
-  } catch (error) {
-    console.error(error);
-    const errorMessage = error.response?.data?.error || 'An error occurred. Please try again later.';
-    setError(errorMessage);
-    setLoading(false);
-  }
-};
-
-// const handleShowMore = () => {
-//  setLimit(prevLimit => prevLimit + 10);
-// };
-
-// useEffect(() => {
-//  transactionHistory(new Event('click'));
-// }, [limit]);
-
-const getResult = (e) => {
-  e.preventDefault();
-  BalanceandToken(e);
-  transactionHistory(e);
-};
-
- 
-
-
-
-const scaledData = dataTest.graph.map((transaction, index) => {
-  const previousBalance = index > 0 ? dataTest.graph[index - 1].cumulativeBalance : null;
-  const currentBalance = transaction.cumulativeBalance / 1000000000;
-
-  let areaColor = null;
-  if (previousBalance !== null) {
-    areaColor = currentBalance > previousBalance ? 'green' : 'red';
-  }
-
-  return {
-    time: transaction.time,
-    Balance: currentBalance,
-    areaColor: areaColor,
   };
-});
+
+
+
+
+
+  {/* Converts includeAccounts to Array */}
+
+
+  //On call of this function it returns the transaction history of the inputed Address
+  const transactionHistory = async (e) => {
+    e.preventDefault();
+
+    let countData = null;
+
+    const countRequest = axios.post('/api/count', {
+      includeAccounts,
+      txTypes,
+      timeGe,
+      timeLe,
+      balanceChangeGe,
+      balanceChangeLe,
+    });
+
+    try {
+      const countResponse = await countRequest;
+      countData = countResponse.data.count;
+
+
+    const graphRequest = axios.post('/api/graph', {
+      includeAccounts,
+      txTypes,
+      timeGe,
+      timeLe,
+      balanceChangeGe,
+      balanceChangeLe,
+      limit: countData,
+      offset,
+    });
+
+    const listRequest = axios.post('/api/list', {
+      includeAccounts,
+      txTypes,
+      timeGe,
+      timeLe,
+      balanceChangeGe,
+      balanceChangeLe,
+      limit,
+      offset,
+    });
+
+  
+    const [graphResponse, listResponse] = await axios.all([
+      graphRequest,
+      listRequest
+    ]);
+
+    const listData = listResponse.data;
+    const graphData = graphResponse.data.data2;
+
+      setDataTest({ count: countData, list: listData, graph:graphData });
+      setLoading(false);
+    } catch (error) {
+      console.error(error);
+      const errorMessage = error.response?.data?.error || 'An error occurred. Please try again later.';
+      setError(errorMessage);
+      setLoading(false);
+    }
+  };
+
+  // const handleShowMore = () => {
+  //  setLimit(prevLimit => prevLimit + 10);
+  // };
+
+  // useEffect(() => {
+  //  transactionHistory(new Event('click'));
+  // }, [limit]);
+
+  const getResult = (e) => {
+    e.preventDefault();
+    BalanceandToken(e);
+    transactionHistory(e);
+  };
+
   
 
 
 
+  const scaledData = dataTest.graph.map((transaction, index) => {
+    const previousBalance = index > 0 ? dataTest.graph[index - 1].cumulativeBalance : null;
+    const currentBalance = transaction.cumulativeBalance / 1000000000;
+
+    let areaColor = null;
+    if (previousBalance !== null) {
+      areaColor = currentBalance > previousBalance ? 'green' : 'red';
+    }
+
+    return {
+      time: transaction.time,
+      Balance: currentBalance,
+      areaColor: areaColor,
+    };
+  });
+  
+  const AreaCchart = () => {
+    return (
+      <AreaChart 
+      className=" font-Oswald"
+      width={580} 
+      height={250} 
+      data={scaledData}
+      margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+        <defs>
+          <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+            <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+          </linearGradient>
+          <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
+          </linearGradient>
+        </defs>
+        <XAxis  dataKey="time" tickFormatter={formatDateTime} axisLine={false} tickLine={false} />
+        <YAxis hide />
+        <Tooltip />
+        <Area type="monotone" dataKey="Balance" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+      </AreaChart>
+    )
+  }
+
+  const HistoryData = () => {
+    return (
+      dataTest.list.map((transaction, index) => (
+          <React.Fragment key={index}>
+            <tr>
+              <td align="left" className=" font-Inter pt-[10px]">
+                <p className=" font-poppins font-bold">
+                  {transaction.txType}
+                </p>
+                {formatDateTime(transaction.time)}
+              </td>
+              <td
+                align="right"
+                className={`text-lg font-poppins ${
+                transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'}`}>
+                  {transaction.balanceChange / 1000000000}
+              </td>
+            </tr>
+          </React.Fragment>
+        ))
+    )
+  }
+
+  const AssetData = () => {
+    return (
+      extractedData.map((data, index) => (
+        <React.Fragment key={index}>
+          <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">
+            <td className="py-[1rem] font-Inter pl-[8px]" align="left">
+              <span className="font-poppins font-bold">{data.token}</span>
+              Venom
+            </td>
+            <td className="font-Inter" align="left">Coming Soon</td>
+            <td className="" align="left">{data.amount}</td>
+            <td className="font-Inter" align="left">Coming Soon</td>
+          </tr>
+        </React.Fragment>
+      ))
+    )
+  }
 
 //This is the end of what Bernard added in this section     
   return (
@@ -258,31 +320,13 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         <div className='flex align-center justify-center'>
         </div>
         <div className="flex gap-[1rem] text-white">
-          <div className="">
+          <div className="w-[60%]">
             <h3 className="font-[600] font-Oswald text-[1.5rem]">Performance</h3>
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
-              <p className="text-[2rem] font-poppins font-[600]">${balance / 1000000000}</p>
+              <p className="text-[2rem] font-poppins font-[600]">${value ? balance / 1000000000 : 0}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
-              <AreaChart 
-                className=" font-Oswald"
-                width={580} 
-                height={250} 
-                data={scaledData}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-                  </linearGradient>
-                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-                  </linearGradient>
-                </defs>
-                <XAxis  dataKey="time" tickFormatter={formatDateTime} axisLine={false} tickLine={false} />
-                <YAxis hide />
-                <Tooltip />
-                <Area type="monotone" dataKey="Balance" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-              </AreaChart>
+              {value ? AreaCchart() : <p className=' font-instrumentSerif text-[2rem] ml-[8rem] pt-[3rem] text-white absolute'>No record found 😱!</p>}
+              
             </div>
           </div>
           <div className="text-white flex-1">
@@ -290,28 +334,13 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             {/* {dataTest.count !== null && <p>Total number of Transaction: {dataTest.count}</p>} */}
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <table className="w-full">
-                <tr className="border-b-[1px]">
-                  <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
-                  <th align="right" className=" font-poppins pb-[10px]">Balance</th>
-                </tr>
-                {dataTest.list.map((transaction, index) => (
-                  <React.Fragment key={index}>
-                    <tr>
-                      <td align="left" className=" font-Inter pt-[10px]">
-                        <p className=" font-poppins font-bold">
-                          {transaction.txType}
-                        </p>
-                        {formatDateTime(transaction.time)}
-                      </td>
-                      <td
-                        align="right"
-                        className={`text-lg font-poppins ${
-                        transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                          {transaction.balanceChange / 1000000000}
-                      </td>
-                    </tr>
-                  </React.Fragment>
-                ))}
+                <tbody>
+                  <tr className="border-b-[1px]">
+                    <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
+                    <th align="right" className=" font-poppins pb-[10px]">Balance</th>
+                  </tr>
+                  {value ? HistoryData() : <tr className=" font-instrumentSerif text-center pt-[6rem] text-[1.5rem] h-[15rem]"><td>No record found yet 😞!</td></tr>}
+                </tbody>
               </table>
               <div className=" border-t mt-3 flex items-center justify-center">
                 <Link href="/app/History">
@@ -354,25 +383,15 @@ const scaledData = dataTest.graph.map((transaction, index) => {
               <p className="font-poppins text-[1.3rem] font-bold">Wallet - ${balance / 1000000000}</p> 
             </div>
             <table className="w-[100%]">
-              <tr>
-                <th className=" font-poppins text-sm" align="left">ASSET</th>
-                <th className=" font-poppins text-sm font-[300]" align="left">PRICE</th>
-                <th className=" font-poppins text-sm font-[300]" align="left">BALANCE</th>
-                <th className=" font-poppins text-sm font-[300]" align="left">VALUE</th>
-              </tr>
-              {extractedData.map((data, index) => (
-                <React.Fragment key={index}>
-                  <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">
-                    <td className="py-[1rem] font-Inter pl-[8px]" align="left">
-                      <p className="font-poppins font-bold">{data.token}</p>
-                      Venom
-                    </td>
-                    <td className="font-Inter" align="left">Coming Soon</td>
-                    <td className="" align="left">{data.amount}</td>
-                    <td className="font-Inter" align="left">Coming Soon</td>
-                  </tr>
-                </React.Fragment>
-              ))}
+              <tbody>
+                <tr>
+                  <th className=" font-poppins text-sm" align="left">ASSET</th>
+                  <th className=" font-poppins text-sm font-[300]" align="left">PRICE</th>
+                  <th className=" font-poppins text-sm font-[300]" align="left">BALANCE</th>
+                  <th className=" font-poppins text-sm font-[300]" align="left">VALUE</th>
+                </tr>
+                {value ? AssetData() : <tr className=" font-instrumentSerif text-center pt-[3rem] text-[1.5rem] h-[5rem]"><td>No record found yet 😞!</td></tr>}
+              </tbody>
             </table>
           </div>
         </div>

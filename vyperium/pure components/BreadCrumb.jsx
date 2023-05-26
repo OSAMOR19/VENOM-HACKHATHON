@@ -3,9 +3,17 @@ import Link from "next/link"
 import { CSSProperties, useState } from "react";
 import { PulseLoader } from "react-spinners";
 
-const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter}) => {
+const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, value}) => {
     
     const [Lcolor, setColor] = useState("#008000");
+
+    const IncludedAcc = () => {
+        return (
+            includeAccounts.map((address) => (
+                <p key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</p>
+            ))
+        )
+    }
 
     const override = {
         display: "block",
@@ -59,16 +67,14 @@ const BreadCrumb = ({children, includeAccounts, handleInputChange1, getResult, r
                 <div className="">
                     {balance !== null && (
                         <div className="flex items-center">
-                        {includeAccounts.map((address) => (
-                            <p key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</p>
-                        ))}                     
+                        {value ? IncludedAcc() : null}                     
                         <Image 
                             src= "/images/angle-down.svg" 
                             alt ="svg" height={1} width={30}
                             onClick={getResult}
                             className="cursor-pointer"/>
                         </div>)}
-                    <p className="text-[2.6rem] font-poppins font-[600]">${Math.floor(balance / 1000000000)}</p>
+                    <p className="text-[2.6rem] font-poppins font-[600]">${value ? Math.floor(balance / 1000000000) : 0}</p>
                     <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
                 </div>
             </div>
