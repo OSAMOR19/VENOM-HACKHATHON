@@ -43,6 +43,7 @@ const fetchData = async () => {
     }
   } catch (error) {
     console.error(error);
+    setBalance([])
     // Handle error
   }
 };
@@ -84,6 +85,14 @@ const renderOwnerAddresses = () => {
   );
 };
 
+useEffect(() => {
+  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
+    setSpinner(false);
+  } else {
+    setSpinner(true);
+  }
+}, [includeAccounts, balance]);
+
 
 
 
@@ -100,14 +109,14 @@ try {
       setError(null);
     } else {
       setError(result.error);
-      setBalance(null); 
-      setExtractedData(null);
+      setBalance([]); 
+      setExtractedData([]);
     }
   } catch (error) {
     console.error(error);
     setError('Internal Server Error');
-    setBalance(null);
-    setExtractedData(null);
+    setBalance([]);
+    setExtractedData([]);
   }
 };
 
@@ -185,6 +194,7 @@ const transactionHistory = async (e) => {
     setClickedIncludeAccounts(includeAccounts);
     setClickedBalance(balance);
     setIncludeAccounts([]);
+    setBalance(null)
   } catch (error) {
     console.error(error);
     const errorMessage = error.response?.data?.error || 'An error occurred. Please try again later.';
@@ -277,6 +287,8 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <p className="text-[2rem] font-poppins font-[600]">${clickedBalance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
+              {clickedBalance ==0 ? (<div className='text-white font-bold text-[1.5rem] h-[580px] w-[560px] flex align-center justify-center'> No Transaction yet</div>
+              ):(
               <AreaChart 
                 className=" font-Oswald"
                 width={580} 
@@ -297,6 +309,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                 <Tooltip />
                 <Area type="monotone" dataKey="Balance" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
               </AreaChart>
+              )}
             </div>
           </div>
           <div className="text-white flex-1">
