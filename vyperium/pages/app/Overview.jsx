@@ -14,8 +14,7 @@ const [includeAccounts, setIncludeAccounts] = useState([]);
 const [balance, setBalance] = useState(null);
 const [extractedData, setExtractedData] = useState([]);
 const [error, setError] = useState(null);
-const [addr, setAddr] = useState();
-const [spinner, setSpinner] = useState(false);
+const [addr, setAddr] = useState(null);
 const formatDateTime = (timestamp) => {
   const dateObj = new Date(timestamp * 1000);
   const options = {
@@ -29,100 +28,42 @@ const formatDateTime = (timestamp) => {
   };
   return dateObj.toLocaleDateString(undefined, options);
 };
-
-const [clickedIncludeAccounts, setClickedIncludeAccounts] = useState(null);
-const [clickedBalance, setClickedBalance] = useState(null);
-
-const fetchData = async () => {
-  try {
-    if (includeAccounts.length > 0 && includeAccounts.join(',').length >= 50)  {
-      const response = await axios.get(`/api/search?ownerAddress=${includeAccounts}`);
-      const { balance } = response.data;
-      setBalance(balance);
-      setSpinner(false);
-    }
-  } catch (error) {
-    console.error(error);
-    setBalance([])
-    // Handle error
-  }
+const handleAddrChange = (newAddr) => {
+  setAddr(newAddr);
+  setIncludeAccounts([newAddr]);  //Set includeAccounts to the value of addr
 };
 
-useEffect(() => {
-  fetchData();
-}, [includeAccounts]);
+useEffect(() =>{
+  const fetchData = async () => {
+    try{
+      const response = await axios.get(`/api/search?ownerAddress=${includeAccounts}`);
+      const { balance, extractedData } = response.data;
 
-const handleInputChange1 = (event) => {
+      setBalance(balance);
+      setExtractedData(extractedData);
+    } catch (error) {
+      console.error(error);
+      setBalance([])
+      setExtractedData([])
+    }
+  };
+
+  if (includeAccounts){
+    fetchData();
+  }  
+},[includeAccounts]
+);
+
+const handleInputChange = (event) => {
   const { value } = event.target;
   const accounts = value.split(',').map((account) => account.trim());
   setIncludeAccounts(accounts);
 };
 
-useEffect(() => {
-  fetchData();
-}, []);
-
-const renderBalance = () => {
-  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
-    return null;
-  }
-  return <p> {balance / 1000000000}</p>;
-};
-
-const renderOwnerAddresses = () => {
-  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
-    return null;
-  }
-
-  return (
-    <div>
-      <ul>
-        {includeAccounts.map((address) => (
-          <li key={address}>{address}</li>
-        ))}
-      </ul>
-    </div>
-  );
-};
-
-useEffect(() => {
-  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
-    setSpinner(false);
-  } else {
-    setSpinner(true);
-  }
-}, [includeAccounts, balance]);
 
 
-
-
-//On call of this Function it returns the values of the tokens and Balance of the wallet
-const BalanceandToken = async (e) => {
-e.preventDefault();
-try {
-    const response = await fetch(`/api/search?ownerAddress=${includeAccounts}`);
-    const result = await response.json();
-
-    if (response.ok) {
-      setBalance(result.balance);
-      setExtractedData(result.extractedData);
-      setError(null);
-    } else {
-      setError(result.error);
-      setBalance([]); 
-      setExtractedData([]);
-    }
-  } catch (error) {
-    console.error(error);
-    setError('Internal Server Error');
-    setBalance([]);
-    setExtractedData([]);
-  }
-};
-
-//This section contains details about transaction history.
-const [dataTest, setDataTest] = useState({count: null, list: [], graph: []});
-
+// This section contains details about transaction history.
+const [dataTest, setDataTest] = useState({ count: null, list: [], graph: [] });
 const [txTypes, setTxTypes] = useState(['Ordinary']);
 const [timeGe, setTimeGe] = useState(0);
 const [timeLe, setTimeLe] = useState(0);
@@ -132,92 +73,61 @@ const [limit, setLimit] = useState(3);
 const [offset, setOffset] = useState(0);
 const [loading, setLoading] = useState(false);
 
-
-
-
-{/* Converts includeAccounts to Array */}
-
-
-//On call of this function it returns the transaction history of the inputed Address
-const transactionHistory = async (e) => {
-  e.preventDefault();
-
-  let countData = null;
-
-  const countRequest = axios.post('/api/count', {
-    includeAccounts,
-    txTypes,
-    timeGe,
-    timeLe,
-    balanceChangeGe,
-    balanceChangeLe,
-  });
+useEffect (() => {
+  const transactionHistory = async () => {
+    let countData = null;
 
   try {
-    const countResponse = await countRequest;
+    const countResponse = await axios.post('/api/count', {
+      includeAccounts,
+      txTypes,
+      timeGe,
+      timeLe,
+      balanceChangeGe,
+      balanceChangeLe,
+    });
     countData = countResponse.data.count;
 
+    const graphResponse = await axios.post('/api/graph', {
+      includeAccounts,
+      txTypes,
+      timeGe,
+      timeLe,
+      balanceChangeGe,
+      balanceChangeLe,
+      limit: countData,
+      offset,
+    });
 
-  const graphRequest = axios.post('/api/graph', {
-    includeAccounts,
-    txTypes,
-    timeGe,
-    timeLe,
-    balanceChangeGe,
-    balanceChangeLe,
-    limit: countData,
-    offset,
-  });
+    const listResponse = await axios.post('/api/list', {
+      includeAccounts,
+      txTypes,
+      timeGe,
+      timeLe,
+      balanceChangeGe,
+      balanceChangeLe,
+      limit,
+      offset,
+    });
+    const listData = listResponse.data;
+    const graphData = graphResponse.data.data2;
 
-  const listRequest = axios.post('/api/list', {
-    includeAccounts,
-    txTypes,
-    timeGe,
-    timeLe,
-    balanceChangeGe,
-    balanceChangeLe,
-    limit,
-    offset,
-  });
-
- 
-  const [graphResponse, listResponse] = await axios.all([
-    graphRequest,
-    listRequest
-  ]);
-
-  const listData = listResponse.data;
-  const graphData = graphResponse.data.data2;
-
-    setDataTest({ count: countData, list: listData, graph:graphData });
+    setDataTest({ count: countData, list: listData, graph: graphData });
     setLoading(false);
-    setClickedIncludeAccounts(includeAccounts);
-    setClickedBalance(balance);
-    setIncludeAccounts([]);
-    setBalance(null)
   } catch (error) {
     console.error(error);
     const errorMessage = error.response?.data?.error || 'An error occurred. Please try again later.';
     setError(errorMessage);
     setLoading(false);
   }
-};
+}
+ transactionHistory();
+},[includeAccounts, txTypes, timeGe, timeLe, balanceChangeGe, balanceChangeLe, limit, offset] )
+//const transactionHistory = async () => {
+  
 
-// const handleShowMore = () => {
-//  setLimit(prevLimit => prevLimit + 10);
-// };
+// Rest of the code...
 
-// useEffect(() => {
-//  transactionHistory(new Event('click'));
-// }, [limit]);
-
-const getResult = (e) => {
-  e.preventDefault();
-  BalanceandToken(e);
-  transactionHistory(e);
-};
-
- 
 
 
 
@@ -245,49 +155,50 @@ const scaledData = dataTest.graph.map((transaction, index) => {
   return (
     <>
       <HeadComp title="Vyperium - Overview" />
-      <BreadCrumb 
-        includeAccounts={includeAccounts} 
-        clickedBalance={clickedBalance}
-        clickedIncludeAccounts = {clickedIncludeAccounts}
-        handleInputChange1={handleInputChange1} 
-        getResult={getResult} 
-        renderOwnerAddresses={renderOwnerAddresses()}
-        renderBalance={renderBalance()}
-        balance={balance}
-        spinnerProp = {spinner}
-        spinnerSetter= {() => setSpinner(true)}
-        textColor="#008000">
-        {/**This returns the tokens in the wallet section */}
-        {/* <div>         
-              <div className="grid grid-cols-4 gap-4 text-white bg-neutral-800 rounded">
-              <div className="font-bold">Asset</div>
-              <div className="font-bold">Balance</div>
-              <div className="font-bold">Price</div>
-              <div className="font-bold">Value</div>
-              {extractedData.map((data, index) => (
-                <React.Fragment key={index}>
-                  <div>{data.token}</div>
-                  <div>{data.amount}</div>
-                  <div></div>
-                  <div></div>
-                </React.Fragment>
-              ))}         
+      {addr == null ? (
+      <div className='flex align-center justify-center pt-10'>
+      <h3 className="font-[600] font-Oswald text-[1.5rem]">
+        <Button onAddrChange={handleAddrChange}/>
+      </h3>
+      </div> ):(    
+      <div className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
+        <div className="flex items-center justify-between text-white">
+          <div className=" flex items-center gap-5">
+              <button className="font-Inter border-[1px] rounded-[6px] h-[3rem] px-[1rem] border-[#008000]">Add Wallet</button>
+              <Image src= "/images/share.svg" alt ="gas" height={1} width={20}/>
+              <Image src= "/images/tg.svg" alt ="gas" height={1} width={20}/>
+          </div>
+          <div className="font-Inter flex gap-5">
+                <Image src= "/images/user_img.svg" alt ="user_img" height={1} width={100}/>
+            {/**This is the input section */}                
+                <div className="">
+                    
+                        <div className="flex items-center">
+                        <div onChange={handleInputChange}>
+                        {includeAccounts && includeAccounts.map((address) => (
+                         <p key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</p>
+                        ))}
+                        </div>
+                        {/*<input className='text-black' type="text" value={includeAccounts} onChange={handleInputChange} />
+                        {includeAccounts}*/}
+                        <Image 
+                            src= "/images/angle-down.svg" 
+                            alt ="svg" height={1} width={30}
+                         //   onClick={getResult}
+                            className="cursor-pointer"/>
+                        </div>
+                    <p className="text-[2.6rem] font-poppins font-[600]">${Math.floor(balance  / 1000000000)}</p>
+                    <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
+                </div>
             </div>
-          </div>   */}
-        {/*This returns thetransactions of the wallet address*/}
-        <div className='flex align-center justify-center'>
-        {/*<h3 className="font-[600] font-Oswald text-[1.5rem]">
-        <Button onAddrChange={newAddr => setAddr(newAddr)}/>
-              Assets: {addr}
-            </h3>*/}
         </div>
         <div className="flex gap-[1rem] text-white">
           <div className="">
             <h3 className="font-[600] font-Oswald text-[1.5rem]">Performance</h3>
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
-              <p className="text-[2rem] font-poppins font-[600]">${clickedBalance / 1000000000}</p>
+              <p className="text-[2rem] font-poppins font-[600]">${balance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
-              {clickedBalance ==0 ? (<div className='text-white font-bold text-[1.5rem] h-[580px] w-[560px] flex align-center justify-center'> No Transaction yet</div>
+              {balance ==0 ? (<div className='text-white font-bold text-[1.5rem] h-[580px] w-[560px] flex align-center justify-center'> No Transaction yet</div>
               ):(
               <AreaChart 
                 className=" font-Oswald"
@@ -314,7 +225,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
           </div>
           <div className="text-white flex-1">
             <h3 className="font-[600] mb-[8px] font-Oswald text-[1.5rem]">History</h3>
-            {/* {dataTest.count !== null && <p>Total number of Transaction: {dataTest.count}</p>} */}
+            
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <table className="w-full">
                 <tr className="border-b-[1px]">
@@ -345,30 +256,13 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                   <button className="mt-[.6rem] hover:bg-[#000] transition-[.5s] py-[.35rem] text-[.8rem] px-3 border-[1px] rounded-[.3rem]">See More</button>
                 </Link>
               </div>
-                    {/* {dataTest.list.map((transaction, index) => (
-                      <React.Fragment key={index}>
-                        <div>{transaction.hash.slice(0, 10)}...</div>
-                        <div>{transaction.txType}</div>
-                        <div
-                        className={`text-lg ${
-                          transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'
-                        }`}
-                      >{transaction.balanceChange / 1000000000}</div>
-                        <div>{formatDateTime(transaction.time)}</div>
-                      </React.Fragment>
-                    ))} */}
-            </div> 
-
-            {/* <div className="text-center bg-green-500 p-5 rounded cursor-pointer w-40"
-            onClick={handleShowMore}>
-            Show More
-            </div> */}
+            </div>        
           </div>
-        </div>
-        <div className=" text-white">
+          </div>
+          <div className=" text-white">
           <div className="mb-[1rem] mt-[2rem]">
             <h3 className="font-[600] font-Oswald text-[1.5rem]">
-              Assets
+              Assets: {dataTest.count}
             </h3>
           </div>
           <div className=" border-[1px] rounded-[10px] h-fit p-6">
@@ -378,7 +272,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                 <path d="M7 11h15a3 3 0 013 3v8a3 3 0 01-3 3H8a1 1 0 01-1-1V11z" stroke="#fff" stroke-width="2"></path>
                 <path d="M6 9a2 2 0 012-2h12a2 2 0 012 2H6z" fill="#fff"></path>
               </svg>&nbsp;
-              <p className="font-poppins text-[1.3rem] font-bold">Wallet - ${clickedBalance / 1000000000}</p> 
+              <p className="font-poppins text-[1.3rem] font-bold">Wallet - ${balance / 1000000000}</p> 
             </div>
             <table className="w-[100%]">
               <tr>
@@ -403,87 +297,8 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             </table>
           </div>
         </div>
-  {/* <div>
-        <div className='bg-gray-500'>
-          <form onSubmit={transactionHistory}>
-            <div>
-              
-            </div>
-            <div>
-              <label>
-                Transaction Types:
-                <input
-                  type="text"
-                  value={txTypes}
-                  onChange={(e) => setTxTypes(e.target.value)}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Time Greater or Equal:
-                <input
-                  type="number"
-                  value={timeGe}
-                  onChange={(e) => setTimeGe(parseInt(e.target.value))}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Time Less or Equal:
-                <input
-                  type="number"
-                  value={timeLe}
-                  onChange={(e) => setTimeLe(parseInt(e.target.value))}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Balance Change Greater or Equal:
-                <input
-                  type="number"
-                  value={balanceChangeGe}
-                  onChange={(e) => setBalanceChangeGe(parseInt(e.target.value))}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Balance Change Less or Equal:
-                <input
-                  type="number"
-                  value={balanceChangeLe}
-                  onChange={(e) => setBalanceChangeLe(parseInt(e.target.value))}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Limit:
-                <input
-                  type="number"
-                  value={limit}
-                  onChange={(e) => setLimit(parseInt(e.target.value))}
-                />
-              </label>
-            </div>
-            <div>
-              <label>
-                Offset:
-                <input
-                  type="number"
-                  value={offset}
-                  onChange={(e) => setOffset(parseInt(e.target.value))}
-                />
-              </label>
-            </div>
-            <button type="submit">Fetch Data</button>
-          </form>
-          </div>
-        </div> */}
-      </BreadCrumb>
+      </div>
+      )}
     </>
   )
 }
