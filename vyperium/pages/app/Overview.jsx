@@ -35,7 +35,7 @@ const [clickedBalance, setClickedBalance] = useState(null);
 
 const fetchData = async () => {
   try {
-    if (includeAccounts.length > 0) {
+    if (includeAccounts.length > 0 && includeAccounts.join(',').length >= 50)  {
       const response = await axios.get(`/api/search?ownerAddress=${includeAccounts}`);
       const { balance } = response.data;
       setBalance(balance);
@@ -62,21 +62,19 @@ useEffect(() => {
 }, []);
 
 const renderBalance = () => {
-  if (balance === null) {
+  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
     return null;
   }
-
-  return <p>Balance: {balance}</p>;
+  return <p> {balance / 1000000000}</p>;
 };
 
 const renderOwnerAddresses = () => {
-  if (balance === null || balance === 0) {
+  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
     return null;
   }
 
   return (
     <div>
-      <p>Owner Addresses:</p>
       <ul>
         {includeAccounts.map((address) => (
           <li key={address}>{address}</li>
@@ -85,6 +83,7 @@ const renderOwnerAddresses = () => {
     </div>
   );
 };
+
 
 
 

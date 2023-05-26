@@ -6,7 +6,6 @@ import { PulseLoader } from "react-spinners";
 const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter}) => {
     
     const [Lcolor, setColor] = useState("#008000");
-    const slicedValue = clickedIncludeAccounts ? clickedIncludeAccounts.slice(0, 10) : '';
     const override = {
         display: "block",
         margin: "auto",
@@ -40,8 +39,12 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                     data-testid="loader"
                 />
                 <div tabIndex={0} className="rounded text-white cursor-pointer w-50" onClick={getResult}>
+                    <div className="flex px-5">
                     {renderOwnerAddresses}
+                    <div className="text-green-800 px-5 font-bold"> 
                     {renderBalance}
+                    </div>
+                    </div>
                 </div>
             </div>
         </div>
