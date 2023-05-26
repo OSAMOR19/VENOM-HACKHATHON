@@ -44,7 +44,7 @@ const initVenomConnect = async () => {
 
 const SAMPLE_ADDR = new Address("");
 
-function Button() {
+function Button( { onAddrChange } ) {
   const [VC, setVC] = useState();
   useEffect(() => {
     (async () => {
@@ -91,6 +91,9 @@ function Button() {
     const venomWalletAddress = provider ? await getAddress(provider) : undefined;
     const publicKey = provider ? await getPubkey(provider) : undefined;
     setAddr(venomWalletAddress);
+    if (typeof onAddrChange === 'function') {
+      onAddrChange(venomWalletAddress);
+    }
     setPubkey(publicKey);
     setIsConnected(true);
   };
@@ -100,6 +103,9 @@ function Button() {
     await provider?.disconnect();
     setAddr(undefined);
     setPubkey(undefined);
+    if (typeof onAddrChange === 'function') {
+      onAddrChange(venomWalletAddress);
+    }
     setIsConnected(false);
   };
 

@@ -5,6 +5,7 @@ import axios from "axios";
 import Link from 'next/link';
 import BreadCrumb from '@/pure components/BreadCrumb';
 import HeadComp from '@/layout/HeadComp';
+import Button from '../venom-connect/button';
 
 
 const Overview = () => {
@@ -13,6 +14,7 @@ const [includeAccounts, setIncludeAccounts] = useState([]);
 const [balance, setBalance] = useState(null);
 const [extractedData, setExtractedData] = useState([]);
 const [error, setError] = useState(null);
+const [addr, setAddr] = useState();
 const [spinner, setSpinner] = useState(false);
 const formatDateTime = (timestamp) => {
   const dateObj = new Date(timestamp * 1000);
@@ -27,6 +29,9 @@ const formatDateTime = (timestamp) => {
   };
   return dateObj.toLocaleDateString(undefined, options);
 };
+
+const [clickedIncludeAccounts, setClickedIncludeAccounts] = useState(null);
+const [clickedBalance, setClickedBalance] = useState(null);
 
 const fetchData = async () => {
   try {
@@ -121,6 +126,7 @@ const [loading, setLoading] = useState(false);
 
 
 
+
 {/* Converts includeAccounts to Array */}
 
 
@@ -177,6 +183,9 @@ const transactionHistory = async (e) => {
 
     setDataTest({ count: countData, list: listData, graph:graphData });
     setLoading(false);
+    setClickedIncludeAccounts(includeAccounts);
+    setClickedBalance(balance);
+    setIncludeAccounts([]);
   } catch (error) {
     console.error(error);
     const errorMessage = error.response?.data?.error || 'An error occurred. Please try again later.';
@@ -229,6 +238,8 @@ const scaledData = dataTest.graph.map((transaction, index) => {
       <HeadComp title="Vyperium - Overview" />
       <BreadCrumb 
         includeAccounts={includeAccounts} 
+        clickedBalance={clickedBalance}
+        clickedIncludeAccounts = {clickedIncludeAccounts}
         handleInputChange1={handleInputChange1} 
         getResult={getResult} 
         renderOwnerAddresses={renderOwnerAddresses()}
@@ -256,12 +267,16 @@ const scaledData = dataTest.graph.map((transaction, index) => {
           </div>   */}
         {/*This returns thetransactions of the wallet address*/}
         <div className='flex align-center justify-center'>
+        {/*<h3 className="font-[600] font-Oswald text-[1.5rem]">
+        <Button onAddrChange={newAddr => setAddr(newAddr)}/>
+              Assets: {addr}
+            </h3>*/}
         </div>
         <div className="flex gap-[1rem] text-white">
           <div className="">
             <h3 className="font-[600] font-Oswald text-[1.5rem]">Performance</h3>
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
-              <p className="text-[2rem] font-poppins font-[600]">${balance / 1000000000}</p>
+              <p className="text-[2rem] font-poppins font-[600]">${clickedBalance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
               <AreaChart 
                 className=" font-Oswald"
@@ -351,7 +366,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                 <path d="M7 11h15a3 3 0 013 3v8a3 3 0 01-3 3H8a1 1 0 01-1-1V11z" stroke="#fff" stroke-width="2"></path>
                 <path d="M6 9a2 2 0 012-2h12a2 2 0 012 2H6z" fill="#fff"></path>
               </svg>&nbsp;
-              <p className="font-poppins text-[1.3rem] font-bold">Wallet - ${balance / 1000000000}</p> 
+              <p className="font-poppins text-[1.3rem] font-bold">Wallet - ${clickedBalance / 1000000000}</p> 
             </div>
             <table className="w-[100%]">
               <tr>
