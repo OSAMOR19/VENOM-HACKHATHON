@@ -12,7 +12,7 @@ import { useData } from '@/context/DataContext';
 
 
 
-const Overview1 = () => {
+const Overview = () => {
   const { isConnected } = useData()
   const router = useRouter();
   const userWallet = router.query.userwallet
@@ -501,4 +501,4 @@ const scaledData = dataTest.graph.map((transaction, index) => {
   )
 }
 
-export default Overview1
+export default Overview

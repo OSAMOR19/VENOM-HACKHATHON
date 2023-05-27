@@ -91,6 +91,11 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
             History    
             </Link>
         </li>
+        <li style={ { color: textTColor }} className="font-bold hover:text-[#008000]">
+            <Link href= "/app/History">
+            NFTs    
+            </Link>
+        </li>
         </ul>
         {children}
     </section>

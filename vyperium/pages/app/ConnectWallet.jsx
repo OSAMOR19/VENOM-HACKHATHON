@@ -16,7 +16,7 @@ const ConnectWallet = () => {
   };
   
   if (isConnected) {
-    router.push(`/app/${connectedAddr[0]}/Overview1`);
+    router.push(`/app/${connectedAddr[0]}/Overview`);
   }
 
   return (
