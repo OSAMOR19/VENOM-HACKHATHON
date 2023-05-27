@@ -66,7 +66,7 @@ To start the development server:
 * _Designer_
 
 ## Contributing
-If you'd like to contribute to Pontys, please follow these guidelines:
+If you'd like to contribute to Vyperium, please follow these guidelines:
 
 * Clone the development branch on GitHub.
 * Make all changes on this branch
@@ -75,7 +75,7 @@ If you'd like to contribute to Pontys, please follow these guidelines:
 * Submit a pull request to the main branch.
 
 ## Contact 
-filll in later
+isaacchukwuka67@gmail.com johnexxdefi@gmail.com  bernardonu@gmail.com
 
 ## License  
 _No license added yet_
