@@ -1,16 +1,20 @@
-
+import { useData } from '@/context/DataContext';
+import { useRouter } from "next/router";
 import Button from "@/pages/venom-connect/button";
 import Link from "next/link";
 import Image from "next/image";
-import { useRouter } from "next/router";
+
+
 
 
 
 
 const AppNav = () => {
+    const { setCnnctdAddr } = useData();
+    const { connectedAddr } = useData();
     const router = useRouter();
     const navLinks = [
-		{ key: 1, title: "Overview", path: "/app/Overview", iconSrc: "/images/eye.svg"},
+		{ key: 1, title: "Overview", path: `/app/${connectedAddr}/Overview`, iconSrc: "/images/eye.svg"},
 		{ key: 2, title: "Explore", path: "/app/Explore", iconSrc: "/images/compass.svg" },
 		{ key: 3, title: "Favourites", path: "", iconSrc: "/images/star.svg" },
 		{ key: 3, title: "Swap", path: "", iconSrc: "/images/swap.svg"},
@@ -26,7 +30,9 @@ const AppNav = () => {
             </Link>
 		</li>
 	));
-
+    const handleAddrChange = (newAddr) => {
+        setCnnctdAddr([newAddr]); 
+     };
  
   return (
     <>

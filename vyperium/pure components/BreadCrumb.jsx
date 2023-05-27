@@ -3,7 +3,7 @@ import Link from "next/link"
 import { CSSProperties, useState } from "react";
 import { PulseLoader } from "react-spinners";
 
-const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, value}) => {
+const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter}) => {
     
     const [Lcolor, setColor] = useState("#008000");
     const override = {
@@ -62,14 +62,20 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                 <div className="">
                     
                         <div className="flex items-center">
-                        {value ? IncludedAcc() : null}                     
+                        <div>
+                        {clickedIncludeAccounts && clickedIncludeAccounts.map((address) => (
+                         <p key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</p>
+                        ))}
+
+                        </div>
+          
                         <Image 
                             src= "/images/angle-down.svg" 
                             alt ="svg" height={1} width={30}
                             onClick={getResult}
                             className="cursor-pointer"/>
-                        </div>)}
-                    <p className="text-[2.6rem] font-poppins font-[600]">${value ? Math.floor(balance / 1000000000) : 0}</p>
+                        </div>
+                    <p className="text-[2.6rem] font-poppins font-[600]">${Math.floor(clickedBalance  / 1000000000)}</p>
                     <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
                 </div>
             </div>

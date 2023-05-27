@@ -2,7 +2,7 @@ import Image from "next/image"
 import { useEffect } from "react"
 import Button from "../venom-connect/button"
 
-const Index = () => {
+const HomePage = () => {
     
   return (
     <>
@@ -84,4 +84,4 @@ const Index = () => {
   )
 }
 
-export default Index
+export default HomePage
