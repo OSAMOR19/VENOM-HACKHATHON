@@ -20,7 +20,7 @@ const Overview = () => {
     if (!isConnected) {
       router.push("/app/ConnectWallet");
     }
-    // setIncludeAccounts(userWallet)
+    setIncludeAccounts([userWallet])
   }, 
   [isConnected])
 
