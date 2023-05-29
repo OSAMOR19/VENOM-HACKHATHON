@@ -47,7 +47,7 @@ const Swap = () => {
                     </div>
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
                 </div>
-                <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem]">Swap</button>
+                <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold">Swap</button>
             </div>
         </section>
     </>
