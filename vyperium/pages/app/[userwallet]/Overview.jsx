@@ -14,15 +14,22 @@ import { useData } from '@/context/DataContext';
 
 const Overview = () => {
   const { isConnected } = useData()
+  const { setCnnctdAddr } = useData()
+  const { connectedAddr } = useData();
+
   const router = useRouter();
   const userWallet = router.query.userwallet
+  const walletArr = [userWallet]
   useEffect (() => {
     if (!isConnected) {
       router.push("/app/ConnectWallet");
     }
-    setIncludeAccounts([userWallet])
   }, 
   [isConnected])
+    const routerPush = () => {
+        setCnnctdAddr(walletArr)
+        router.push(`/app/${connectedAddr[0]}/Overview`)
+    }
 
 const [includeAccounts, setIncludeAccounts] = useState([]);
 const [balance, setBalance] = useState(null);
@@ -110,10 +117,9 @@ useEffect(() => {
 
 
 //On call of this Function it returns the values of the tokens and Balance of the wallet
-const BalanceandToken = async (e) => {
-e.preventDefault();
+const BalanceandToken = async () => {
 try {
-    const response = await fetch(`/api/search?ownerAddress=${includeAccounts}`);
+    const response = await fetch(`/api/search?ownerAddress=${walletArr}`);
     const result = await response.json();
 
     if (response.ok) {
@@ -148,17 +154,14 @@ const [loading, setLoading] = useState(false);
 
 
 
-{/* Converts includeAccounts to Array */}
-
 
 //On call of this function it returns the transaction history of the inputed Address
-const transactionHistory = async (e) => {
-  e.preventDefault();
+const transactionHistory = async () => {
 
   let countData = null;
 
   const countRequest = axios.post('/api/count', {
-    includeAccounts,
+    walletArr,
     txTypes,
     timeGe,
     timeLe,
@@ -172,7 +175,7 @@ const transactionHistory = async (e) => {
 
 
   const graphRequest = axios.post('/api/graph', {
-    includeAccounts,
+    walletArr,
     txTypes,
     timeGe,
     timeLe,
@@ -183,7 +186,7 @@ const transactionHistory = async (e) => {
   });
 
   const listRequest = axios.post('/api/list', {
-    includeAccounts,
+    walletArr,
     txTypes,
     timeGe,
     timeLe,
@@ -224,11 +227,14 @@ const transactionHistory = async (e) => {
 //  transactionHistory(new Event('click'));
 // }, [limit]);
 
-const getResult = (e) => {
-  e.preventDefault();
-  BalanceandToken(e);
-  transactionHistory(e);
+const getResult = () => {
+  BalanceandToken();
+  transactionHistory();
 };
+useEffect(() => {
+  getResult()
+}, 
+[includeAccounts])
 
  
 
@@ -269,6 +275,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         balance={balance}
         spinnerProp = {spinner}
         spinnerSetter= {() => setSpinner(true)}
+        routerPush={routerPush}
         textColor="#008000">
         {/**This returns the tokens in the wallet section */}
         {/* <div>         

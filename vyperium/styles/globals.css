@@ -36,6 +36,10 @@ body {
 .input-container:focus-within input {
     background-color: transparent;
 }
+.active {
+    background-color: #008000;
+    border-radius: 5px;
+}
 @media all and (max-width: 768px){
     .mainNav{
       position: fixed;
