@@ -10,11 +10,12 @@ import { useRouter } from "next/router";
 const AppNav = () => {
     const router = useRouter();
     const navLinks = [
+		{ key: 1, title: "Your Wallet", path: "/app/Wallet", iconSrc: "/images/eye.svg"},
 		{ key: 1, title: "Overview", path: "/app/Overview", iconSrc: "/images/eye.svg"},
 		{ key: 2, title: "Explore", path: "/app/Explore", iconSrc: "/images/compass.svg" },
 		{ key: 3, title: "Favourites", path: "", iconSrc: "/images/star.svg" },
-		{ key: 3, title: "Swap", path: "", iconSrc: "/images/swap.svg"},
-		{ key: 3, title: "Settings", path: "", iconSrc: "/images/setting.svg" },
+		{ key: 4, title: "Swap", path: "", iconSrc: "/images/swap.svg"},
+		{ key: 5, title: "Settings", path: "", iconSrc: "/images/setting.svg" },
 	];
 
 
