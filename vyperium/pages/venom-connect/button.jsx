@@ -1,8 +1,8 @@
-import  { useEffect, useState} from 'react';
+import React, { useEffect, useState } from 'react';
+
 import { EverscaleStandaloneClient } from 'everscale-standalone-client';
 import { VenomConnect } from 'venom-connect';
 import { ProviderRpcClient, Address, Contract } from 'everscale-inpage-provider';
-import { useData } from '@/context/DataContext';
 
 
 const initVenomConnect = async () => {
@@ -73,8 +73,7 @@ function Button( { onAddrChange } ) {
   const [addr, setAddr] = useState();
   const [pubkey, setPubkey] = useState();
   const [provider, setProvider] = useState();
-  const { setIsConnected } = useData()
-  
+  const [isConnected, setIsConnected] = useState();
   // This method allows us to gen a wallet address from inpage provider
   const getAddress = async (provider) => {
     const providerState = await provider?.getProviderState?.();

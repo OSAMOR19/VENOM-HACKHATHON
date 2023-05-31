@@ -1,40 +1,20 @@
 import React, { useState, useEffect } from 'react'
 import { AreaChart,  Area , Tooltip ,XAxis ,YAxis } from 'recharts';
-import { useRouter } from 'next/router';
 import Image from "next/image"
 import axios from "axios";
 import Link from 'next/link';
 import BreadCrumb from '@/pure components/BreadCrumb';
 import HeadComp from '@/layout/HeadComp';
-import { useData } from '@/context/DataContext';
+//import Button from '../venom-connect/button';
 
 
-
-
-
-const Overview = () => {
-  const { isConnected } = useData()
-  const { setCnnctdAddr } = useData()
-  const { connectedAddr } = useData();
-
-  const router = useRouter();
-  const userWallet = router.query.userwallet
-  const walletArr = [userWallet]
-  useEffect (() => {
-    if (!isConnected) {
-      router.push("/app/ConnectWallet");
-    }
-  }, 
-  [isConnected])
-    const routerPush = () => {
-        setCnnctdAddr(walletArr)
-        router.push(`/app/${connectedAddr[0]}/Overview`)
-    }
-
+const Overview1 = () => {
+//This is the begining of what Bernard.O Added 
 const [includeAccounts, setIncludeAccounts] = useState([]);
 const [balance, setBalance] = useState(null);
 const [extractedData, setExtractedData] = useState([]);
 const [error, setError] = useState(null);
+const [addr, setAddr] = useState();
 const [spinner, setSpinner] = useState(false);
 const formatDateTime = (timestamp) => {
   const dateObj = new Date(timestamp * 1000);
@@ -117,9 +97,10 @@ useEffect(() => {
 
 
 //On call of this Function it returns the values of the tokens and Balance of the wallet
-const BalanceandToken = async () => {
+const BalanceandToken = async (e) => {
+e.preventDefault();
 try {
-    const response = await fetch(`/api/search?ownerAddress=${walletArr}`);
+    const response = await fetch(`/api/search?ownerAddress=${includeAccounts}`);
     const result = await response.json();
 
     if (response.ok) {
@@ -154,14 +135,17 @@ const [loading, setLoading] = useState(false);
 
 
 
+{/* Converts includeAccounts to Array */}
+
 
 //On call of this function it returns the transaction history of the inputed Address
-const transactionHistory = async () => {
+const transactionHistory = async (e) => {
+  e.preventDefault();
 
   let countData = null;
 
   const countRequest = axios.post('/api/count', {
-    walletArr,
+    includeAccounts,
     txTypes,
     timeGe,
     timeLe,
@@ -175,7 +159,7 @@ const transactionHistory = async () => {
 
 
   const graphRequest = axios.post('/api/graph', {
-    walletArr,
+    includeAccounts,
     txTypes,
     timeGe,
     timeLe,
@@ -186,7 +170,7 @@ const transactionHistory = async () => {
   });
 
   const listRequest = axios.post('/api/list', {
-    walletArr,
+    includeAccounts,
     txTypes,
     timeGe,
     timeLe,
@@ -227,14 +211,11 @@ const transactionHistory = async () => {
 //  transactionHistory(new Event('click'));
 // }, [limit]);
 
-const getResult = () => {
-  BalanceandToken();
-  transactionHistory();
+const getResult = (e) => {
+  e.preventDefault();
+  BalanceandToken(e);
+  transactionHistory(e);
 };
-useEffect(() => {
-  getResult()
-}, 
-[includeAccounts])
 
  
 
@@ -275,7 +256,6 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         balance={balance}
         spinnerProp = {spinner}
         spinnerSetter= {() => setSpinner(true)}
-        routerPush={routerPush}
         textColor="#008000">
         {/**This returns the tokens in the wallet section */}
         {/* <div>         
@@ -296,6 +276,10 @@ const scaledData = dataTest.graph.map((transaction, index) => {
           </div>   */}
         {/*This returns thetransactions of the wallet address*/}
         <div className='flex align-center justify-center'>
+        {/*<h3 className="font-[600] font-Oswald text-[1.5rem]">
+        <Button onAddrChange={newAddr => setAddr(newAddr)}/>
+              Assets: {addr}
+            </h3>*/}
         </div>
         <div className="flex gap-[1rem] text-white">
           <div className="">
@@ -333,30 +317,28 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             {/* {dataTest.count !== null && <p>Total number of Transaction: {dataTest.count}</p>} */}
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <table className="w-full">
-                <tbody>
-                  <tr className="border-b-[1px]">
-                    <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
-                    <th align="right" className=" font-poppins pb-[10px]">Balance</th>
-                  </tr>
-                  {dataTest.list.map((transaction, index) => (
-                    <React.Fragment key={index}>
-                      <tr>
-                        <td align="left" className=" font-Inter pt-[10px]">
-                          <p className=" font-poppins font-bold">
-                            {transaction.txType}
-                          </p>
-                          {formatDateTime(transaction.time)}
-                        </td>
-                        <td
-                          align="right"
-                          className={`text-lg font-poppins ${
-                          transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                            {transaction.balanceChange / 1000000000}
-                        </td>
-                      </tr>
-                    </React.Fragment>
-                  ))}
-                </tbody>
+                <tr className="border-b-[1px]">
+                  <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
+                  <th align="right" className=" font-poppins pb-[10px]">Balance</th>
+                </tr>
+                {dataTest.list.map((transaction, index) => (
+                  <React.Fragment key={index}>
+                    <tr>
+                      <td align="left" className=" font-Inter pt-[10px]">
+                        <p className=" font-poppins font-bold">
+                          {transaction.txType}
+                        </p>
+                        {formatDateTime(transaction.time)}
+                      </td>
+                      <td
+                        align="right"
+                        className={`text-lg font-poppins ${
+                        transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'}`}>
+                          {transaction.balanceChange / 1000000000}
+                      </td>
+                    </tr>
+                  </React.Fragment>
+                ))}
               </table>
               <div className=" border-t mt-3 flex items-center justify-center">
                 <Link href="/app/History">
@@ -399,27 +381,25 @@ const scaledData = dataTest.graph.map((transaction, index) => {
               <p className="font-poppins text-[1.3rem] font-bold">Wallet - ${clickedBalance / 1000000000}</p> 
             </div>
             <table className="w-[100%]">
-              <tbody>
-                <tr>
-                  <th className=" font-poppins text-sm" align="left">ASSET</th>
-                  <th className=" font-poppins text-sm font-[300]" align="left">PRICE</th>
-                  <th className=" font-poppins text-sm font-[300]" align="left">BALANCE</th>
-                  <th className=" font-poppins text-sm font-[300]" align="left">VALUE</th>
-                </tr>
-                {extractedData.map((data, index) => (
-                  <React.Fragment key={index}>
-                    <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">
-                      <td className="py-[1rem] font-Inter pl-[8px]" align="left">
-                        <p className="font-poppins font-bold">{data.token}</p>
-                        Venom
-                      </td>
-                      <td className="font-Inter" align="left">Coming Soon</td>
-                      <td className="" align="left">{data.amount}</td>
-                      <td className="font-Inter" align="left">Coming Soon</td>
-                    </tr>
-                  </React.Fragment>
-                ))}
-              </tbody>
+              <tr>
+                <th className=" font-poppins text-sm" align="left">ASSET</th>
+                <th className=" font-poppins text-sm font-[300]" align="left">PRICE</th>
+                <th className=" font-poppins text-sm font-[300]" align="left">BALANCE</th>
+                <th className=" font-poppins text-sm font-[300]" align="left">VALUE</th>
+              </tr>
+              {extractedData.map((data, index) => (
+                <React.Fragment key={index}>
+                  <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">
+                    <td className="py-[1rem] font-Inter pl-[8px]" align="left">
+                      <p className="font-poppins font-bold">{data.token}</p>
+                      Venom
+                    </td>
+                    <td className="font-Inter" align="left">Coming Soon</td>
+                    <td className="" align="left">{data.amount}</td>
+                    <td className="font-Inter" align="left">Coming Soon</td>
+                  </tr>
+                </React.Fragment>
+              ))}
             </table>
           </div>
         </div>
@@ -508,4 +488,4 @@ const scaledData = dataTest.graph.map((transaction, index) => {
   )
 }
 
-export default Overview
+export default Overview1

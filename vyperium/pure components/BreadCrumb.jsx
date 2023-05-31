@@ -2,15 +2,15 @@ import Image from "next/image"
 import Link from "next/link"
 import { CSSProperties, useState } from "react";
 import { PulseLoader } from "react-spinners";
-import { useData } from '@/context/DataContext';
 
-const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, routerPush}) => {
+const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter}) => {
     
     const [Lcolor, setColor] = useState("#008000");
     const override = {
         display: "block",
         margin: "auto",
     };
+
   return (
     <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
       <div className=" mb-[2rem]">
@@ -38,7 +38,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                     aria-label="Loading Spinner"
                     data-testid="loader"
                 />
-                <div tabIndex={0} className="rounded text-white cursor-pointer w-50" onClick={routerPush}>
+                <div tabIndex={0} className="rounded text-white cursor-pointer w-50" onClick={getResult}>
                     <div className="flex px-5">
                     {renderOwnerAddresses}
                     <div className="text-green-800 px-5 font-bold"> 
@@ -72,7 +72,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                         <Image 
                             src= "/images/angle-down.svg" 
                             alt ="svg" height={1} width={30}
-                            // onClick={getResult}
+                            onClick={getResult}
                             className="cursor-pointer"/>
                         </div>
                     <p className="text-[2.6rem] font-poppins font-[600]">${Math.floor(clickedBalance  / 1000000000)}</p>
@@ -89,11 +89,6 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
         <li style={ { color: textTColor }} className="font-bold hover:text-[#008000]">
             <Link href= "/app/History">
             History    
-            </Link>
-        </li>
-        <li style={ { color: textTColor }} className="font-bold hover:text-[#008000]">
-            <Link href= "/app/History">
-            NFTs    
             </Link>
         </li>
         </ul>

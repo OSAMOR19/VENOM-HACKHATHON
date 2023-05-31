@@ -1,16 +1,16 @@
-import React, {useState} from "react";
 import HeadComp from "@/layout/HeadComp";
-import HomePage from "./components";
+import Index from "./components/Index";
 import Test from '@/layout/Test'
-import Overview from "./app/[userwallet]/Overview";
-
+import Overview from "./app/Overview";
+import Overview1 from "./app/Overview1";
 
 export default function Home() {
   return (
     <>
       <HeadComp title="Vyperium - Home" />
       {/* <Index /> */}
-      <Overview/>
+      {/*<Overview />*/}
+      <Overview1/>
     </>
   )
 }

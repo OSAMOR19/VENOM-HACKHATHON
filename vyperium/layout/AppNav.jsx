@@ -1,40 +1,32 @@
-import { useData } from '@/context/DataContext';
-import { useRouter } from "next/router";
+
 import Button from "@/pages/venom-connect/button";
 import Link from "next/link";
 import Image from "next/image";
-
-
+import { useRouter } from "next/router";
 
 
 
 
 const AppNav = () => {
-    const { setCnnctdAddr } = useData();
-    const { connectedAddr } = useData();
     const router = useRouter();
     const navLinks = [
-		{ key: 1, title: "Overview", path: `/app/${connectedAddr}/Overview`, iconSrc: "/images/eye.svg"},
+		{ key: 1, title: "Overview", path: "/app/Overview", iconSrc: "/images/eye.svg"},
 		{ key: 2, title: "Explore", path: "/app/Explore", iconSrc: "/images/compass.svg" },
 		{ key: 3, title: "Favourites", path: "", iconSrc: "/images/star.svg" },
-		{ key: 4, title: "Send", path: "/app/Send", iconSrc: "/images/star.svg" },
-		{ key: 5, title: "Swap", path: "/app/Swap", iconSrc: "/images/swap.svg"},
-		{ key: 6, title: "Bridge", path: "/app/Bridge", iconSrc: "/images/swap.svg"},
-		{ key: 7, title: "Settings", path: "", iconSrc: "/images/setting.svg" },
+		{ key: 3, title: "Swap", path: "", iconSrc: "/images/swap.svg"},
+		{ key: 3, title: "Settings", path: "", iconSrc: "/images/setting.svg" },
 	];
 
 
 	const links = navLinks.map((link) => (
-		<li key={link.key} className={router.pathname == link.path ? "active" : ""}>
+		<li key={link.key} className={router.pathname === link.path ? "active" : ""}>
 			<Link className="pl-[1rem] font-Inter flex items-center hover:bg-[#008000] hover:rounded-[5px] py-[.7rem] transition-[.5s] gap-3" href={link.path}>
                 <Image src = {link.iconSrc} alt = "appIcon" height ={1} width = {20} />
                 {link.title}
             </Link>
 		</li>
 	));
-    const handleAddrChange = (newAddr) => {
-        setCnnctdAddr([newAddr]); 
-     };
+
  
   return (
     <>
