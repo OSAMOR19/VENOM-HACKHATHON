@@ -156,10 +156,11 @@ const scaledData = dataTest.graph.map((transaction, index) => {
     <>
       <HeadComp title="Vyperium - Your Wallet" />
       {addr == null ? (
-      <div className='flex align-center justify-center pt-10'>
-      <h3 className="font-[600] font-Oswald text-[1.5rem]">
+      <div className='font-[600] font-Oswald ml-[22%] w-[71%] pt-[4rem] mr-[7%] mt-[5rem] text-center'>
+        <h3 className=" text-[1.5rem] mb-[4rem] text-white">
+          Connect wallet to get started
+        </h3>
         <Button onAddrChange={handleAddrChange}/>
-      </h3>
       </div> ):(    
       <div className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
         <div className="flex items-center justify-between text-white">
@@ -198,7 +199,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <p className="text-[2rem] font-poppins font-[600]">${balance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
-              {balance ==0 ? (<div className='text-white font-bold text-[1.5rem] h-[580px] w-[560px] flex align-center justify-center'> No Transaction yet</div>
+              {balance ==0 ? (<div className='text-white font-bold font-Inter pt-[6rem] text-[1.5rem] h-[580px] w-[560px] flex align-center justify-center'> No Transaction yet 😞!</div>
               ):(
               <AreaChart 
                 className=" font-Oswald"
@@ -228,28 +229,30 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <table className="w-full">
-                <tr className="border-b-[1px]">
-                  <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
-                  <th align="right" className=" font-poppins pb-[10px]">Balance</th>
-                </tr>
-                {dataTest.list.map((transaction, index) => (
-                  <React.Fragment key={index}>
-                    <tr>
-                      <td align="left" className=" font-Inter pt-[10px]">
-                        <p className=" font-poppins font-bold">
-                          {transaction.txType}
-                        </p>
-                        {formatDateTime(transaction.time)}
-                      </td>
-                      <td
-                        align="right"
-                        className={`text-lg font-poppins ${
-                        transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                          {transaction.balanceChange / 1000000000}
-                      </td>
-                    </tr>
-                  </React.Fragment>
-                ))}
+                <tbody>
+                  <tr className="border-b-[1px]">
+                    <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
+                    <th align="right" className=" font-poppins pb-[10px]">Balance</th>
+                  </tr>
+                  {dataTest.list.map((transaction, index) => (
+                    <React.Fragment key={index}>
+                      <tr>
+                        <td align="left" className=" font-Inter pt-[10px]">
+                          <p className=" font-poppins font-bold">
+                            {transaction.txType}
+                          </p>
+                          {formatDateTime(transaction.time)}
+                        </td>
+                        <td
+                          align="right"
+                          className={`text-lg font-poppins ${
+                          transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'}`}>
+                            {transaction.balanceChange / 1000000000}
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
+                </tbody>
               </table>
               <div className=" border-t mt-3 flex items-center justify-center">
                 <Link href="/app/History">

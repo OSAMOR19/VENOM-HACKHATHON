@@ -10,12 +10,13 @@ import { useRouter } from "next/router";
 const AppNav = () => {
     const router = useRouter();
     const navLinks = [
-		{ key: 1, title: "Your Wallet", path: "/app/Wallet", iconSrc: "/images/eye.svg"},
-		{ key: 1, title: "Overview", path: "/app/Overview", iconSrc: "/images/eye.svg"},
-		{ key: 2, title: "Explore", path: "/app/Explore", iconSrc: "/images/compass.svg" },
-		{ key: 3, title: "Favourites", path: "", iconSrc: "/images/star.svg" },
-		{ key: 4, title: "Swap", path: "", iconSrc: "/images/swap.svg"},
-		{ key: 5, title: "Settings", path: "", iconSrc: "/images/setting.svg" },
+		{ key: 1, title: "Your Wallet", path: "/app/Wallet", iconSrc: "/images/wallet.svg"},
+		{ key: 2, title: "Overview", path: "/app/Overview", iconSrc: "/images/eye.svg"},
+		{ key: 3, title: "Explore", path: "/app/Explore", iconSrc: "/images/compass.svg" },
+		{ key: 4, title: "Send", path: "/app/Send", iconSrc: "/images/send-vector.svg" },
+		{ key: 5, title: "Swap", path: "/app/Swap", iconSrc: "/images/swap.svg"},
+		{ key: 6, title: "Bridge", path: "/app/Bridge", iconSrc: "/images/bridge.svg" },
+		{ key: 7, title: "Settings", path: "", iconSrc: "/images/setting.svg" },
 	];
 
 
@@ -38,7 +39,7 @@ const AppNav = () => {
                 <Button />
             </div>
             <nav className=" pt-[2rem]">
-                <ul className=" ">
+                <ul className=" space-y-1">
                     {links}
                 </ul>
             </nav>

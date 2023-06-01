@@ -365,29 +365,29 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <table className="w-full">
                 <tbody>
-                <tr className="border-b-[1px]">
-                  <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
-                  <th align="right" className=" font-poppins pb-[10px]">Balance</th>
-                </tr>
-                {dataTest.list.map((transaction, index) => (
-                  <React.Fragment key={index}>
-                    <tr>
+                  <tr className="border-b-[1px]">
+                    <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
+                    <th align="right" className=" font-poppins pb-[10px]">Balance</th>
+                  </tr>
+                  {dataTest.list.map((transaction, index) => (
+                    <React.Fragment key={index}>
+                      <tr>
 
-                      <td align="left" className=" font-Inter pt-[10px]">
-                        <p className=" font-poppins font-bold">
-                          {transaction.txType}
-                        </p>
-                        {formatDateTime(transaction.time)}
-                      </td>
-                      <td
-                        align="right"
-                        className={`text-lg font-poppins ${
-                          transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'}`}>
-                          {transaction.balanceChange / 1000000000}
-                      </td>
-                    </tr>
-                  </React.Fragment>
-                ))}
+                        <td align="left" className=" font-Inter pt-[10px]">
+                          <span className=" font-poppins font-bold">
+                            {transaction.txType}
+                          </span> <br />
+                          {formatDateTime(transaction.time)}
+                        </td>
+                        <td
+                          align="right"
+                          className={`text-lg font-poppins ${
+                            transaction.balanceChange < 0 ? 'text-red-500' : 'text-green-500'}`}>
+                            {transaction.balanceChange / 1000000000}
+                        </td>
+                      </tr>
+                    </React.Fragment>
+                  ))}
                 </tbody>
               </table>
               <div className=" border-t mt-3 flex items-center justify-center">
@@ -431,25 +431,27 @@ const scaledData = dataTest.graph.map((transaction, index) => {
               <p className="font-poppins text-[1.3rem] font-bold">Wallet - ${clickedBalance / 1000000000}</p> 
             </div>
             <table className="w-[100%]">
-              <tr>
-                <th className=" font-poppins text-sm" align="left">ASSET</th>
-                <th className=" font-poppins text-sm font-[300]" align="left">PRICE</th>
-                <th className=" font-poppins text-sm font-[300]" align="left">BALANCE</th>
-                <th className=" font-poppins text-sm font-[300]" align="left">VALUE</th>
-              </tr>
-              {extractedData.map((data, index) => (
-                <React.Fragment key={index}>
-                  <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">
-                    <td className="py-[1rem] font-Inter pl-[8px]" align="left">
-                      <p className="font-poppins font-bold">{data.token}</p>
-                      Venom
-                    </td>
-                    <td className="font-Inter" align="left">Coming Soon</td>
-                    <td className="" align="left">{data.amount}</td>
-                    <td className="font-Inter" align="left">Coming Soon</td>
-                  </tr>
-                </React.Fragment>
-              ))}
+              <tbody>
+                <tr>
+                  <th className=" font-poppins text-sm" align="left">ASSET</th>
+                  <th className=" font-poppins text-sm font-[300]" align="left">PRICE</th>
+                  <th className=" font-poppins text-sm font-[300]" align="left">BALANCE</th>
+                  <th className=" font-poppins text-sm font-[300]" align="left">VALUE</th>
+                </tr>
+                {extractedData.map((data, index) => (
+                  <React.Fragment key={index}>
+                    <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">
+                      <td className="py-[1rem] font-Inter pl-[8px]" align="left">
+                        <p className="font-poppins font-bold">{data.token}</p>
+                        Venom
+                      </td>
+                      <td className="font-Inter" align="left">Coming Soon</td>
+                      <td className="" align="left">{data.amount}</td>
+                      <td className="font-Inter" align="left">Coming Soon</td>
+                    </tr>
+                  </React.Fragment>
+                ))}
+              </tbody>
             </table>
           </div>
         </div>
