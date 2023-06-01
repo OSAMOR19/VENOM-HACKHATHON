@@ -1,7 +1,13 @@
+import React,{useState, useEffect} from 'react'
 import HeadComp from "@/layout/HeadComp"
 import Image from "next/image"
+import Button from "../venom-connect/button";
 
 const Send = () => {
+    const [addr, setAddr] = useState(null);
+    const handleAddrChange = (newAddr) => {
+        setAddr(newAddr);  
+      };
   return (
     <>
         <HeadComp title= "Vyperium - Send" />
@@ -45,7 +51,13 @@ const Send = () => {
                     </div>
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
                 </div>
+                {addr == null ? (
+                  <div className="w-full mt-[1rem] bg-[#008000] cursor-pointer font-raleway py-[1rem] rounded-[1rem] font-bold flex justify-center items-center" onAddrChange={handleAddrChange} >
+                  <Button onAddrChange={handleAddrChange} />
+                </div>
+                   ):(   
                 <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold">Send</button>
+            )}
             </div>
         </section>
     </>

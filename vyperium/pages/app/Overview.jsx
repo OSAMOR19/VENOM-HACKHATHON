@@ -35,7 +35,6 @@ const [clickedBalance, setClickedBalance] = useState(null);
 
 const [addresses, setAddresses] = useState([]);
   //const [newAddress, setNewAddress] = useState('')
-  const [input2 , setInput2] = useState('')
 
   const handleAddAddress = () => {
     const newAddress = String(clickedIncludeAccounts).trim();
@@ -48,7 +47,8 @@ const [addresses, setAddresses] = useState([]);
       }
   
       setAddresses(updatedAddresses);
-      Cookies.set('addresses', JSON.stringify(updatedAddresses));
+      Cookies.set('addresses', JSON.stringify(updatedAddresses), { expires: 14 }); // Expires in 14 days
+
     }
   };
   
