@@ -4,7 +4,8 @@ import Image from "next/image"
 import axios from "axios";
 import Link from 'next/link';
 import BreadCrumb from '@/pure components/BreadCrumb';
-import HeadComp from '@/layout/HeadComp';
+import HeadComp from '@/layout/HeadComp'
+import Cookies from 'js-cookie';
 
 
 const Overview = () => {
@@ -32,20 +33,62 @@ const formatDateTime = (timestamp) => {
 const [clickedIncludeAccounts, setClickedIncludeAccounts] = useState(null);
 const [clickedBalance, setClickedBalance] = useState(null);
 
-const fetchData = async () => {
-  try {
-    if (includeAccounts.length > 0 && includeAccounts.join(',').length >= 50)  {
-      const response = await axios.get(`/api/search?ownerAddress=${includeAccounts}`);
-      const { balance } = response.data;
-      setBalance(balance);
-      setSpinner(false);
+const [addresses, setAddresses] = useState([]);
+  //const [newAddress, setNewAddress] = useState('')
+  const [input2 , setInput2] = useState('')
+
+  const handleAddAddress = () => {
+    const newAddress = String(clickedIncludeAccounts).trim();
+    if (newAddress !== '') {
+      const updatedAddresses = [...addresses, newAddress];
+  
+      // Remove the first address if the count exceeds 5
+      if (updatedAddresses.length > 5) {
+        updatedAddresses.shift();
+      }
+  
+      setAddresses(updatedAddresses);
+      Cookies.set('addresses', JSON.stringify(updatedAddresses));
     }
-  } catch (error) {
-    console.error(error);
-    setBalance([])
-    // Handle error
-  }
-};
+  };
+  
+  
+
+  useEffect(() => {
+    const storedAddresses = Cookies.get('addresses');
+    if (storedAddresses) {
+      try {
+        const parsedAddresses = JSON.parse(storedAddresses);
+        setAddresses(parsedAddresses);
+      } catch (error) {
+        console.error('Error parsing addresses:', error);
+      }
+    }
+  }, []);
+  
+
+    const [isExpanded, setIsExpanded] = useState(false);
+  
+    const toggleDropdown = () => {
+      setIsExpanded(!isExpanded);
+    };
+  
+
+  const fetchData = async () => {
+    try {
+      if (Array.isArray(includeAccounts) && includeAccounts.length > 0 && includeAccounts.join(',').length >= 50) {
+        const response = await axios.get(`/api/search?ownerAddress=${includeAccounts.join(',')}`);
+        const { balance } = response.data;
+        setBalance(balance);
+        setSpinner(false);
+      }
+    } catch (error) {
+      console.error(error);
+      setBalance([]);
+      // Handle error
+    }
+  };
+  
 
 useEffect(() => {
   fetchData();
@@ -254,6 +297,11 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         renderBalance={renderBalance()}
         balance={balance}
         spinnerProp = {spinner}
+        handleAddAddress={handleAddAddress}
+        toggleDropdown={toggleDropdown}
+        isExpanded={isExpanded}
+        addresses={addresses}
+        setIncludeAccounts={setIncludeAccounts}
         spinnerSetter= {() => setSpinner(true)}
         textColor="#008000">
         {/**This returns the tokens in the wallet section */}
@@ -405,6 +453,31 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             </table>
           </div>
         </div>
+        <div className='text-white'>
+   
+    <button onClick={handleAddAddress}>Add Wallet</button>
+
+    <div>
+      <h3>Stored Addresses:</h3>
+      <div onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
+        {isExpanded ? '▲' : '▼'} Click to {isExpanded ? 'contract' : 'expand'}
+      </div>
+      {isExpanded && (
+        <ul>
+          {addresses.map((address, index) => (
+            <li
+              key={index}
+              onClick={() => setIncludeAccounts([address])}
+              style={{ cursor: 'pointer' }}
+              title={address}
+            >
+              {`${address.slice(0, 7)}....${address.slice(40, -20)}...${address.slice(-4)}`}
+            </li>
+          ))}
+        </ul>
+      )}
+    </div>
+  </div>
   {/* <div>
         <div className='bg-gray-500'>
           <form onSubmit={transactionHistory}>

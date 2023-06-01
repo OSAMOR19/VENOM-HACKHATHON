@@ -3,7 +3,7 @@ import Link from "next/link"
 import { CSSProperties, useState } from "react";
 import { PulseLoader } from "react-spinners";
 
-const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter}) => {
+const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter,handleAddAddress,toggleDropdown,isExpanded,addresses,setIncludeAccounts}) => {
     
     const [Lcolor, setColor] = useState("#008000");
     const override = {
@@ -51,8 +51,33 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
       </div>
         
       <div className="flex items-center justify-between text-white">
+        {/*To be styled */}
           <div className=" flex items-center gap-5">
-              <button className="font-Inter border-[1px] rounded-[6px] h-[3rem] px-[1rem] border-[#008000]">Add Wallet</button>
+              <button 
+              className="font-Inter border-[1px] rounded-[6px] h-[3rem] px-[1rem] border-[#008000]"
+              onClick={handleAddAddress}>Add Wallet</button>
+                <div className="font-Inter border-[1px] rounded-[6px] h-[3rem] px-[1rem] border-[#008000]">
+                <h3>Stored Addresses:</h3>
+                <div onClick={toggleDropdown}
+                style={{ cursor: 'pointer' }}>
+                    {isExpanded ? '▲' : '▼'} Click to {isExpanded ? 'contract' : 'expand'}
+                </div>
+                {isExpanded && (
+                    <ul>
+                    {addresses.map((address, index) => (
+                        <li
+                        key={index}
+                        onClick={() => setIncludeAccounts([address])}
+                        style={{ cursor: 'pointer' }}
+                        title={address}
+                        >
+                        {`${address.slice(0, 7)}....${address.slice(40, -20)}...${address.slice(-4)}`}
+                        </li>
+                    ))}
+                    </ul>
+                )}
+                </div>
+            {/*To be styled */}
               <Image src= "/images/share.svg" alt ="gas" height={1} width={20}/>
               <Image src= "/images/tg.svg" alt ="gas" height={1} width={20}/>
           </div>
