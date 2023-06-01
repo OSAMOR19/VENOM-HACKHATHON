@@ -42,8 +42,8 @@ const Bridge = () => {
                             <h3 className="font-Inter font-bold">TOKEN1</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                         </div>
-                        <div className="">
-                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[2rem] font-Oswald text-[#808080]" />
+                        <div className="pr-[1rem]">
+                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[16rem] text-right font-Oswald text-[#808080]" />
                         </div>
                     </div>
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
@@ -56,8 +56,8 @@ const Bridge = () => {
                             <h3 className="font-Inter font-bold">Token2</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                         </div>
-                        <div className="">
-                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[2rem] font-Oswald text-[#808080]" />
+                        <div className="pr-[1rem]">
+                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[16rem] text-right font-Oswald text-[#808080]" />
                         </div>
                     </div>
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
