@@ -5,8 +5,8 @@ import axios from 'axios';
 export default async function handler(req, res) {
   try {
     const endpoint = 'https://devnet-api.venomscan.com/v1/search';
-    const { ownerAddress } = req.query;
 
+    const ownerAddress = '0:33478651d9c7b44c1b45c2dfe85edf7a5d24692f5222f0a25c176b1abfd95e51'
     const data = {
       query: ownerAddress,
     };

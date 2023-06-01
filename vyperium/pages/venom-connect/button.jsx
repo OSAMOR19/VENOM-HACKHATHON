@@ -8,8 +8,8 @@ import { ProviderRpcClient, Address, Contract } from 'everscale-inpage-provider'
 const initVenomConnect = async () => {
   return new VenomConnect({
     theme: 'dark',
-    checkNetworkId: 1002,
-    checkNetworkName: "Venom Devnet",
+    checkNetworkId: 1000,
+    checkNetworkName: "Venom testnet",
     providersOptions: {
       venomwallet: {
         walletWaysToConnect: [
@@ -23,11 +23,11 @@ const initVenomConnect = async () => {
                 fallback: () =>
                   EverscaleStandaloneClient.create({
                     connection: {
-                      id: 1010,
+                      id: 1000,
                       group: 'venom_testnet',
                       type: 'jrpc',
                       data: {
-                        endpoint: 'https://jrpc-devnet.venom.foundation/rpc',
+                        endpoint: 'https://jrpc-testnet.venom.foundation/rpc',
                       },
                     },
                   }),

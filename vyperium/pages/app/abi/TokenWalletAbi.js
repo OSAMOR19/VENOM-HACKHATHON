@@ -1,4 +1,4 @@
-const Token_Wallet = {
+export const Token_Wallet = Object.freeze({
     "ABI version": 2,
     "version": "2.2",
     "header": ["pubkey", "time", "expire"],
@@ -148,5 +148,5 @@ const Token_Wallet = {
       { "name": "owner_", "type": "address" },
       { "name": "balance_", "type": "uint128" }
     ]
-  };
+  }); 
   
