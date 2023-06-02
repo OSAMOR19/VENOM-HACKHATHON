@@ -455,31 +455,6 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             </table>
           </div>
         </div>
-        <div className='text-white'>
-   
-    <button onClick={handleAddAddress}>Add Wallet</button>
-
-    <div>
-      <h3>Stored Addresses:</h3>
-      <div onClick={toggleDropdown} style={{ cursor: 'pointer' }}>
-        {isExpanded ? '▲' : '▼'} Click to {isExpanded ? 'contract' : 'expand'}
-      </div>
-      {isExpanded && (
-        <ul>
-          {addresses.map((address, index) => (
-            <li
-              key={index}
-              onClick={() => setIncludeAccounts([address])}
-              style={{ cursor: 'pointer' }}
-              title={address}
-            >
-              {`${address.slice(0, 7)}....${address.slice(40, -20)}...${address.slice(-4)}`}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
-  </div>
   {/* <div>
         <div className='bg-gray-500'>
           <form onSubmit={transactionHistory}>
