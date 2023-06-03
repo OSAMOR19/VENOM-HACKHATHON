@@ -11,6 +11,7 @@ const Swap = () => {
     const [symbol, setSymbol] = useState('');
     const [decimals, setDecimals] = useState('');
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [smallModal, setSmallModal] = useState(false)
 
     const openPopup = () => {
         setIsPopupVisible(true);
@@ -19,6 +20,15 @@ const Swap = () => {
     const closePopup = () => {
         setIsPopupVisible(false);
     };
+
+    const openModal = () =>{
+      setSmallModal(true);
+    }
+
+    const closeModal = () =>{
+      setSmallModal(false);
+    }
+
     const handleAddrChange = (newAddr) => {
         setAddr(newAddr);
       };
@@ -99,7 +109,12 @@ const Swap = () => {
             <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold" >Swap</button>
           )}
             </div>
-            
+          
+
+          {/* BIG MODAL */}
+          {/* BIG MODAL */}
+          {/* BIG MODAL */}
+
         {isPopupVisible && (
         <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
           <div className="bg-neutral-900 p-4 rounded max-h-[60vh] overflow-y-auto scrollbar">
@@ -107,6 +122,7 @@ const Swap = () => {
                 <div className="font-bold">Select Token</div>
                 <div><button
               onClick={closePopup}
+             
               className="text-white hover:text-red-700 text-white font-bold text-2xl "
             >
               X
@@ -118,7 +134,7 @@ const Swap = () => {
                 placeholder="Input Address  0:343....."
                 className="bg-transparent outline-none font-bold w-80 text-gray-700"
               />
-              <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">
+              <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded " onClick={openModal}>
                 Import Token
               </button>
             </div>
@@ -142,29 +158,35 @@ const Swap = () => {
           </div>
         </div>
       )}
- <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center" >
-  <div className='bg-neutral-800 rounded-md p-4 '>
-    <div className="flex justify-between p-2">
-    <p>Find the token you want to Swap</p>
-    <div><button
-              onClick={closePopup}
-              className="text-white hover:text-red-700 text-white font-bold text-2xl "
-            >
-              X
-            </button></div>
-    </div>     
-    <input type="text" value={rootAddress} onChange={handleInputChange}
-    placeholder="Input Address 0:3456....."
-    className="bg-transparent outline-none font-[700] w-[25rem] border border-green-500 rounded font-Oswald text-[#808080]"/>
-    <div className="flex Justify-between p-4">
-      <div></div>
-    <span className="font-bold text-l">Title:{symbol}<br/>Decimal:{decimals}</span>
-    <div>
-      import
-    </div>
-    </div>
-    </div>
-    </div>
+
+      {/* SMALL MODAL */}
+      {/* SMALL MODAL */}
+      {/* SMALL MODAL */}
+      
+      {smallModal&&(     
+      <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center" >
+        <div className='bg-neutral-800 rounded-md p-4 '>
+          <div className="flex justify-between p-2">
+          <p>Find the token you want to Swap</p>
+          <div><button
+                    onClick={closeModal}
+                    className="text-white hover:text-red-700 text-white font-bold text-2xl "
+                  >
+                    X
+                  </button></div>
+          </div>     
+          <input type="text" value={rootAddress} onChange={handleInputChange}
+          placeholder="Input Address 0:3456....."
+          className="bg-transparent outline-none font-[700] w-[25rem] border border-green-500 rounded font-Oswald text-[#808080]"/>
+          <div className="flex justify-between p-4">
+            <div><span className="font-bold text-l">Title:{symbol}<br/>Decimal:{decimals}</span></div>
+          <div className="font-bold cursor-pointer border hover:border-green-500 rounded px-4 bg-neutral-500">
+          import
+          </div>
+          </div>
+          </div>
+          </div>
+          )}
         </section>
     </>
   )
