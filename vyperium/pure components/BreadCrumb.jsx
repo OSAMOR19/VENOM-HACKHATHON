@@ -1,15 +1,21 @@
 import Image from "next/image"
 import Link from "next/link"
-import { CSSProperties, useState } from "react";
+import { CSSProperties, useState, useRef } from "react";
 import { PulseLoader } from "react-spinners";
 
-const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter,handleAddAddress,toggleDropdown,isExpanded,addresses,setIncludeAccounts}) => {
+const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, handleAddAddress, addresses, setIncludeAccounts}) => {
     
     const [Lcolor, setColor] = useState("#008000");
+    const [isExpanded, setIsExpanded] = useState(false);
+    const dropDown = useRef()
     const override = {
         display: "block",
         margin: "auto",
     };
+    const toggleDropdown = () => {
+        setIsExpanded(!isExpanded)
+        dropDown.current.classList.toggle("expanded")
+    }
 
   return (
     <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
@@ -53,33 +59,32 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
       <div className="flex items-center justify-between text-white">
         {/*To be styled */}
           <div className=" flex items-center gap-5">
-              <button 
-              className="font-Inter border-[1px] rounded-[6px] h-[3rem] px-[1rem] border-[#008000]"
-              onClick={handleAddAddress}>Add Wallet</button>
-                <div className="font-Inter border-[1px] rounded-[6px] h-[3rem] px-[1rem] border-[#008000]">
+            <button 
+                className="font-Inter border-[1px] rounded-[6px] h-[3rem] px-[1rem] border-[#008000]"
+                onClick={handleAddAddress}>Add Wallet
+            </button>
+            <div ref={dropDown} className="relative font-Inter border-[1px] rounded-[6px] h-fit px-[1rem] border-[#008000]">
                 <h3>Stored Addresses:</h3>
-                <div onClick={toggleDropdown}
-                style={{ cursor: 'pointer' }}>
-                    {isExpanded ? '▲' : '▼'} Click to {isExpanded ? 'contract' : 'expand'}
+                <div onClick={toggleDropdown} className=" cursor-pointer">
+                    <span>▲</span> Click to {isExpanded ? 'contract' : 'expand'}
                 </div>
-                {isExpanded && (
-                    <ul>
+                <ul className="absolute transition-[.5s] border p-2 rounded-[5px] border-t-0 bg-[#0C0C0C] left-[-10px] scale-y-[0] translate-y-[-100px]">
                     {addresses.map((address, index) => (
                         <li
-                        key={index}
-                        onClick={() => setIncludeAccounts([address])}
-                        style={{ cursor: 'pointer' }}
-                        title={address}
-                        >
-                        {`${address.slice(0, 7)}....${address.slice(40, -20)}...${address.slice(-4)}`}
+                            key={index}
+                            onClick={() => setIncludeAccounts([address])}
+                            style={{ cursor: 'pointer' }}
+                            title={address}
+                            className=" pt-2 border-b"
+                            >
+                            {`${address.slice(0, 7)}....${address.slice(40, -20)}...${address.slice(-4)}`}
                         </li>
                     ))}
-                    </ul>
-                )}
-                </div>
+                </ul>
+            </div>
             {/*To be styled */}
-              <Image src= "/images/share.svg" alt ="gas" height={1} width={20}/>
-              <Image src= "/images/tg.svg" alt ="gas" height={1} width={20}/>
+            <Image src= "/images/share.svg" alt ="gas" height={1} width={20}/>
+            <Image src= "/images/tg.svg" alt ="gas" height={1} width={20}/>
           </div>
           <div className="font-Inter flex gap-5">
                 <Image src= "/images/user_img.svg" alt ="user_img" height={1} width={100}/>
