@@ -9,7 +9,7 @@ import Cookies from 'js-cookie';
 
 
 const Overview = () => {
-//This is the begining of what Bernard.O Added 
+
 const [includeAccounts, setIncludeAccounts] = useState([]);
 const [balance, setBalance] = useState(null);
 const [extractedData, setExtractedData] = useState([]);
@@ -34,7 +34,6 @@ const [clickedIncludeAccounts, setClickedIncludeAccounts] = useState(null);
 const [clickedBalance, setClickedBalance] = useState(null);
 
 const [addresses, setAddresses] = useState([]);
-  //const [newAddress, setNewAddress] = useState('')
 
   const handleAddAddress = () => {
     const newAddress = String(clickedIncludeAccounts).trim();
@@ -65,13 +64,6 @@ const [addresses, setAddresses] = useState([]);
       }
     }
   }, []);
-  
-
-    const [isExpanded, setIsExpanded] = useState(false);
-  
-    const toggleDropdown = () => {
-      setIsExpanded(!isExpanded);
-    };
   
 
   const fetchData = async () => {
@@ -126,14 +118,6 @@ const renderOwnerAddresses = () => {
     </div>
   );
 };
-
-useEffect(() => {
-  if (includeAccounts.length >= 50 || balance === null || balance === 0) {
-    setSpinner(false);
-  } else {
-    setSpinner(true);
-  }
-}, [includeAccounts, balance]);
 
 
 
@@ -283,7 +267,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
 
 
 
-//This is the end of what Bernard added in this section     
+   
   return (
     <>
       <HeadComp title="Vyperium - Overview" />
@@ -298,8 +282,6 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         balance={balance}
         spinnerProp = {spinner}
         handleAddAddress={handleAddAddress}
-        toggleDropdown={toggleDropdown}
-        isExpanded={isExpanded}
         addresses={addresses}
         setIncludeAccounts={setIncludeAccounts}
         spinnerSetter= {() => setSpinner(true)}
