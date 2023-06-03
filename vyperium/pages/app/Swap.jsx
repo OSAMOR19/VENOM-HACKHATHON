@@ -1,7 +1,51 @@
 import HeadComp from "@/layout/HeadComp"
 import Image from "next/image"
+import Button from '../venom-connect/button';
+import { useState, useEffect } from "react";
+import tokenList from './constant/tokenList.json';
+import axios from 'axios';
 
 const Swap = () => {
+    const [addr, setAddr] = useState();
+    const [rootAddress, setRootAddress] = useState('');
+    const [symbol, setSymbol] = useState('');
+    const [decimals, setDecimals] = useState('');
+    const [isPopupVisible, setIsPopupVisible] = useState(false);
+
+    const openPopup = () => {
+        setIsPopupVisible(true);
+    };
+
+    const closePopup = () => {
+        setIsPopupVisible(false);
+    };
+    const handleAddrChange = (newAddr) => {
+        setAddr(newAddr);
+      };
+
+      useEffect(() => {
+        if (rootAddress) {
+          fetchTokenData();
+        }
+      }, [rootAddress]);
+    
+      const fetchTokenData = async () => {
+        try {
+          const response = await axios.post('/api/token', { rootAddress });
+          const { symbol, decimals } = response.data;
+          setSymbol(symbol);
+          setDecimals(decimals);
+        } catch (error) {
+          console.error(error);
+          setSymbol('No Result Found')
+          setDecimals([])
+        }
+      };
+
+      const handleInputChange = (event) => {
+        setRootAddress(event.target.value);
+      };
+
   return (
     <>
         <HeadComp title= "Vyperium - Swap" />
@@ -17,7 +61,7 @@ const Swap = () => {
                 <div className=" bg-[#1D1D21] rounded-[1rem] p-[1rem]">
                     <p className="font-poppins">Pay with</p>
                     <div className="flex justify-between">
-                        <div className="flex items-center">
+                        <div className="flex items-center" onClick={openPopup}>
                             <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                             <h3 className="font-Inter font-bold">TOKEN1</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
@@ -47,8 +91,80 @@ const Swap = () => {
                     </div>
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
                 </div>
-                <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold">Swap</button>
+                {addr == null ? (
+            <div className="w-full mt-[1rem] bg-[#008000] cursor-pointer font-raleway py-[1rem] rounded-[1rem] font-bold flex justify-center items-center">
+              <Button onAddrChange={handleAddrChange} />
             </div>
+          ) : (
+            <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold" >Swap</button>
+          )}
+            </div>
+            
+        {isPopupVisible && (
+        <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center">
+          <div className="bg-neutral-900 p-4 rounded max-h-[60vh] overflow-y-auto scrollbar">
+            <div className="flex justify-between px-4 py-4">
+                <div className="font-bold">Select Token</div>
+                <div><button
+              onClick={closePopup}
+              className="text-white hover:text-red-700 text-white font-bold text-2xl "
+            >
+              X
+            </button></div>
+            </div>
+            <div className="flex">
+              <input
+                type="text"
+                placeholder="Input Address  0:343....."
+                className="bg-transparent outline-none font-bold w-80 text-gray-700"
+              />
+              <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">
+                Import Token
+              </button>
+            </div>
+            <ul className="px-4">
+              {tokenList.map((token) => (
+                <li
+                  key={token.ticker}
+                  className="shadow-md py-2 cursor-pointer"
+                >
+                  <div className="flex justify-between">
+                    <div>
+                      <span className="font-bold">{token.name}</span>
+                      <br />
+                      {token.ticker}
+                    </div>
+                    <div>balance</div>
+                  </div>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+ <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center" >
+  <div className='bg-neutral-800 rounded-md p-4 '>
+    <div className="flex justify-between p-2">
+    <p>Find the token you want to Swap</p>
+    <div><button
+              onClick={closePopup}
+              className="text-white hover:text-red-700 text-white font-bold text-2xl "
+            >
+              X
+            </button></div>
+    </div>     
+    <input type="text" value={rootAddress} onChange={handleInputChange}
+    placeholder="Input Address 0:3456....."
+    className="bg-transparent outline-none font-[700] w-[25rem] border border-green-500 rounded font-Oswald text-[#808080]"/>
+    <div className="flex Justify-between p-4">
+      <div></div>
+    <span className="font-bold text-l">Title:{symbol}<br/>Decimal:{decimals}</span>
+    <div>
+      import
+    </div>
+    </div>
+    </div>
+    </div>
         </section>
     </>
   )
