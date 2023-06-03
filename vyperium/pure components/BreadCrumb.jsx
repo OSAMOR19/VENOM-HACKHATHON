@@ -66,7 +66,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
             <div ref={dropDown} className="relative font-Inter border-[1px] rounded-[6px] h-fit px-[1rem] border-[#008000]">
                 <h3>Stored Addresses:</h3>
                 <div onClick={toggleDropdown} className=" cursor-pointer">
-                    <span>▲</span> Click to {isExpanded ? 'contract' : 'expand'}
+                    {isExpanded ? '🔺' : '🔻'}Click to {isExpanded ? 'contract' : 'expand'}
                 </div>
                 <ul className="absolute transition-[.5s] border p-2 rounded-[5px] border-t-0 bg-[#0C0C0C] left-[-10px] scale-y-[0] translate-y-[-100px]">
                     {addresses.map((address, index) => (
