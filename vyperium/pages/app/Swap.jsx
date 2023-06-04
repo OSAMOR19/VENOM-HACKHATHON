@@ -4,14 +4,28 @@ import Button from '../venom-connect/button';
 import { useState, useEffect } from "react";
 import tokenList from './constant/tokenList.json';
 import axios from 'axios';
+import Cookies from 'js-cookie';
 
 const Swap = () => {
     const [addr, setAddr] = useState();
     const [rootAddress, setRootAddress] = useState('');
     const [symbol, setSymbol] = useState('');
     const [decimals, setDecimals] = useState('');
+    const [input1, setInput1]= useState('')
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [smallModal, setSmallModal] = useState(false)
+    const [savedTokens, setSavedTokens] = useState([]);
+    const [importClicked, setImportClicked] = useState(false);
+    const [fetchError, setFetchError] = useState(false);
+
+    useEffect(() => {
+      // Fetch the saved tokens from local storage
+      const savedTokensData = localStorage.getItem('tokens');
+      if (savedTokensData) {
+        setSavedTokens(JSON.parse(savedTokensData));
+      }
+    }, []);
+
 
     const openPopup = () => {
         setIsPopupVisible(true);
@@ -27,6 +41,10 @@ const Swap = () => {
 
     const closeModal = () =>{
       setSmallModal(false);
+      setInput1('');
+      setDecimals('');
+      setRootAddress('');
+      setSymbol('')
     }
 
     const handleAddrChange = (newAddr) => {
@@ -45,15 +63,54 @@ const Swap = () => {
           const { symbol, decimals } = response.data;
           setSymbol(symbol);
           setDecimals(decimals);
+
         } catch (error) {
           console.error(error);
           setSymbol('No Result Found')
           setDecimals([])
+          setFetchError(true); 
         }
       };
 
       const handleInputChange = (event) => {
         setRootAddress(event.target.value);
+      };
+
+      const handeleInput1Change = (event) => {
+        setInput1(event.target.value);
+        setSmallModal(true);
+       
+      }
+
+      const handleImport = () => {
+        
+        const newToken = {
+          rootAddress,
+          symbol,
+          decimals
+        };
+    
+        const updatedTokens = [...savedTokens, newToken];
+        Cookies.set('tokens', JSON.stringify(updatedTokens), { expires: 14 });
+    
+        // Update the state
+        setSavedTokens(updatedTokens);
+        setImportClicked(true);
+        setSmallModal(false);
+        setInput1('')
+        setDecimals('')
+        setRootAddress('')
+        setSymbol('')
+      
+      };
+
+      const handleCancel = () => {
+        // Clear the saved tokens from local storage
+        Cookies.remove('tokens');
+    
+        // Update the state
+        setSavedTokens([]);
+        setImportClicked(false);
       };
 
   return (
@@ -133,12 +190,31 @@ const Swap = () => {
                 type="text"
                 placeholder="Input Address  0:343....."
                 className="bg-transparent outline-none font-bold w-80 text-gray-700"
+                value={input1}
+                onChange={handeleInput1Change}
               />
               <button className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded " onClick={openModal}>
                 Import Token
               </button>
             </div>
             <ul className="px-4">
+                  {importClicked &&
+                    savedTokens.map((token, index) => (
+                  <li key={index} className="shadow-md py-2 cursor-pointer">
+                    <div className="flex justify-between">
+                      <div>
+                        <span className="font-bold">{token.symbol}</span>
+                        <br/>
+                        <span className="">{token.symbol}</span>
+                        {/*<br />
+                        Decimals: {token.decimals}
+                        <br />
+                        Root Address: {token.rootAddress}*/}
+                      </div>
+                      <div>balance</div>
+                    </div>
+                  </li>
+                ))}
               {tokenList.map((token) => (
                 <li
                   key={token.ticker}
@@ -154,6 +230,7 @@ const Swap = () => {
                   </div>
                 </li>
               ))}
+      
             </ul>
           </div>
         </div>
@@ -162,7 +239,7 @@ const Swap = () => {
       {/* SMALL MODAL */}
       {/* SMALL MODAL */}
       {/* SMALL MODAL */}
-      
+
       {smallModal&&(     
       <div className="fixed top-0 left-0 w-full h-full bg-black bg-opacity-50 flex justify-center items-center" >
         <div className='bg-neutral-800 rounded-md p-4 '>
@@ -180,7 +257,7 @@ const Swap = () => {
           className="bg-transparent outline-none font-[700] w-[25rem] border border-green-500 rounded font-Oswald text-[#808080]"/>
           <div className="flex justify-between p-4">
             <div><span className="font-bold text-l">Title:{symbol}<br/>Decimal:{decimals}</span></div>
-          <div className="font-bold cursor-pointer border hover:border-green-500 rounded px-4 bg-neutral-500">
+          <div className="font-bold cursor-pointer border hover:border-green-500 rounded px-4 bg-neutral-500"  onClick={handleImport} disabled={fetchError} >
           import
           </div>
           </div>
