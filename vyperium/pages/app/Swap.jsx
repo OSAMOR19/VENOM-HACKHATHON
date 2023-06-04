@@ -5,8 +5,15 @@ import { useState, useEffect } from "react";
 import tokenList from './constant/tokenList.json';
 import axios from 'axios';
 import Cookies from 'js-cookie';
+import { initVenomConnect } from "../venom-connect/configure";
+import { Token_Root } from "./constant/abi/TokenRootAbi";
+import { Token_Wallet } from "./constant/abi/TokenWalletAbi";
+
+
 
 const Swap = () => {
+
+
     const [addr, setAddr] = useState();
     const [rootAddress, setRootAddress] = useState('');
     const [symbol, setSymbol] = useState('');
@@ -20,7 +27,7 @@ const Swap = () => {
 
     useEffect(() => {
       // Fetch the saved tokens from local storage
-      const savedTokensData = localStorage.getItem('tokens');
+      const savedTokensData = Cookies.get('tokens');
       if (savedTokensData) {
         setSavedTokens(JSON.parse(savedTokensData));
       }
@@ -29,6 +36,11 @@ const Swap = () => {
 
     const openPopup = () => {
         setIsPopupVisible(true);
+        const savedTokensData = Cookies.get('tokens');
+        if (savedTokensData) {
+          const parsedTokens = JSON.parse(savedTokensData);
+          setSavedTokens(parsedTokens);
+        }
     };
 
     const closePopup = () => {
@@ -198,8 +210,8 @@ const Swap = () => {
               </button>
             </div>
             <ul className="px-4">
-                  {importClicked &&
-                    savedTokens.map((token, index) => (
+                  <div onClick={handleCancel}>Clear</div>
+                    {savedTokens.map((token, index) => (
                   <li key={index} className="shadow-md py-2 cursor-pointer">
                     <div className="flex justify-between">
                       <div>

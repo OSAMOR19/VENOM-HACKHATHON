@@ -1,4 +1,4 @@
-export const Token_Root = {
+export const Token_Root = Object.freeze({
 	"ABI version": 2,
 	"version": "2.2",
 	"header": ["pubkey", "time", "expire"],
@@ -241,5 +241,4 @@ export const Token_Root = {
 		{"name":"randomNonce_","type":"uint256"},
 		{"name":"deployer_","type":"address"}
 	]
-}
-
+}); 
