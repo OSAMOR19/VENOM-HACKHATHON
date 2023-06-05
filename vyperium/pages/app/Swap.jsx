@@ -243,7 +243,7 @@ const Swap = () => {
   };
 
 
-  const [balance, setBalance] = useState(0)
+  const [balance, setBalance] = useState('')
   
   let tokenWalletAddress;
 
@@ -490,15 +490,19 @@ const getBalance2 = async(addr) => {
 
                     <div className="flex justify-between">
                       <div>
-                        <span className="font-bold">{token.symbol}</span>
-                        <br/>
-                        <span className="">{token.symbol}</span>
+                      <div className="px-2"> 
+                    <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
+                    </div>
                         {/*<br />
                         Decimals: {token.decimals}
                         <br />
                         Root Address: {token.rootAddress}*/}
                       </div>
-                      <div>balance</div>
+                      <div>
+                      <span className="font-bold">{token.symbol}</span>
+                        <br/>
+                        <span className="">{token.symbol}</span>
+                      </div>
                     </div>
                   </li>
                 ))}
