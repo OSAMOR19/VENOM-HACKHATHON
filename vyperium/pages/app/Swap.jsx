@@ -8,6 +8,7 @@ import Cookies from 'js-cookie';
 import { initVenomConnect } from "../venom-connect/configure";
 import { Token_Root } from "./constant/abi/TokenRootAbi";
 import { Token_Wallet } from "./constant/abi/TokenWalletAbi";
+import { ProviderRpcClient, Address, Contract } from 'everscale-inpage-provider';
 
 
 
@@ -16,14 +17,24 @@ const Swap = () => {
 
     const [addr, setAddr] = useState();
     const [rootAddress, setRootAddress] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
     const [symbol, setSymbol] = useState('');
     const [decimals, setDecimals] = useState('');
-    const [input1, setInput1]= useState('')
+    const [input1, setInput1]= useState('');
+    const [tokenOne, setTokenOne] = useState('VENOM');
+    const [tokenOneAddr, setTokenOneAddr] = useState('');
+    const [tokenTwoAddr, setTokenTwoAddr] = useState('');
+    const [tokenOneDecimal, setTokenOneDecimal] = useState('');
+    const [tokenTwoDecimal, setTokenTwoDecimal] = useState('');
+    const [tokenTwo, setTokenTwo] = useState('SELECT TOKEN')
     const [isPopupVisible, setIsPopupVisible] = useState(false);
+    const [currentPopup, setCurrentPopup] = useState(null);
     const [smallModal, setSmallModal] = useState(false)
     const [savedTokens, setSavedTokens] = useState([]);
     const [importClicked, setImportClicked] = useState(false);
     const [fetchError, setFetchError] = useState(false);
+
+  
 
     useEffect(() => {
       // Fetch the saved tokens from local storage
@@ -32,16 +43,18 @@ const Swap = () => {
         setSavedTokens(JSON.parse(savedTokensData));
       }
     }, []);
+      
 
-
-    const openPopup = () => {
+      const openPopup = (buttonIndex) => {
+        setCurrentPopup(buttonIndex);
         setIsPopupVisible(true);
         const savedTokensData = Cookies.get('tokens');
         if (savedTokensData) {
           const parsedTokens = JSON.parse(savedTokensData);
           setSavedTokens(parsedTokens);
         }
-    };
+      };
+
 
     const closePopup = () => {
         setIsPopupVisible(false);
@@ -56,7 +69,7 @@ const Swap = () => {
       setInput1('');
       setDecimals('');
       setRootAddress('');
-      setSymbol('')
+      setSymbol('');
     }
 
     const handleAddrChange = (newAddr) => {
@@ -70,6 +83,7 @@ const Swap = () => {
       }, [rootAddress]);
     
       const fetchTokenData = async () => {
+        setIsLoading(true);
         try {
           const response = await axios.post('/api/token', { rootAddress });
           const { symbol, decimals } = response.data;
@@ -82,6 +96,8 @@ const Swap = () => {
           setDecimals([])
           setFetchError(true); 
         }
+
+        setIsLoading(false);
       };
 
       const handleInputChange = (event) => {
@@ -125,6 +141,262 @@ const Swap = () => {
         setImportClicked(false);
       };
 
+        const handleExchange = () =>{
+          setTokenOne(tokenTwo);
+          setTokenTwo(tokenOne)
+          setTokenOneAddr(tokenTwoAddr)
+          setTokenTwoAddr(tokenOneAddr)
+        }
+
+        const handleItemClick = (name, address,decimal) => {
+          if (currentPopup === 1) {
+            setTokenOne(name);
+            setTokenOneAddr(address);
+            setTokenOneDecimal(decimal)
+          } else if (currentPopup === 2) {
+            setTokenTwo(name);
+            setTokenTwoAddr(address);
+            setTokenTwoDecimal(decimal)
+          }
+          setIsPopupVisible(false);
+        };
+        
+        const handleSavedData = (symbol, decimals, rootAddress) =>{
+          if (currentPopup === 1) {
+            setTokenOne(symbol);
+            setTokenOneAddr(rootAddress);
+            setTokenOneDecimal(decimals)
+          } else if (currentPopup === 2) {
+            setTokenTwo(symbol);
+            setTokenTwoAddr(rootAddress);
+            setTokenTwoDecimal(decimals)
+          }
+          setIsPopupVisible(false);
+        }
+////////////////////////////////////////////////////////////////////////
+//                 /         /                                         //
+//  ///////   ///////  ///////   ////////   ///////  ///////  ///////  //
+//    /     /         /     /  /            /     /  /            /   //
+//    /     ///////   /     /   ///////     /     /  ///////      /    //
+//   /           /   /     /         /     /     /  /            /     //
+//  /     ///////   ///////   ///////     ///////  ///////  ///////    //
+//                 /         /                                         //
+////////////////////////////////////////////////////////////////////////
+
+
+
+        const [VC, setVC] = useState();
+  useEffect(() => {
+    (async () => {
+      const _vc = await initVenomConnect();
+      setVC(_vc);
+    })();
+  }, []);
+
+  useEffect(() => {
+    // connect event handler
+    const off = VC?.on('connect', onConnect);
+    if (VC)
+      (async () => await VC.checkAuth())();
+
+    // just an empty callback, cuz we don't need it
+    return () => {
+      off?.();
+    };
+  }, [VC]);
+
+  const login = async() => {
+    if (!VC) return;
+    await VC.connect();
+  }
+
+  const [pubkey, setPubkey] = useState();
+  const [provider, setProvider] = useState();
+  const [isConnected, setIsConnected] = useState();
+  // This method allows us to gen a wallet address from inpage provider
+  const getAddress = async (provider) => {
+    const providerState = await provider?.getProviderState?.();
+    return providerState?.permissions.accountInteraction?.address.toString();
+  };
+  const getPubkey = async (provider) => {
+    const providerState = await provider?.getProviderState?.();
+    return providerState?.permissions.accountInteraction?.publicKey;
+  };
+
+  // This handler will be called after venomConnect.login() action
+  // connect method returns provider to interact with wallet, so we just store it in state
+  const onConnect = async (provider) => {
+    setProvider(provider);
+    const venomWalletAddress = provider ? await getAddress(provider) : undefined;
+    const publicKey = provider ? await getPubkey(provider) : undefined;
+    setAddr(venomWalletAddress);
+    setPubkey(publicKey);
+    setIsConnected(true);
+  };
+  // This handler will be called after venomConnect.disconnect() action
+  // By click logout. We need to reset address and balance.
+  const onDisconnect = async () => {
+    await provider?.disconnect();
+    setAddr(undefined);
+    setPubkey(undefined);
+    setIsConnected(false);
+  };
+
+
+  const [balance, setBalance] = useState(0)
+  
+  let tokenWalletAddress;
+
+  const setupTokenWalletAddress = async( ) => {
+    try{
+      const standalone = await VC?.getStandalone('venomwallet');
+
+      const contractAddress = new Address(tokenOneAddr)
+
+      const contract= new standalone.Contract(Token_Root, contractAddress);
+
+      const tokenWallet = ( await contract.methods
+        
+        .walletOf({
+          answerId: 0,
+          walletOwner: addr.toString(),
+        } )
+        .call()) 
+        if (!tokenWallet) return undefined;
+        tokenWalletAddress= tokenWallet.value0._address;
+        return tokenWalletAddress;
+    }
+    catch (e){
+      console.error(e)
+    }
+    return undefined;
+  }
+
+  const getBalance = async(addr) => {
+    if(!addr) return;
+    const standalone = await VC?.getStandalone('venomwallet');
+
+    if(standalone) {
+      if(!tokenWalletAddress){
+        await setupTokenWalletAddress(standalone, addr);
+      }
+
+      if (!provider || !tokenWalletAddress ) return;
+
+      try{
+        const contractAddress = new Address(tokenWalletAddress);
+        const contract = new standalone.Contract(Token_Wallet, contractAddress);
+
+        const contractState = await provider.rawApi.getFullContractState({address: tokenWalletAddress});
+        if (contractState.state){
+
+          const result = await contract.methods.balance({ answerId: 0}).call();
+          const  tokenBalance = result.value0;
+          setBalance(tokenBalance);
+        }
+        else {
+          setBalance('0');
+        }
+      }
+        catch (e) {
+          console.error(e);
+        }
+
+      }else{
+        alert('Standalone is not available now');
+      }
+    }
+  
+    useEffect(() => {
+      if(addr) getBalance(addr)
+    }, [addr,tokenOneAddr])
+
+    
+/// REVISIT////
+
+const [balance2, setBalance2] = useState('')
+  
+let tokenWalletAddress2;
+
+const setupTokenWalletAddress2 = async( ) => {
+  try{
+    const standalone = await VC?.getStandalone('venomwallet');
+
+    const contractAddress = new Address(tokenTwoAddr)
+
+    const contract= new standalone.Contract(Token_Root, contractAddress);
+
+    const tokenWallet = ( await contract.methods
+      
+      .walletOf({
+        answerId: 0,
+        walletOwner: addr.toString(),
+      } )
+      .call()) 
+      if (!tokenWallet) return undefined;
+      tokenWalletAddress2= tokenWallet.value0._address;
+      return tokenWalletAddress2;
+  }
+  catch (e){
+    console.error(e)
+  }
+  return undefined;
+}
+
+const getBalance2 = async(addr) => {
+  if(!addr) return;
+  const standalone = await VC?.getStandalone('venomwallet');
+
+  if(standalone) {
+    if(!tokenWalletAddress){
+      await setupTokenWalletAddress2(standalone, addr);
+    }
+
+    if (!provider || !tokenWalletAddress2 ) return;
+
+    try{
+      const contractAddress = new Address(tokenWalletAddress2);
+      const contract = new standalone.Contract(Token_Wallet, contractAddress);
+
+      const contractState = await provider.rawApi.getFullContractState({address: tokenWalletAddress2});
+      if (contractState.state){
+
+        const result = await contract.methods.balance({ answerId: 0}).call();
+        const  tokenBalance2 = result.value0;
+        setBalance2(tokenBalance2);
+      }
+      else {
+        setBalance2('0');
+      }
+    }
+      catch (e) {
+        console.error(e);
+      }
+
+    }else{
+      alert('Standalone is not available now');
+    }
+  }
+
+  useEffect(() => {
+    if(addr) getBalance2(addr)
+  }, [addr,tokenTwoAddr])
+
+  const tokenOneBalance= balance  / Math.pow(10, tokenOneDecimal);
+  const tokenTwoBalance = balance2 / Math.pow(10, tokenTwoDecimal);
+
+  
+////////////////////////////////////////////////////////////////////////
+//                 /         /                                         //
+//  ///////   ///////  ///////   ////////   ///////  ///////  ///////  //
+//    /     /         /     /  /            /     /  /            /   //
+//    /     ///////   /     /   ///////     /     /  ///////      /    //
+//   /           /   /     /         /     /     /  /            /     //
+//  /     ///////   ///////   ///////     ///////  ///////  ///////    //
+//                 /         /                                         //
+////////////////////////////////////////////////////////////////////////
+
+
   return (
     <>
         <HeadComp title= "Vyperium - Swap" />
@@ -137,38 +409,39 @@ const Swap = () => {
                     <h3 className="font-Inter font-bold">Venom</h3>
                     <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                 </div>
-                <div className=" bg-[#1D1D21] rounded-[1rem] p-[1rem]">
+                <div className=" bg-[#1D1D21] rounded-[1rem] p-[1rem]" onClick={() => openPopup(1)} >
                     <p className="font-poppins">Pay with</p>
                     <div className="flex justify-between">
-                        <div className="flex items-center" onClick={openPopup}>
+                        <div className="flex items-center" >
                             <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
-                            <h3 className="font-Inter font-bold">TOKEN1</h3>
+                            <h3 className="font-Inter font-bold">{tokenOne}</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                         </div>
                         <div className="pr-[1rem]">
                             <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[16rem] text-right font-Oswald text-[#808080]" />
                         </div>
                     </div>
-                    <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
+                    
+                    <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">{tokenOneBalance}</span></p>
                 </div>
                 <div className="flex justify-center translate-y-[-50%] left-0 right-0 absolute">
                     <button className="bg-[#1D1D21] rounded-[50%] border-t-[#0C0C0C] border-r-[#0C0C0C] border-t-[3px] border-r-[3px] rotate-[-45deg] p-1">
-                        <Image src= "/images/up-and-down-arrows.svg" alt ="swap" height={1} width={30} />
+                        <Image src= "/images/up-and-down-arrows.svg" onClick={handleExchange} alt ="swap" height={1} width={30} />
                     </button>
                 </div>
-                <div className="bg-[#1D1D21] rounded-[1rem] mt-[4px] p-[1rem]">
+                <div className="bg-[#1D1D21] rounded-[1rem] mt-[4px] p-[1rem]" onClick={() => openPopup(2)}> 
                     <p className="font-poppins">Receive</p>
                     <div className="flex justify-between">
                         <div className="flex items-center">
                             <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
-                            <h3 className="font-Inter font-bold">Token2</h3>
-                            <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
+                            <h3 className="font-Inter font-bold">{tokenTwo}</h3>
+                            <Image src= "/images/angle-down.svg" alt ="gas"  height={1} width={30}/>
                         </div>
                         <div className="pr-[1rem]">
                             <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[16rem] text-right font-Oswald text-[#808080]" />
                         </div>
                     </div>
-                    <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
+                    <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">{tokenTwoBalance}</span></p>
                 </div>
                 {addr == null ? (
             <div className="w-full mt-[1rem] bg-[#008000] cursor-pointer font-raleway py-[1rem] rounded-[1rem] font-bold flex justify-center items-center">
@@ -212,7 +485,9 @@ const Swap = () => {
             <ul className="px-4">
                   <div onClick={handleCancel}>Clear</div>
                     {savedTokens.map((token, index) => (
-                  <li key={index} className="shadow-md py-2 cursor-pointer">
+                  <li key={index} className="shadow-md py-2 cursor-pointer"
+                  onClick={() => handleSavedData (token.symbol, token.decimals,token.rootAddress)}>
+
                     <div className="flex justify-between">
                       <div>
                         <span className="font-bold">{token.symbol}</span>
@@ -229,16 +504,18 @@ const Swap = () => {
                 ))}
               {tokenList.map((token) => (
                 <li
-                  key={token.ticker}
-                  className="shadow-md py-2 cursor-pointer"
-                >
+                key={token.ticker}
+                className="shadow-md py-2 cursor-pointer"
+                onClick={() => handleItemClick(token.name, token.address, token.decimals)}
+              >
+            
                   <div className="flex justify-between">
-                    <div>
-                      <span className="font-bold">{token.name}</span>
-                      <br />
-                      {token.ticker}
+                    <div className="px-2"> 
+                    <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
                     </div>
-                    <div>balance</div>
+                    <div><span className="font-bold">{token.name}</span>
+                      <br />
+                      {token.ticker}</div>
                   </div>
                 </li>
               ))}
@@ -267,12 +544,26 @@ const Swap = () => {
           <input type="text" value={rootAddress} onChange={handleInputChange}
           placeholder="Input Address 0:3456....."
           className="bg-transparent outline-none font-[700] w-[25rem] border border-green-500 rounded font-Oswald text-[#808080]"/>
-          <div className="flex justify-between p-4">
-            <div><span className="font-bold text-l">Title:{symbol}<br/>Decimal:{decimals}</span></div>
-          <div className="font-bold cursor-pointer border hover:border-green-500 rounded px-4 bg-neutral-500"  onClick={handleImport} disabled={fetchError} >
-          import
-          </div>
-          </div>
+         <div className="flex justify-between p-4">
+      <div>
+        {isLoading ? (
+          <div className="animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-green-500"></div>
+        ) : (
+          <span className="font-bold text-l">
+            {symbol}
+            <br />
+            {decimals}
+          </span>
+        )}
+      </div>
+      <div
+        className="font-bold cursor-pointer border hover:border-green-500 rounded px-4 bg-neutral-500"
+        onClick={fetchTokenData}
+        disabled={isLoading}
+      >
+        Import
+      </div>
+        </div>
           </div>
           </div>
           )}
