@@ -234,6 +234,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                     <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
                     <th align="right" className=" font-poppins pb-[10px]">Balance</th>
                   </tr>
+                  {dataTest.list == 0 && <tr className= "h-[15rem] text-[1.5rem] font-Inter font-[600] flex justify-center items-center">No transaction yet 😞!</tr>}
                   {dataTest.list.map((transaction, index) => (
                     <React.Fragment key={index}>
                       <tr>

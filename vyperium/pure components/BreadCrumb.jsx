@@ -69,6 +69,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                     {isExpanded ? '🔺' : '🔻'}Click to {isExpanded ? 'contract' : 'expand'}
                 </div>
                 <ul className="absolute transition-[.5s] border p-2 rounded-[5px] border-t-0 bg-[#0C0C0C] left-[-10px] scale-y-[0] translate-y-[-100px]">
+                    {addresses.length == 0 && <li className=" pt-2 text-center">No Address Added yet..</li>}
                     {addresses.map((address, index) => (
                         <li
                             key={index}
@@ -82,7 +83,6 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                     ))}
                 </ul>
             </div>
-            {/*To be styled */}
             <Image src= "/images/share.svg" alt ="gas" height={1} width={20}/>
             <Image src= "/images/tg.svg" alt ="gas" height={1} width={20}/>
           </div>

@@ -316,7 +316,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <p className="text-[2rem] font-poppins font-[600]">${clickedBalance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
-              {clickedBalance ==0 ? (<div className='text-white font-bold text-[1.5rem] h-[580px] w-[560px] flex align-center justify-center'> No Transaction yet</div>
+              {clickedBalance == 0 ? (<div className='text-white font-bold text-[1.5rem] h-[580px] w-[560px] flex align-center justify-center'> No Transaction yet</div>
               ):(
               <AreaChart 
                 className=" font-Oswald"
