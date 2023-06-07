@@ -3,6 +3,8 @@ import HeadComp from '@/layout/HeadComp';
 import Image from 'next/image';
 import Button from '../venom-connect/button';
 import axios from 'axios';
+import { EverscaleStandaloneClient } from 'everscale-standalone-client';
+import { Token_Root } from "./constant/abi/TokenRootAbi";
 import { Token_Wallet } from './constant/abi/TokenWalletAbi';
 import { VenomConnect } from 'venom-connect';
 import { ProviderRpcClient, Address, Contract } from 'everscale-inpage-provider';
@@ -60,11 +62,17 @@ const initVenomConnect = async () => {
 
 
 
-//////////////////////////////////////////////////////////////////////////////////
-/////////////////////////////////////////////////////////////////////////////////
-////////////////////////////////////////////////////////////////////////////////
-///////////////////////////////////////////////////////////////////////////////
-//////////////////////////////////////////////////////////////////////////////
+////////////////////////////////////////////////////////////////////////
+//                 /         /                                         //
+//  ///////   ///////  ///////   ////////   ///////  ///////  ///////  //
+//    /     /         /     /  /            /     /  /            /   //
+//    /     ///////   /     /   ///////     /     /  ///////      /    //
+//   /           /   /     /         /     /     /  /            /     //
+//  /     ///////   ///////   ///////     ///////  ///////  ///////    //
+//                 /         /                                         //
+////////////////////////////////////////////////////////////////////////
+
+
 
 const Send = () => {
 
@@ -183,33 +191,85 @@ const [pubkey, setPubkey] = useState();
     result *= BigInt(10);
   }
   
-  const parsedTokenAmount = BigInt(tokenAmount);
+  const parsedTokenAmount = BigInt(Math.floor(tokenAmount));
+
+
   const finalResult = result * parsedTokenAmount;
+
+
+  const [tokenWalletAddress, setTokenWalletAddress] = useState('');
+  const setupTokenWalletAddress = async () => {
+    try {
+      const standalone = await VC?.getStandalone('venomwallet');
   
+      const contractAddress = new Address(rootAddress);
+  
+      const contract = new standalone.Contract(Token_Root, contractAddress);
+  
+      const tokenWallet = await contract.methods.walletOf({
+        answerId: 0,
+        walletOwner: addr.toString(),
+      }).call();
+  
+      if (!tokenWallet) return undefined;
+  
+      const walletAddress = tokenWallet.value0._address;
+      return walletAddress;
+    } catch (e) {
+      console.error(e);
+    }
+  };
+
+  
+  useEffect(() => {
+    const fetchTokenWalletAddress = async () => {
+      const address = await setupTokenWalletAddress();
+      setTokenWalletAddress(address);
+    };
+
+    if (addr && rootAddress) {
+      fetchTokenWalletAddress();
+    }
+  }, [addr, rootAddress]);
+  
+
+    
+
+
   const send = async () => {
     if (isInvalid) {
       return; // Don't proceed if input value is invalid
     }
+
+    const standalone = await VC?.getStandalone('venomwallet');
+
     if (provider) {
+      const contractAddress = new Address(tokenWalletAddress);
       const contract = new provider.Contract(Token_Wallet, contractAddress);
   
       await contract?.methods
         .transfer({
           amount: finalResult.toString(),
           recipient: recipientAddress,
-          deployWalletValue: '10000',
-          remainingGasTo: userAddress,
+          deployWalletValue: '100000000',
+          remainingGasTo: tokenWalletAddress,
           notify: true,
           payload: '',
         })
         .send({
           from: userAddress,
-          amount: '10', // Provide a valid amount object
+          amount: '1000000000', // Provide a valid amount object
           bounce: true,
         });
+
+        handleSendSuccess();
     }
   };
   
+  const handleSendSuccess = () => {
+    setTokenAmount('');
+    setRecipient('');
+  };
   
   
 
@@ -453,13 +513,13 @@ const [pubkey, setPubkey] = useState();
             <p className="font-poppins text-[#808080] mt-[2px]">0x0000...</p>
           </div>
           <div className="bg-[#1D1D21] rounded-[1rem] mt-[4px] p-[1rem]">
-            <p className="font-poppins">Asset:{asset}</p>
+            <p className="font-poppins">Asset</p>
             <div className="flex justify-between">
               <div className="flex items-center">
-                <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1} />
-                <h3 className="font-Inter font-bold">Token</h3>
+                <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px] cursor-pointer" width={30} height={1} onClick={openPopup} />
+                <h3 className="font-Inter font-bold" onClick={openPopup}>{asset}</h3>
                 <div>
-                <Image src="/images/angle-down.svg" alt="gas" height={1} width={30} onClick={openPopup} />
+                <Image src="/images/angle-down.svg" alt="gas" height={1} width={30} onClick={openPopup} className='cursor-pointer' />
                 <Popup isOpen={isOpen} onClose={closePopup} ></Popup>
                 </div>
               </div>
@@ -479,7 +539,11 @@ const [pubkey, setPubkey] = useState();
             <p className="font-poppins text-[#808080] mt-[2px]">
               Address:&nbsp;
               <span className="">{rootAddress ? `${rootAddress.slice(0, 7)}....${rootAddress.slice(40, -20)}...${rootAddress.slice(-4)}` : ''}</span>
+
             </p>
+            <div>
+      
+    </div>
           </div>
           {addr == null ? (
             <div className="w-full mt-[1rem] bg-[#008000] cursor-pointer font-raleway py-[1rem] rounded-[1rem] font-bold flex justify-center items-center">

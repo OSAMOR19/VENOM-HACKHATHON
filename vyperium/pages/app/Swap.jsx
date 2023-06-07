@@ -19,13 +19,13 @@ const Swap = () => {
     const [rootAddress, setRootAddress] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [symbol, setSymbol] = useState('');
-    const [decimals, setDecimals] = useState('');
+    const [decimals, setDecimals] = useState('0');
     const [input1, setInput1]= useState('');
     const [tokenOne, setTokenOne] = useState('VENOM');
     const [tokenOneAddr, setTokenOneAddr] = useState('');
     const [tokenTwoAddr, setTokenTwoAddr] = useState('');
-    const [tokenOneDecimal, setTokenOneDecimal] = useState('');
-    const [tokenTwoDecimal, setTokenTwoDecimal] = useState('');
+    const [tokenOneDecimal, setTokenOneDecimal] = useState('0');
+    const [tokenTwoDecimal, setTokenTwoDecimal] = useState('0');
     const [tokenTwo, setTokenTwo] = useState('SELECT TOKEN')
     const [isPopupVisible, setIsPopupVisible] = useState(false);
     const [currentPopup, setCurrentPopup] = useState(null);
@@ -142,10 +142,12 @@ const Swap = () => {
       };
 
         const handleExchange = () =>{
+          setTokenOneDecimal(tokenTwoDecimal);
+          setTokenTwoDecimal(tokenOneDecimal);
           setTokenOne(tokenTwo);
-          setTokenTwo(tokenOne)
-          setTokenOneAddr(tokenTwoAddr)
-          setTokenTwoAddr(tokenOneAddr)
+          setTokenTwo(tokenOne);
+          setTokenOneAddr(tokenTwoAddr);
+          setTokenTwoAddr(tokenOneAddr);
         }
 
         const handleItemClick = (name, address,decimal) => {
@@ -244,6 +246,7 @@ const Swap = () => {
 
 
   const [balance, setBalance] = useState('')
+  const [test, setTest] = useState([])
   
   let tokenWalletAddress;
 
@@ -290,9 +293,9 @@ const Swap = () => {
         const contractState = await provider.rawApi.getFullContractState({address: tokenWalletAddress});
         if (contractState.state){
 
-          const result = await contract.methods.balance({ answerId: 0}).call();
+          const result = await contract.methods.root({ answerId: 0}).call();
           const  tokenBalance = result.value0;
-          setBalance(tokenBalance);
+          setTest(tokenBalance);
         }
         else {
           setBalance('0');
@@ -401,7 +404,7 @@ const getBalance2 = async(addr) => {
     <>
         <HeadComp title= "Vyperium - Swap" />
         <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem] text-white">
-            <h2 className="font-Oswald text-[2rem] font-[600]">Swap</h2>
+            <h2 className="font-Oswald text-[2rem] font-[600]">Swap {JSON.stringify(test)}</h2>
             <p className="font-Inter text-[rgb(128,128,128)] text-[.9rem]">Trade any token, LP share or Vault in a single transaction</p>
             <div className="relative border-[2px] border-[#1D1D21] mt-[2rem] w-[80%] rounded-[1rem] p-[2rem]">
                 <div className="flex items-center mb-[1rem]">

@@ -3,7 +3,7 @@ import Link from "next/link"
 import { CSSProperties, useState, useRef } from "react";
 import { PulseLoader } from "react-spinners";
 
-const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, handleAddAddress, addresses, setIncludeAccounts}) => {
+const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, topRef,getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, handleAddAddress, addresses, setIncludeAccounts}) => {
     
     const [Lcolor, setColor] = useState("#008000");
     const [isExpanded, setIsExpanded] = useState(false);
@@ -18,8 +18,8 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
     }
 
   return (
-    <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
-      <div className=" mb-[2rem]">
+    <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]" ref={topRef}>
+      <div className=" mb-[2rem]"> 
         <div className="input-container">
             <div 
                 className='relative flex items-center'>

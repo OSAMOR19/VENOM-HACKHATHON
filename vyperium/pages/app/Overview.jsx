@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useRef } from 'react'
 import { AreaChart,  Area , Tooltip ,XAxis ,YAxis } from 'recharts';
 import Image from "next/image"
 import axios from "axios";
@@ -29,7 +29,7 @@ const formatDateTime = (timestamp) => {
   };
   return dateObj.toLocaleDateString(undefined, options);
 };
-
+const topRef = useRef(null);
 const [clickedIncludeAccounts, setClickedIncludeAccounts] = useState(null);
 const [clickedBalance, setClickedBalance] = useState(null);
 
@@ -243,7 +243,15 @@ const getResult = (e) => {
   transactionHistory(e);
 };
 
- 
+const handleClick = (ownerAddress) => {
+  setIncludeAccounts([ownerAddress]);
+if (topRef.current){
+  window.scrollTo({
+    top: topRef.current.offsetTop,
+    behavior: 'smooth',
+  });
+}
+};
 
 
 
@@ -272,7 +280,8 @@ const scaledData = dataTest.graph.map((transaction, index) => {
     <>
       <HeadComp title="Vyperium - Overview" />
       <BreadCrumb 
-        includeAccounts={includeAccounts} 
+        includeAccounts={includeAccounts}
+        topRef={topRef} 
         clickedBalance={clickedBalance}
         clickedIncludeAccounts = {clickedIncludeAccounts}
         handleInputChange1={handleInputChange1} 
@@ -312,7 +321,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         </div>
         <div className="flex gap-[1rem] text-white">
           <div className="">
-            <h3 className="font-[600] font-Oswald text-[1.5rem]">Performance</h3>
+            <h3 className="font-[600] font-Oswald text-[1.5rem]">Performances</h3>
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <p className="text-[2rem] font-poppins font-[600]">${clickedBalance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
@@ -422,7 +431,8 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                 </tr>
                 {extractedData.map((data, index) => (
                   <React.Fragment key={index}>
-                    <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">
+                    <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]" onClick={() => handleClick(data.ownerAddress)}
+>
                       <td className="py-[1rem] font-Inter pl-[8px]" align="left">
                         <p className="font-poppins font-bold">{data.token}</p>
                         Venom

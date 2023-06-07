@@ -40,7 +40,7 @@ export default async function handler(req, res) {
     const extractedData = balances.filter(balance => balance.amount !== "0").map(balance => ({
     token: balance.token,
     amount: balance.amount,
-    ownerAddress: balance.ownerAddress
+    ownerAddress: balance.rootAddress
     }));
 
     res.json({ balance, extractedData});
