@@ -57,9 +57,9 @@ const AppNav = () => {
             </nav>
         </aside>
         <header className="flex bg-[#0C0C0C] z-10 justify-between pt-[1rem] border-b border-b-[#808080] pb-3 text-white fixed top-0 left-[2%] md:left-[22%] right-[2%] md:right-[7%]">
-            <div className=" flex items-center">
-                logo&nbsp;
-                <h1 className=" font-instrumentSerif font-[500]">Vyperium</h1>
+            <div className="cursor-pointer flex gap-2 items-center">
+                <Image src= "/images/vyperiumlogo.jpeg" alt ="gas" height={1} width={30}/>
+                <h1 className="text-[1.5rem] font-instrumentSerif font-[500]">Vyperium</h1>
             </div>
             <div className=" hidden md:block">
                 <div className=" flex items-center gap-2">

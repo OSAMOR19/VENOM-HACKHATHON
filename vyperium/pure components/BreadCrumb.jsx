@@ -35,7 +35,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                 <Image src= "/images/search.svg" alt ="Search" height={1} width={15}/>
             </button>
             </div>
-            <div className="text-center">
+            <div className="md:text-center">
                 <PulseLoader
                     color={Lcolor}
                     loading={spinnerProp}
@@ -45,9 +45,9 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                     data-testid="loader"
                 />
                 <div tabIndex={0} className="rounded text-white cursor-pointer w-50" onClick={getResult}>
-                    <div className="flex px-5">
+                    <div className="pt-[1rem] md:pt-0 overflow-hidden">
                     {renderOwnerAddresses}
-                    <div className="text-green-800 px-5 font-bold"> 
+                    <div className="text-green-800 font-bold"> 
                     {renderBalance}
                     </div>
                     </div>

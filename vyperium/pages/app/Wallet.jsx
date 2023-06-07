@@ -162,13 +162,8 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         </h3>
         <Button onAddrChange={handleAddrChange}/>
       </div> ):(    
-      <div className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
-        <div className="flex items-center justify-between text-white">
-          <div className=" flex items-center gap-5">
-              <button className="font-Inter border-[1px] rounded-[6px] h-[3rem] px-[1rem] border-[#008000]">Add Wallet</button>
-              <Image src= "/images/share.svg" alt ="gas" height={1} width={20}/>
-              <Image src= "/images/tg.svg" alt ="gas" height={1} width={20}/>
-          </div>
+      <div className="md:ml-[22%] mx-[2%] md:w-[71%] pt-[1rem] md:mr-[7%] mt-[5rem]">
+        <div className="flex items-center md:justify-end pb-[2rem] text-white">
           <div className="font-Inter flex gap-5">
                 <Image src= "/images/user_img.svg" alt ="user_img" height={1} width={100}/>
             {/**This is the input section */}                
@@ -180,12 +175,9 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                          <p key={address}>{address.slice(0, 4) + '...' + address.slice(-4)}</p>
                         ))}
                         </div>
-                        {/*<input className='text-black' type="text" value={includeAccounts} onChange={handleInputChange} />
-                        {includeAccounts}*/}
                         <Image 
                             src= "/images/angle-down.svg" 
                             alt ="svg" height={1} width={30}
-                         //   onClick={getResult}
                             className="cursor-pointer"/>
                         </div>
                     <p className="text-[2.6rem] font-poppins font-[600]">${Math.floor(balance  / 1000000000)}</p>
@@ -193,40 +185,39 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                 </div>
             </div>
         </div>
-        <div className="flex gap-[1rem] text-white">
-          <div className="">
+        <div className="flex flex-col md:flex-row gap-[1rem] text-white">
+          <div className="flex-1">
             <h3 className="font-[600] font-Oswald text-[1.5rem]">Performance</h3>
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <p className="text-[2rem] font-poppins font-[600]">${balance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
-              {balance ==0 ? (<div className='text-white font-bold font-Inter pt-[6rem] text-[1.5rem] h-[580px] w-[560px] flex align-center justify-center'> No Transaction yet 😞!</div>
+              {balance ==0 ? (<div className='text-white font-bold font-Inter pt-[6rem] text-[1.5rem] h-[580px] flex align-center justify-center'> No Transaction yet 😞!</div>
               ):(
-              <AreaChart 
-                className=" font-Oswald"
-                width={580} 
-                height={250} 
-                data={scaledData}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-                  </linearGradient>
-                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-                  </linearGradient>
-                </defs>
-                <XAxis  dataKey="time" tickFormatter={formatDateTime} axisLine={false} tickLine={false} />
-                <YAxis hide />
-                <Tooltip />
-                <Area type="monotone" dataKey="Balance" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-              </AreaChart>
+                <ResponsiveContainer width="100%" height={250}>
+                  <AreaChart 
+                    className=" font-Oswald" 
+                    data={scaledData}
+                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                      </linearGradient>
+                      <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
+                      </linearGradient>
+                    </defs>
+                    <XAxis  dataKey="time" tickFormatter={formatDateTime} axisLine={false} tickLine={false} />
+                    <YAxis hide />
+                    <Tooltip />
+                    <Area type="monotone" dataKey="Balance" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+                  </AreaChart>
+                </ResponsiveContainer>
               )}
             </div>
           </div>
-          <div className="text-white flex-1">
+          <div className="text-white md:w-[35%]">
             <h3 className="font-[600] mb-[8px] font-Oswald text-[1.5rem]">History</h3>
-            
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <table className="w-full">
                 <tbody>
