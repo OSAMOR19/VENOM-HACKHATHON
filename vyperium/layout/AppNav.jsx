@@ -31,7 +31,12 @@ const AppNav = () => {
 	));
 
     const showNav = () => {
-        navRef.current.classList.toggle("translate-x-0")
+        if (navRef.current.classList.contains("translate-x-[-20rem]")) {
+            navRef.current.classList.remove("translate-x-[-20rem]")
+        }
+        else {
+            navRef.current.classList.add("translate-x-[-20rem]")
+        }
     }
 
  
