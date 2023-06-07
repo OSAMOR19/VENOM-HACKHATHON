@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { AreaChart,  Area , Tooltip ,XAxis ,YAxis } from 'recharts';
+import { AreaChart,  Area , Tooltip ,XAxis ,YAxis,ResponsiveContainer } from 'recharts';
 import Image from "next/image"
 import axios from "axios";
 import Link from 'next/link';

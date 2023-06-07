@@ -18,13 +18,13 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
     }
 
   return (
-<<<<<<< HEAD
-    <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]" ref={topRef}>
-      <div className=" mb-[2rem]"> 
-=======
-    <section className="md:ml-[22%] mx-[2%] md:w-[71%] pt-[1rem] md:mr-[7%] mt-[4rem] md:mt-[5rem]">
+
+  //  <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]" >
+  //    <div className=" mb-[2rem]"> 
+
+    <section className="md:ml-[22%] mx-[2%] md:w-[71%] pt-[1rem] md:mr-[7%] mt-[4rem] md:mt-[5rem]" ref={topRef}>
       <div className=" mb-[2rem]">
->>>>>>> 35aa00f5e266e74e5e3e218f3660dfed7ca2e77e
+
         <div className="input-container">
             <div 
                 className='relative flex items-center'>

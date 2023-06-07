@@ -1,10 +1,5 @@
-<<<<<<< HEAD
-import React, { useState, useEffect,useRef } from 'react'
-import { AreaChart,  Area , Tooltip ,XAxis ,YAxis } from 'recharts';
-=======
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useRef } from 'react'
 import { AreaChart,  Area , Tooltip ,XAxis ,YAxis, ResponsiveContainer } from 'recharts';
->>>>>>> 35aa00f5e266e74e5e3e218f3660dfed7ca2e77e
 import Image from "next/image"
 import axios from "axios";
 import Link from 'next/link';
@@ -300,6 +295,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         setIncludeAccounts={setIncludeAccounts}
         spinnerSetter= {() => setSpinner(true)}
         textColor="#008000">
+
         {/**This returns the tokens in the wallet section */}
         {/* <div>         
               <div className="grid grid-cols-4 gap-4 text-white bg-neutral-800 rounded">
@@ -317,7 +313,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
               ))}         
             </div>
           </div>   */}
-<<<<<<< HEAD
+
         {/*This returns thetransactions of the wallet address*/}
         <div className='flex align-center justify-center'>
         {/*<h3 className="font-[600] font-Oswald text-[1.5rem]">
@@ -325,14 +321,12 @@ const scaledData = dataTest.graph.map((transaction, index) => {
               Assets: {addr}
             </h3>*/}
         </div>
-        <div className="flex gap-[1rem] text-white">
+        <div className="flex gap-[1rem] text-white"></div>
           <div className="">
-            <h3 className="font-[600] font-Oswald text-[1.5rem]">Performances</h3>
-=======
+
         <div className="flex flex-col md:flex-row gap-[1rem] text-white">
           <div className="flex-1">
             <h3 className="font-[600] font-Oswald text-[1.5rem]">Performance</h3>
->>>>>>> 35aa00f5e266e74e5e3e218f3660dfed7ca2e77e
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <p className="text-[2rem] font-poppins font-[600]">${clickedBalance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
@@ -540,9 +534,10 @@ const scaledData = dataTest.graph.map((transaction, index) => {
           </form>
           </div>
         </div> */}
-      </BreadCrumb>
+        </div>
+    </BreadCrumb>
     </>
-  )
-}
+  );
+};
 
 export default Overview
