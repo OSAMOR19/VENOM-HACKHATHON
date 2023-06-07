@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react'
-import { AreaChart,  Area , Tooltip ,XAxis ,YAxis } from 'recharts';
+import { AreaChart,  Area , Tooltip ,XAxis ,YAxis, ResponsiveContainer } from 'recharts';
 import Image from "next/image"
 import axios from "axios";
 import Link from 'next/link';
@@ -303,45 +303,38 @@ const scaledData = dataTest.graph.map((transaction, index) => {
               ))}         
             </div>
           </div>   */}
-        {/*This returns thetransactions of the wallet address*/}
-        <div className='flex align-center justify-center'>
-        {/*<h3 className="font-[600] font-Oswald text-[1.5rem]">
-        <Button onAddrChange={newAddr => setAddr(newAddr)}/>
-              Assets: {addr}
-            </h3>*/}
-        </div>
-        <div className="flex gap-[1rem] text-white">
-          <div className="">
+        <div className="flex flex-col md:flex-row gap-[1rem] text-white">
+          <div className="flex-1">
             <h3 className="font-[600] font-Oswald text-[1.5rem]">Performance</h3>
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
               <p className="text-[2rem] font-poppins font-[600]">${clickedBalance / 1000000000}</p>
               <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>
               {clickedBalance == 0 ? (<div className='text-white font-bold text-[1.5rem] h-[580px] w-[560px] flex align-center justify-center'> No Transaction yet</div>
               ):(
-              <AreaChart 
-                className=" font-Oswald"
-                width={580} 
-                height={250} 
-                data={scaledData}
-                margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
-                <defs>
-                  <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
-                    <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
-                  </linearGradient>
-                  <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
-                    <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
-                  </linearGradient>
-                </defs>
-                <XAxis  dataKey="time" tickFormatter={formatDateTime} axisLine={false} tickLine={false} />
-                <YAxis hide />
-                <Tooltip />
-                <Area type="monotone" dataKey="Balance" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
-              </AreaChart>
+                <ResponsiveContainer width="100%" height={250}>
+                  <AreaChart 
+                    className=" font-Oswald"
+                    data={scaledData}
+                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                    <defs>
+                      <linearGradient id="colorUv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#8884d8" stopOpacity={0.8}/>
+                        <stop offset="95%" stopColor="#8884d8" stopOpacity={0}/>
+                      </linearGradient>
+                      <linearGradient id="colorPv" x1="0" y1="0" x2="0" y2="1">
+                        <stop offset="5%" stopColor="#82ca9d" stopOpacity={0.8}/>
+                      </linearGradient>
+                    </defs>
+                    <XAxis  dataKey="time" tickFormatter={formatDateTime} axisLine={false} tickLine={false} />
+                    <YAxis hide />
+                    <Tooltip />
+                    <Area type="monotone" dataKey="Balance" stroke="#8884d8" fillOpacity={1} fill="url(#colorUv)" />
+                  </AreaChart>
+                </ResponsiveContainer>
               )}
             </div>
           </div>
-          <div className="text-white flex-1">
+          <div className="text-white w-[35%]">
             <h3 className="font-[600] mb-[8px] font-Oswald text-[1.5rem]">History</h3>
             {/* {dataTest.count !== null && <p>Total number of Transaction: {dataTest.count}</p>} */}
             <div className="h-[23rem] p-[1rem] mt-[8px] border-[1px] rounded-[12px] border-[#808080]">
@@ -351,6 +344,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                     <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
                     <th align="right" className=" font-poppins pb-[10px]">Balance</th>
                   </tr>
+                  {dataTest.list == 0 && <tr className= "h-[15rem] text-[1.5rem] font-Inter font-[600] flex justify-center items-center"><td>No transaction yet 😞!</td></tr>}
                   {dataTest.list.map((transaction, index) => (
                     <React.Fragment key={index}>
                       <tr>
@@ -420,6 +414,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                   <th className=" font-poppins text-sm font-[300]" align="left">BALANCE</th>
                   <th className=" font-poppins text-sm font-[300]" align="left">VALUE</th>
                 </tr>
+                { extractedData == 0 && <tr className= " font-[600] font-poppins"><td>No Asset On this Wallet 😱!</td></tr>}
                 {extractedData.map((data, index) => (
                   <React.Fragment key={index}>
                     <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">

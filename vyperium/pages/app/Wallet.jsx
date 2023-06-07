@@ -234,7 +234,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                     <th align="left" className=" font-poppins pb-[10px]">Transaction Type</th>
                     <th align="right" className=" font-poppins pb-[10px]">Balance</th>
                   </tr>
-                  {dataTest.list == 0 && <tr className= "h-[15rem] text-[1.5rem] font-Inter font-[600] flex justify-center items-center">No transaction yet 😞!</tr>}
+                  {dataTest.list == 0 && <tr className= "h-[15rem] text-[1.5rem] font-Inter font-[600] flex justify-center items-center"><td>No transaction yet 😞!</td></tr>}
                   {dataTest.list.map((transaction, index) => (
                     <React.Fragment key={index}>
                       <tr>
@@ -285,6 +285,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                 <th className=" font-poppins text-sm font-[300]" align="left">BALANCE</th>
                 <th className=" font-poppins text-sm font-[300]" align="left">VALUE</th>
               </tr>
+              { extractedData == 0 && <tr className= " font-[600] font-poppins"><td>No Asset On this Wallet 😱!</td></tr>}
               {extractedData.map((data, index) => (
                 <React.Fragment key={index}>
                   <tr className=" border-t-[1px] cursor-pointer hover:bg-black hover:border-t-0 transition-[.5s]">

@@ -18,7 +18,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
     }
 
   return (
-    <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]">
+    <section className="md:ml-[22%] mx-[2%] md:w-[71%] pt-[1rem] md:mr-[7%] mt-[4rem] md:mt-[5rem]">
       <div className=" mb-[2rem]">
         <div className="input-container">
             <div 
@@ -56,7 +56,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
         </div>
       </div>
         
-      <div className="flex items-center justify-between text-white">
+      <div className="flex flex-col-reverse md:flex-row md:items-center pl-[.5rem] md:pl-0 gap-4 md:gap-0 justify-between text-white">
         {/*To be styled */}
           <div className=" flex items-center gap-5">
             <button 
@@ -83,8 +83,6 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                     ))}
                 </ul>
             </div>
-            <Image src= "/images/share.svg" alt ="gas" height={1} width={20}/>
-            <Image src= "/images/tg.svg" alt ="gas" height={1} width={20}/>
           </div>
           <div className="font-Inter flex gap-5">
                 <Image src= "/images/user_img.svg" alt ="user_img" height={1} width={100}/>
@@ -110,7 +108,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                 </div>
             </div>
         </div>
-        <ul className="flex gap-[2rem] border-b-[1px] pb-[5px] font-poppins mt-[1.6rem] mb-[1.4rem] text-white">
+        <ul className="flex mx-1 gap-[2rem] border-b-[1px] pb-[5px] font-poppins mt-[1.6rem] mb-[1.4rem] text-white">
         <li style={ { color: textColor }} className="font-bold hover:text-[#008000]">
             <Link href= "/app/Overview">
             Tokens      
