@@ -257,7 +257,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
           <div className=" text-white">
           <div className="mb-[1rem] mt-[2rem]">
             <h3 className="font-[600] font-Oswald text-[1.5rem]">
-              Assets: {dataTest.count}
+              Assets
             </h3>
           </div>
           <div className=" border-[1px] rounded-[10px] h-fit p-6">
