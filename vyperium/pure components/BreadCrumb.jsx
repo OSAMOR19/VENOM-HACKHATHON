@@ -18,8 +18,13 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
     }
 
   return (
+<<<<<<< HEAD
     <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem]" ref={topRef}>
       <div className=" mb-[2rem]"> 
+=======
+    <section className="md:ml-[22%] mx-[2%] md:w-[71%] pt-[1rem] md:mr-[7%] mt-[4rem] md:mt-[5rem]">
+      <div className=" mb-[2rem]">
+>>>>>>> 35aa00f5e266e74e5e3e218f3660dfed7ca2e77e
         <div className="input-container">
             <div 
                 className='relative flex items-center'>
@@ -35,7 +40,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                 <Image src= "/images/search.svg" alt ="Search" height={1} width={15}/>
             </button>
             </div>
-            <div className="text-center">
+            <div className="md:text-center">
                 <PulseLoader
                     color={Lcolor}
                     loading={spinnerProp}
@@ -45,9 +50,9 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                     data-testid="loader"
                 />
                 <div tabIndex={0} className="rounded text-white cursor-pointer w-50" onClick={getResult}>
-                    <div className="flex px-5">
+                    <div className="pt-[1rem] md:pt-0 overflow-hidden">
                     {renderOwnerAddresses}
-                    <div className="text-green-800 px-5 font-bold"> 
+                    <div className="text-green-800 font-bold"> 
                     {renderBalance}
                     </div>
                     </div>
@@ -56,7 +61,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
         </div>
       </div>
         
-      <div className="flex items-center justify-between text-white">
+      <div className="flex flex-col-reverse md:flex-row md:items-center pl-[.5rem] md:pl-0 gap-4 md:gap-0 justify-between text-white">
         {/*To be styled */}
           <div className=" flex items-center gap-5">
             <button 
@@ -69,6 +74,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                     {isExpanded ? '🔺' : '🔻'}Click to {isExpanded ? 'contract' : 'expand'}
                 </div>
                 <ul className="absolute transition-[.5s] border p-2 rounded-[5px] border-t-0 bg-[#0C0C0C] left-[-10px] scale-y-[0] translate-y-[-100px]">
+                    {addresses.length == 0 && <li className=" pt-2 text-center">No Address Added yet..</li>}
                     {addresses.map((address, index) => (
                         <li
                             key={index}
@@ -82,9 +88,6 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                     ))}
                 </ul>
             </div>
-            {/*To be styled */}
-            <Image src= "/images/share.svg" alt ="gas" height={1} width={20}/>
-            <Image src= "/images/tg.svg" alt ="gas" height={1} width={20}/>
           </div>
           <div className="font-Inter flex gap-5">
                 <Image src= "/images/user_img.svg" alt ="user_img" height={1} width={100}/>
@@ -110,7 +113,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                 </div>
             </div>
         </div>
-        <ul className="flex gap-[2rem] border-b-[1px] pb-[5px] font-poppins mt-[1.6rem] mb-[1.4rem] text-white">
+        <ul className="flex mx-1 gap-[2rem] border-b-[1px] pb-[5px] font-poppins mt-[1.6rem] mb-[1.4rem] text-white">
         <li style={ { color: textColor }} className="font-bold hover:text-[#008000]">
             <Link href= "/app/Overview">
             Tokens      
