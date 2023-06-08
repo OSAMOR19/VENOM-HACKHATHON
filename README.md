@@ -1,4 +1,5 @@
 # VYPERIUM
+![vyperiumlogo](https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/a32254e1-967d-4d92-8477-a89bce3aa8dc)
 
 ## OVERVIEW
 **VYPERIUM** is a decentralized application built on the Venom blockchain, offering a suite of essential features for secure and seamless token management. Our platform includes features such as token swapping, bridging, and sending tokens/coins, as well as Venom Scan, a powerful tool for tracking and analyzing blockchain data. With our user-friendly interface and robust security measures, **Vyperium** makes it easy for users to manage their digital assets with confidence.
@@ -11,7 +12,7 @@ Below are the functionalities of this Application:
 
 3.**Send Page**: The Send page allows users to securely send tokens or coins to other users or external addresses. Users can specify the recipient's address, choose the desired token, and enter the amount to be sent. The app ensures the accuracy of the transaction details and prompts users to confirm before executing the transfer. It streamlines the process of sending digital assets while prioritizing security.
 
-<img width="1138" alt="Screenshot 2023-06-04 at 00 43 58" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/4e5e457c-2036-445e-aac0-0e91ed3716de">
+https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/21f46b4e-7aa7-4681-812d-8a5faa6aadd5
 
 4.**Swap Page**: The Swap page facilitates instant token swapping within the VYPERIUM app. Users can select the tokens they want to exchange, specify the desired swap ratio or slippage tolerance, and execute the transaction. The app leverages decentralized exchanges or liquidity pools to provide users with competitive rates and seamless token swapping experiences.
 
@@ -29,7 +30,9 @@ Below are the functionalities of this Application:
 * [Contributing](#contributing)
 * [Contact Us](#contact)
 * [License](#license)
-* <img width="1259" alt="Screenshot 2023-06-04 at 00 27 31" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/8c5039e5-7dc2-4aba-887d-bf096ec4682b">
+
+
+<!-- * <img width="1259" alt="Screenshot 2023-06-04 at 00 27 31" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/8c5039e5-7dc2-4aba-887d-bf096ec4682b"> -->
 
 
 ## Installation
@@ -80,9 +83,9 @@ To start the development server:
 * Explore new opportunities for growth and expansion
 
 ## Team Members
+* _Isaac_ (Project Manager/Team Lead)
 * _Johnex_ (Front End Developer)
 * _Benard_ (Backend Developer/BlockChain Dev)
-* _Isaac_ (Project Designer)
 * _Designer_ (UI/UX Designer)
 
 ## Contributing
