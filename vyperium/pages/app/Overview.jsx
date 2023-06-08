@@ -408,7 +408,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
 
             {/* <div className="text-center bg-green-500 p-5 rounded cursor-pointer w-40"
             onClick={handleShowMore}>
-            Show Mor
+            Show Mo
             </div> */}
           </div>
         </div>
