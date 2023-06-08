@@ -445,7 +445,7 @@ const getBalance2 = async(addr) => {
             <p className="font-Inter text-[rgb(128,128,128)] text-[.9rem]">Trade any token, LP share or Vault in a single transaction</p>
             <div className="relative border-[2px] border-[#1D1D21] mt-[2rem] w-[80%] rounded-[1rem] p-[2rem]">
                 <div className="flex items-center mb-[1rem]">
-                    <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
+                    <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                     <h3 className="font-Inter font-bold">Venom</h3>
                     <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                 </div>
@@ -453,7 +453,7 @@ const getBalance2 = async(addr) => {
                     <p className="font-poppins">Pay with</p>
                     <div className="flex justify-between" >
                         <div className="flex items-center" onClick={() => openPopup(1)} >
-                            <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
+                            <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                             <h3 className="font-Inter font-bold">{tokenOne}</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                         </div>
@@ -473,7 +473,7 @@ const getBalance2 = async(addr) => {
                     <p className="font-poppins">Receive</p>
                     <div className="flex justify-between" >
                         <div className="flex items-center" onClick={() => openPopup(2)}>
-                            <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
+                            <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                             <h3 className="font-Inter font-bold">{tokenTwo}</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas"  height={1} width={30}/>
                         </div>
@@ -504,7 +504,7 @@ const getBalance2 = async(addr) => {
                 <div><button
               onClick={closePopup}
              
-              className="text-white hover:text-red-700 text-white font-bold text-2xl "
+              className="text-white hover:text-red-70 font-bold text-2xl "
             >
               X
             </button></div>
@@ -530,7 +530,7 @@ const getBalance2 = async(addr) => {
                     <div className="flex justify-between hover:bg-green-700 rounded">
                       <div>
                       <div className="p-4"> 
-                    <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
+                    <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
                     </div>
                         {/*<br />
                         Decimals: {token.decimals}
@@ -554,7 +554,7 @@ const getBalance2 = async(addr) => {
             
                   <div className="flex justify-between hover:bg-green-700 rounded">
                     <div className="p-4"> 
-                    <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
+                    <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
                     </div>
                     <div className="ml-[8px]"><span className="font-bold">{token.name}</span>
                       <br />
@@ -579,7 +579,7 @@ const getBalance2 = async(addr) => {
           <p>Find the token you want to Swap</p>
           <div><button
                     onClick={closeModal}
-                    className="text-white hover:text-red-700 text-white font-bold text-2xl "
+                    className=" hover:text-red-700 text-white font-bold text-2xl "
                   >
                     X
                   </button></div>
