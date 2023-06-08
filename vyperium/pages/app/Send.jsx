@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Button from '../venom-connect/button';
 import axios from 'axios';
 import { EverscaleStandaloneClient } from 'everscale-standalone-client';
-import { Token_Root } from "./constant/abi/TokenRootAbi";
-import { Token_Wallet } from './constant/abi/TokenWalletAbi';
+import { Token_Root } from "@/constant/abi/TokenRootAbi";
+import { Token_Wallet } from '@/constant/abi/TokenWalletAbi';
 import { VenomConnect } from 'venom-connect';
 import { ProviderRpcClient, Address, Contract } from 'everscale-inpage-provider';
 
