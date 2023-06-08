@@ -5,13 +5,17 @@
 
 Below are the functionalities of this Application:
 
+
+
+
+
 1.**Overview Page**: The Overview page provides users with a snapshot of their token holdings and key statistics. It displays the total value of their portfolio, individual token balances, recent transactions, and other relevant information. Users can quickly assess their asset allocation and monitor their overall performance.
 
 2.**Explore Page**: The Explore page offers a comprehensive view of the Venom blockchain and its ecosystem. Users can browse and discover various tokens available on the network, including their market prices, trading volumes, and historical charts. It enables users to stay informed about the latest token trends and explore new investment opportunities.
 
 3.**Send Page**: The Send page allows users to securely send tokens or coins to other users or external addresses. Users can specify the recipient's address, choose the desired token, and enter the amount to be sent. The app ensures the accuracy of the transaction details and prompts users to confirm before executing the transfer. It streamlines the process of sending digital assets while prioritizing security.
 
-<img width="1138" alt="Screenshot 2023-06-04 at 00 43 58" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/4e5e457c-2036-445e-aac0-0e91ed3716de">
+https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/21f46b4e-7aa7-4681-812d-8a5faa6aadd5
 
 4.**Swap Page**: The Swap page facilitates instant token swapping within the VYPERIUM app. Users can select the tokens they want to exchange, specify the desired swap ratio or slippage tolerance, and execute the transaction. The app leverages decentralized exchanges or liquidity pools to provide users with competitive rates and seamless token swapping experiences.
 
