@@ -3,9 +3,21 @@
 ## OVERVIEW
 **VYPERIUM** is a decentralized application built on the Venom blockchain, offering a suite of essential features for secure and seamless token management. Our platform includes features such as token swapping, bridging, and sending tokens/coins, as well as Venom Scan, a powerful tool for tracking and analyzing blockchain data. With our user-friendly interface and robust security measures, **Vyperium** makes it easy for users to manage their digital assets with confidence.
 
+Below are the functionalities of this Application:
+
+1.**Overview Page**: The Overview page provides users with a snapshot of their token holdings and key statistics. It displays the total value of their portfolio, individual token balances, recent transactions, and other relevant information. Users can quickly assess their asset allocation and monitor their overall performance.
+
+2.**Explore Page**: The Explore page offers a comprehensive view of the Venom blockchain and its ecosystem. Users can browse and discover various tokens available on the network, including their market prices, trading volumes, and historical charts. It enables users to stay informed about the latest token trends and explore new investment opportunities.
+
+3.**Send Page**: The Send page allows users to securely send tokens or coins to other users or external addresses. Users can specify the recipient's address, choose the desired token, and enter the amount to be sent. The app ensures the accuracy of the transaction details and prompts users to confirm before executing the transfer. It streamlines the process of sending digital assets while prioritizing security.
 
 <img width="1138" alt="Screenshot 2023-06-04 at 00 43 58" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/4e5e457c-2036-445e-aac0-0e91ed3716de">
 
+4.**Swap Page**: The Swap page facilitates instant token swapping within the VYPERIUM app. Users can select the tokens they want to exchange, specify the desired swap ratio or slippage tolerance, and execute the transaction. The app leverages decentralized exchanges or liquidity pools to provide users with competitive rates and seamless token swapping experiences.
+
+5.**Bridge Page**: The Bridge page enables users to transfer tokens between different blockchains. It acts as a bridge connecting multiple blockchain networks, allowing users to transfer assets across different ecosystems. Users can initiate cross-chain transactions, ensuring compatibility and interoperability between various tokens and blockchains.
+
+6.**Settings Page**: The Settings page empowers users to customize and personalize their VYPERIUM app experience. Users can manage account preferences, security settings, notification preferences, and other app-specific configurations. It ensures that users have full control over their app settings and can adapt the platform to their specific needs and preferences.
 
 
 ## Table of Contents
@@ -49,6 +61,7 @@ To start the development server:
 * Next.js
 * JavaScript
 * Tailwind CSS
+* Figma
 
 ## **Roadmap**
 ## Phase 1:
@@ -67,10 +80,10 @@ To start the development server:
 * Explore new opportunities for growth and expansion
 
 ## Team Members
-* _Johnex_
-* _Benard_
-* _Isaac_
-* _Designer_
+* _Johnex_ (Front End Developer)
+* _Benard_ (Backend Developer/BlockChain Dev)
+* _Isaac_ (Project Designer)
+* _Designer_ (UI/UX Designer)
 
 ## Contributing
 If you'd like to contribute to Vyperium, please follow these guidelines:
