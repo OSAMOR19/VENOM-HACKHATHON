@@ -18,6 +18,8 @@ const Swap = () => {
     const [addr, setAddr] = useState();
     const [rootAddress, setRootAddress] = useState('');
     const [isLoading, setIsLoading] = useState(false);
+    const [isLoadingpairs, setIsLoadingpairs] = useState(false);
+    const [response, setResponse] = useState(null);
     const [symbol, setSymbol] = useState('');
     const [decimals, setDecimals] = useState('0');
     const [input1, setInput1]= useState('');
@@ -31,6 +33,7 @@ const Swap = () => {
     const [currentPopup, setCurrentPopup] = useState(null);
     const [smallModal, setSmallModal] = useState(false)
     const [savedTokens, setSavedTokens] = useState([]);
+    const [pairs, setPairs] = useState([]);
     const [importClicked, setImportClicked] = useState(false);
     const [fetchError, setFetchError] = useState(false);
 
@@ -109,6 +112,40 @@ const Swap = () => {
         setSmallModal(true);
        
       }
+
+      useEffect(() => {
+        fetchData();
+      }, [tokenOneAddr, tokenTwoAddr]);
+    
+      const fetchData = async () => {
+        try {
+          setIsLoadingpairs(true);
+    
+          const response = await axios.post('/api/swap/pair', {
+            currencyAddresses: [tokenOneAddr, tokenTwoAddr],
+            limit: 100,
+            offset: 0,
+            ordering: 'tvlascending'
+          });
+    
+          setResponse(response.data.pairs);
+          setIsLoadingpairs(false);
+        } catch (error) {
+          console.error('Error:', error);
+          setIsLoadingpairs(false);
+        }
+      };
+    
+      const renderButtonContent = () => {
+        if (isLoadingpairs) {
+
+          return <div className="flex justify-center"><div className="  animate-spin rounded-full h-8 w-8 border-t-4 border-b-4 border-neutral-200"></div></div>;
+        } else if (response && response.length > 0) {
+          return 'Swap';
+        } else {
+          return 'Not Enough Liquidity';
+        }
+      };
 
       const handleImport = () => {
         
@@ -245,8 +282,8 @@ const Swap = () => {
   };
 
 
-  const [balance, setBalance] = useState('')
-  const [test, setTest] = useState([])
+  const [balance1, setBalance1] = useState('');
+  
   
   let tokenWalletAddress;
 
@@ -293,12 +330,12 @@ const Swap = () => {
         const contractState = await provider.rawApi.getFullContractState({address: tokenWalletAddress});
         if (contractState.state){
 
-          const result = await contract.methods.root({ answerId: 0}).call();
+          const result = await contract.methods.balance({ answerId: 0}).call();
           const  tokenBalance = result.value0;
-          setTest(tokenBalance);
+          setBalance1(tokenBalance);
         }
         else {
-          setBalance('0');
+          setBalance1('0');
         }
       }
         catch (e) {
@@ -385,7 +422,7 @@ const getBalance2 = async(addr) => {
     if(addr) getBalance2(addr)
   }, [addr,tokenTwoAddr])
 
-  const tokenOneBalance= balance  / Math.pow(10, tokenOneDecimal);
+  const tokenOneBalance= (balance1  / Math.pow(10, tokenOneDecimal));
   const tokenTwoBalance = balance2 / Math.pow(10, tokenTwoDecimal);
 
   
@@ -451,11 +488,10 @@ const getBalance2 = async(addr) => {
               <Button onAddrChange={handleAddrChange} />
             </div>
           ) : (
-            <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold" >Swap</button>
+            <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold" disabled={isLoadingpairs} > <div className="flex justify-center">{renderButtonContent()}</div></button>
           )}
             </div>
-          
-
+            
           {/* BIG MODAL */}
           {/* BIG MODAL */}
           {/* BIG MODAL */}
