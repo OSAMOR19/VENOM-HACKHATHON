@@ -34,6 +34,8 @@ const Swap = () => {
     const [smallModal, setSmallModal] = useState(false)
     const [savedTokens, setSavedTokens] = useState([]);
     const [pairs, setPairs] = useState([]);
+    const [tokenOneCurrency, setTokenOneCurrency] = useState('');
+    const [tokenTwoCurrency, setTokenTwoCurrency] = useState('');
     const [importClicked, setImportClicked] = useState(false);
     const [fetchError, setFetchError] = useState(false);
 
@@ -147,6 +149,7 @@ const Swap = () => {
         }
       };
 
+  
       const handleImport = () => {
         
         const newToken = {
