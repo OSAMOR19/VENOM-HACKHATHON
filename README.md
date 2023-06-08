@@ -1,13 +1,10 @@
 # VYPERIUM
+![vyperiumlogo](https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/a32254e1-967d-4d92-8477-a89bce3aa8dc)
 
 ## OVERVIEW
 **VYPERIUM** is a decentralized application built on the Venom blockchain, offering a suite of essential features for secure and seamless token management. Our platform includes features such as token swapping, bridging, and sending tokens/coins, as well as Venom Scan, a powerful tool for tracking and analyzing blockchain data. With our user-friendly interface and robust security measures, **Vyperium** makes it easy for users to manage their digital assets with confidence.
 
 Below are the functionalities of this Application:
-
-
-
-
 
 1.**Overview Page**: The Overview page provides users with a snapshot of their token holdings and key statistics. It displays the total value of their portfolio, individual token balances, recent transactions, and other relevant information. Users can quickly assess their asset allocation and monitor their overall performance.
 
@@ -33,7 +30,9 @@ https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/21f46b4e-7aa7-4681
 * [Contributing](#contributing)
 * [Contact Us](#contact)
 * [License](#license)
-* <img width="1259" alt="Screenshot 2023-06-04 at 00 27 31" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/8c5039e5-7dc2-4aba-887d-bf096ec4682b">
+
+
+<!-- * <img width="1259" alt="Screenshot 2023-06-04 at 00 27 31" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/8c5039e5-7dc2-4aba-887d-bf096ec4682b"> -->
 
 
 ## Installation
