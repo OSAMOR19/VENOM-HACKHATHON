@@ -83,9 +83,9 @@ To start the development server:
 * Explore new opportunities for growth and expansion
 
 ## Team Members
+* _Isaac_ (Project Manager/Team Lead)
 * _Johnex_ (Front End Developer)
 * _Benard_ (Backend Developer/BlockChain Dev)
-* _Isaac_ (Project Designer)
 * _Designer_ (UI/UX Designer)
 
 ## Contributing
