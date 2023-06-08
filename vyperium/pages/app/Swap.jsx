@@ -21,7 +21,7 @@ const Swap = () => {
     const [isLoadingpairs, setIsLoadingpairs] = useState(false);
     const [response, setResponse] = useState(null);
     const [symbol, setSymbol] = useState('');
-    const [decimals, setDecimals] = useState('0');
+    const [decimals, setDecimals] = useState('');
     const [input1, setInput1]= useState('');
     const [tokenOne, setTokenOne] = useState('VENOM');
     const [tokenOneAddr, setTokenOneAddr] = useState('');
@@ -449,10 +449,10 @@ const getBalance2 = async(addr) => {
                     <h3 className="font-Inter font-bold">Venom</h3>
                     <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                 </div>
-                <div className=" bg-[#1D1D21] rounded-[1rem] p-[1rem]" onClick={() => openPopup(1)} >
+                <div className=" bg-[#1D1D21] rounded-[1rem] p-[1rem]"  >
                     <p className="font-poppins">Pay with</p>
-                    <div className="flex justify-between">
-                        <div className="flex items-center" >
+                    <div className="flex justify-between" >
+                        <div className="flex items-center" onClick={() => openPopup(1)} >
                             <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                             <h3 className="font-Inter font-bold">{tokenOne}</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
@@ -469,10 +469,10 @@ const getBalance2 = async(addr) => {
                         <Image src= "/images/up-and-down-arrows.svg" onClick={handleExchange} alt ="swap" height={1} width={30} />
                     </button>
                 </div>
-                <div className="bg-[#1D1D21] rounded-[1rem] mt-[4px] p-[1rem]" onClick={() => openPopup(2)}> 
+                <div className="bg-[#1D1D21] rounded-[1rem] mt-[4px] p-[1rem]" > 
                     <p className="font-poppins">Receive</p>
-                    <div className="flex justify-between">
-                        <div className="flex items-center">
+                    <div className="flex justify-between" >
+                        <div className="flex items-center" onClick={() => openPopup(2)}>
                             <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                             <h3 className="font-Inter font-bold">{tokenTwo}</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas"  height={1} width={30}/>
@@ -527,9 +527,9 @@ const getBalance2 = async(addr) => {
                   <li key={index} className="shadow-md py-2 cursor-pointer"
                   onClick={() => handleSavedData (token.symbol, token.decimals,token.rootAddress)}>
 
-                    <div className="flex justify-between">
+                    <div className="flex justify-between hover:bg-green-700 rounded">
                       <div>
-                      <div className="px-2"> 
+                      <div className="p-4"> 
                     <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
                     </div>
                         {/*<br />
@@ -537,7 +537,7 @@ const getBalance2 = async(addr) => {
                         <br />
                         Root Address: {token.rootAddress}*/}
                       </div>
-                      <div>
+                      <div className="ml-[8px]">
                       <span className="font-bold">{token.symbol}</span>
                         <br/>
                         <span className="">{token.symbol}</span>
@@ -552,11 +552,11 @@ const getBalance2 = async(addr) => {
                 onClick={() => handleItemClick(token.name, token.address, token.decimals)}
               >
             
-                  <div className="flex justify-between">
-                    <div className="px-2"> 
+                  <div className="flex justify-between hover:bg-green-700 rounded">
+                    <div className="p-4"> 
                     <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
                     </div>
-                    <div><span className="font-bold">{token.name}</span>
+                    <div className="ml-[8px]"><span className="font-bold">{token.name}</span>
                       <br />
                       {token.ticker}</div>
                   </div>
@@ -601,7 +601,7 @@ const getBalance2 = async(addr) => {
       </div>
       <div
         className="font-bold cursor-pointer border hover:border-green-500 rounded px-4 bg-neutral-500"
-        onClick={fetchTokenData}
+        onClick={handleImport}
         disabled={isLoading}
       >
         Import
