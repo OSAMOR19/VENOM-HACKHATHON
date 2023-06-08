@@ -98,7 +98,9 @@ If you'd like to contribute to Vyperium, please follow these guidelines:
 * Submit a pull request to the main branch.
 
 ## Contact 
-isaacchukwuka67@gmail.com johnexxdefi@gmail.com  bernardonu@gmail.com
+isaacchukwuka67@gmail.com
+johnexxdefi@gmail.com  
+bernardonu@gmail.com
 
 ## License  
 _No license added yet_
