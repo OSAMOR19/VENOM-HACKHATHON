@@ -1,37 +1,25 @@
 {
-  "name": "vyperium",
+  "name": "my-app",
   "version": "0.1.0",
   "private": true,
   "scripts": {
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
-    "export": "next export"
+    "lint": "next lint"
   },
   "dependencies": {
-    "@knownout/venom-wallet-controller": "^0.1.48",
     "autoprefixer": "10.4.14",
-    "axios": "^1.4.0",
-    "big-integer": "^1.6.51",
-    "bignumber.js": "^9.1.1",
-    "chart.js": "^4.3.0",
-    "cookie_js": "^1.4.2",
-    "eslint": "8.39.0",
-    "eslint-config-next": "13.3.4",
-    "everscale-inpage-provider": "^0.3.58",
-    "everscale-standalone-client": "^2.1.18",
-    "faker": "^6.6.6",
-    "js-cookie": "^3.0.5",
-    "next": "13.3.4",
-    "postcss": "8.4.23",
+    "eslint": "8.42.0",
+    "eslint-config-next": "13.4.4",
+    "next": "13.4.4",
+    "postcss": "8.4.24",
     "react": "18.2.0",
-    "react-chartjs-2": "^5.2.0",
     "react-dom": "18.2.0",
-    "react-spinners": "^0.13.8",
+    "react-icons": "^4.9.0",
     "recharts": "^2.6.2",
     "tailwindcss": "3.3.2",
-    "venom-connect": "^1.0.18",
-    "wow.js": "^1.2.2"
+    "wow.js": "^1.2.2",
+    "wowjs": "^1.1.3"
   }
 }
