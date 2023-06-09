@@ -4,22 +4,23 @@
 ## OVERVIEW
 **VYPERIUM** is a decentralized application built on the Venom blockchain, offering a suite of essential features for secure and seamless token management. Our platform includes features such as token swapping, bridging, and sending tokens/coins, as well as Venom Scan, a powerful tool for tracking and analyzing blockchain data. With our user-friendly interface and robust security measures, **Vyperium** makes it easy for users to manage their digital assets with confidence.
 
-## Your Wallet: The Your Wallet page provides users with an overview of their wallet addresses and associated tokens. Users can manage multiple wallets within the VYPERIUM app and easily switch between them. This page displays the wallet addresses, token balances, transaction history, and other wallet-specific information. It offers convenient management of multiple wallets in one place.
-
 Below are the functionalities of this Application:
 
 https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/21f46b4e-7aa7-4681-812d-8a5faa6aadd5
+
+## Your Wallet: 
+The My Wallet page provides users with an overview of their wallet addresses and associated tokens. Users can manage multiple wallets within the VYPERIUM app and easily switch between them. This page displays the wallet addresses, token balances, transaction history, and other wallet-specific information. It offers convenient management of multiple wallets in one place.
 
 ### Overview Page
 The Overview page provides users with a snapshot of their token holdings and key statistics. It displays the total value of their portfolio, individual token balances, recent transactions, and other relevant information. Users can quickly assess their asset allocation and monitor their overall performance.
 
 https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/5d780028-7a8a-44c5-bf8c-cd6394329371
 
-### Explore Page 
+### Explore Page:
 The Explore page offers a comprehensive view of the Venom blockchain and its ecosystem. Users can browse and discover various tokens available on the network, including their market prices, trading volumes, and historical charts. It enables users to stay informed about the latest token trends and explore new investment opportunities.
 
 
-### Send Page
+### Send Page:
 The Send page allows users to securely send tokens or coins to other users or external addresses. Users can specify the recipient's address, choose the desired token, and enter the amount to be sent. The app ensures the accuracy of the transaction details and prompts users to confirm before executing the transfer. It streamlines the process of sending digital assets while prioritizing security.
 
 https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/5f765d3b-907e-4eba-9c8d-1b0dbf515fd0
