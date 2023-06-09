@@ -6,12 +6,15 @@
 
 Below are the functionalities of this Application:
 
+https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/21f46b4e-7aa7-4681-812d-8a5faa6aadd5
+
 ### Overview Page
 The Overview page provides users with a snapshot of their token holdings and key statistics. It displays the total value of their portfolio, individual token balances, recent transactions, and other relevant information. Users can quickly assess their asset allocation and monitor their overall performance.
 
-https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/21f46b4e-7aa7-4681-812d-8a5faa6aadd5
+https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/5d780028-7a8a-44c5-bf8c-cd6394329371
 
-2.**Explore Page**: The Explore page offers a comprehensive view of the Venom blockchain and its ecosystem. Users can browse and discover various tokens available on the network, including their market prices, trading volumes, and historical charts. It enables users to stay informed about the latest token trends and explore new investment opportunities.
+### Explore Page 
+The Explore page offers a comprehensive view of the Venom blockchain and its ecosystem. Users can browse and discover various tokens available on the network, including their market prices, trading volumes, and historical charts. It enables users to stay informed about the latest token trends and explore new investment opportunities.
 
 3.**Send Page**: The Send page allows users to securely send tokens or coins to other users or external addresses. Users can specify the recipient's address, choose the desired token, and enter the amount to be sent. The app ensures the accuracy of the transaction details and prompts users to confirm before executing the transfer. It streamlines the process of sending digital assets while prioritizing security.
 
