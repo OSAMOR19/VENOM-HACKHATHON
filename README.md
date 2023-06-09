@@ -34,9 +34,14 @@ The Swap page facilitates instant token swapping within the VYPERIUM app. Users 
 https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/8f9f7ff5-0a76-4dbf-ba26-0f5889add404
 
 
-5.**Bridge Page**: The Bridge page enables users to transfer tokens between different blockchains. It acts as a bridge connecting multiple blockchain networks, allowing users to transfer assets across different ecosystems. Users can initiate cross-chain transactions, ensuring compatibility and interoperability between various tokens and blockchains.
+### Bridge Page
+The Bridge page enables users to transfer tokens between different blockchains. It acts as a bridge connecting multiple blockchain networks, allowing users to transfer assets across different ecosystems. Users can initiate cross-chain transactions, ensuring compatibility and interoperability between various tokens and blockchains.
 
-6.**Settings Page**: The Settings page empowers users to customize and personalize their VYPERIUM app experience. Users can manage account preferences, security settings, notification preferences, and other app-specific configurations. It ensures that users have full control over their app settings and can adapt the platform to their specific needs and preferences.
+![Screenshot (23)](https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/5838f254-a4e9-4e15-a11c-670410de291f)
+
+### Settings Page
+
+The Settings page empowers users to customize and personalize their VYPERIUM app experience. Users can manage account preferences, security settings, notification preferences, and other app-specific configurations. It ensures that users have full control over their app settings and can adapt the platform to their specific needs and preferences.
 
 https://www.figma.com/file/U13MaTFy1wJqkfzHSRyIru/VENOM?type=design&t=0Ut3C33SLAanrOta-0
 
