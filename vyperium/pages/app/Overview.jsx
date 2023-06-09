@@ -72,7 +72,7 @@ const [addresses, setAddresses] = useState([]);
         const response = await axios.get(`/api/search?ownerAddress=${includeAccounts.join(',')}`);
         const { balance } = response.data;
         setBalance(balance);
-        setSpinner(false);
+        setSpinner(true);
       }
     } catch (error) {
       console.error(error);
@@ -221,6 +221,7 @@ const transactionHistory = async (e) => {
     setClickedBalance(balance);
     setIncludeAccounts([]);
     setBalance(null)
+    setSpinner(false)
   } catch (error) {
     console.error(error);
     const errorMessage = error.response?.data?.error || 'An error occurred. Please try again later.';
@@ -422,7 +423,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
             <div className="pb-[1rem] flex items-center">
               <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" class="tm5rm07">
                 <rect width="32" height="32" rx="2" fill="#2558D9"></rect>
-                <path d="M7 11h15a3 3 0 013 3v8a3 3 0 01-3 3H8a1 1 0 01-1-1V11z" stroke="#fff" stroke-width="2"></path>
+                <path d="M7 11h15a3 3 0 013 3v8a3 3 0 01-3 3H8a1 1 0 01-1-1V11z" stroke="#fff" strokeWidth="2"></path>
                 <path d="M6 9a2 2 0 012-2h12a2 2 0 012 2H6z" fill="#fff"></path>
               </svg>&nbsp;
               <p className="font-poppins text-[1.3rem] font-bold">Wallet - ${clickedBalance / 1000000000}</p> 
