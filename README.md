@@ -16,8 +16,11 @@ https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/5d780028-7a8a-44c5
 ### Explore Page 
 The Explore page offers a comprehensive view of the Venom blockchain and its ecosystem. Users can browse and discover various tokens available on the network, including their market prices, trading volumes, and historical charts. It enables users to stay informed about the latest token trends and explore new investment opportunities.
 
-3.**Send Page**: The Send page allows users to securely send tokens or coins to other users or external addresses. Users can specify the recipient's address, choose the desired token, and enter the amount to be sent. The app ensures the accuracy of the transaction details and prompts users to confirm before executing the transfer. It streamlines the process of sending digital assets while prioritizing security.
 
+### Send Page
+The Send page allows users to securely send tokens or coins to other users or external addresses. Users can specify the recipient's address, choose the desired token, and enter the amount to be sent. The app ensures the accuracy of the transaction details and prompts users to confirm before executing the transfer. It streamlines the process of sending digital assets while prioritizing security.
+
+https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/5f765d3b-907e-4eba-9c8d-1b0dbf515fd0
 <img width="1138" alt="Screenshot 2023-06-04 at 00 43 58" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/315e3f99-f79c-4ba5-a096-d01668eacdc0">
 Screen shot of our app interface.
 
