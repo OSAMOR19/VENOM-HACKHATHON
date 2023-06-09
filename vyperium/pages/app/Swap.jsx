@@ -5,7 +5,7 @@ import { useState, useEffect } from "react";
 import tokenList from '@/constant/tokenList.json';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import { initVenomConnect } from "../venom-connect/configure";
+import { initVenomConnect } from "@/wallet-configure/configure";
 import { Token_Root } from "@/constant/abi/TokenRootAbi";
 import { Token_Wallet } from "@/constant/abi/TokenWalletAbi";
 import { ProviderRpcClient, Address, Contract } from 'everscale-inpage-provider';
