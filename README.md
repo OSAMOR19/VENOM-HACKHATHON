@@ -23,6 +23,10 @@ https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/21f46b4e-7aa7-4681
 
 6.**Settings Page**: The Settings page empowers users to customize and personalize their VYPERIUM app experience. Users can manage account preferences, security settings, notification preferences, and other app-specific configurations. It ensures that users have full control over their app settings and can adapt the platform to their specific needs and preferences.
 
+https://www.figma.com/file/U13MaTFy1wJqkfzHSRyIru/VENOM?type=design&t=0Ut3C33SLAanrOta-0
+
+<img width="1198" alt="Screenshot 2023-06-09 at 00 51 28" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/ba315f1d-a955-4b45-91f6-e9f43c4742b3">
+This is a screenshot of the figma file as designed by our Uidesigner
 
 ## Table of Contents
 * [Installation](#installation)
