@@ -1,12 +1,10 @@
 import Image from "next/image"
 import Link from "next/link";
 import React, { useEffect, useState } from 'react';
-<<<<<<< HEAD
-import Accordion from "./Accordion";
-=======
 import Accordion from "../../pure components/Accordion";
+import YouTube from 'react-youtube';
 import { useData } from "@/context/DataContext";
->>>>>>> 6cc4f48271d01272df80bb3b19cc08b4c31a87d1
+
 
 
 const HomePage = () => {
@@ -17,8 +15,7 @@ const HomePage = () => {
         { title: 'Does Vyperium have a pool', content: 'Vyperium does not have a pool of his own but gives you access to all the active and beneficial pools on the explore page of the Venom Blockchain.'},
         { title: 'What Blockchain can i bridge to using Vyperium', content: 'Vyperium uses Venom Bridge Api there for all chains you might want to bridge  using the Venom Bridge would be possible with Vyperium bridge. ' },
       ];
- 
-      
+    
   return (
     <>
         <section className="mt-2 bg-wp mx-auto pt-[8rem] text-white">
@@ -108,10 +105,13 @@ const HomePage = () => {
                     <Image src = "/images/vyperhome1.png" alt="landing-pageImg" height={200} width={400} />
                 </div>
             </div>
+          
         </section>
         <section className="pt-[8rem] pb-[5rem]">
             <div className=" md:w-[70%] w-[94%] mx-auto flex flex-col gap-10 items-center">
-                <Image src="/images/img-landing.svg" className=" wow flipInY" height={1} width={650} alt="img-landing" />
+                <div className="aspect-w-16 aspect-h-9 flex items-center wow flipInY border rounded border-[#008000]">
+                       <YouTube videoId="M9kMlf7hNhI" opts={{ playerVars: { autoplay: 1 } }} />
+                   </div>
                 <div className="md:w-[70%] overflow-x-auto justify-evenly flex gap-4">
                     <div className="wow bounceInDown p-3 bg-[#1A1A26]"><Image src = "/images/ptnr1.svg" alt="landing-pageImg" height={1} width={100} /></div>
                     <div data-wow-delay=".2s" className="wow bounceInDown p-3 bg-[#1A1A26]"><Image src = "/images/ptnr2.svg" alt="landing-pageImg" height={1} width={100} /></div>

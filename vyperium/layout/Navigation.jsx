@@ -32,7 +32,7 @@ const Navigation = () => {
         </ul>
         <div className="flex justify-center ">
           <div className="px-5">
-<<<<<<< HEAD
+
           <Link href='https://twitter.com/Vyperium_'>
           <FaTwitter className="w-5 h-5"/>
           </Link>
@@ -41,16 +41,6 @@ const Navigation = () => {
           <Link href='https://github.com/OSAMOR19/VENOM-HACKHATHON'>
           <FaGithub className="w-5 h-5"/>
           </Link>
-=======
-          <a href='https://twitter.com/Vyperium_' target="_self">
-            <FaTwitter className="w-5 h-5"/>
-          </a>
-          </div>
-          <div className="px-5">
-          <a href='https://github.com/OSAMOR19/VENOM-HACKHATHON' target="_self">
-            <FaGithub className="w-5 h-5"/>
-          </a>
->>>>>>> 6cc4f48271d01272df80bb3b19cc08b4c31a87d1
           </div>
         </div>
       </nav>
