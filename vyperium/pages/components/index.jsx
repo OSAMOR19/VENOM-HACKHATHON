@@ -1,7 +1,7 @@
 import Image from "next/image"
 import Link from "next/link";
 import React, { useEffect, useState } from 'react';
-import Accordion from "./Accordion";
+import Accordion from "../../pure components/Accordion";
 import { useData } from "@/context/DataContext";
 
 
