@@ -43,7 +43,14 @@ const Swap = () => {
     const [tokenTwoCurrency, setTokenTwoCurrency] = useState('');
     const [importClicked, setImportClicked] = useState(false);
     const [fetchError, setFetchError] = useState(false);
-
+    const [currencyInfo, setCurrencyInfo] = useState(null);
+    const [tokenOnePrice, setTokenOnePrice] = useState('');
+    const [tokenTwoPrice, setTokenTwoPrice] = useState('');
+    const [inputOneValue, setInputOneValue] = useState('');
+    const [inputTwoValue, setInputTwoValue] = useState('');
+  
+    
+  
   
 
     useEffect(() => {
@@ -154,6 +161,37 @@ const Swap = () => {
         }
       };
 
+      const fetchPrice = async () => {
+        try {
+          const response = await fetch('/api/swap/price', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ currency_addresses: [tokenOneAddr, tokenTwoAddr] }), // Use the entered currency address
+          });
+    
+          if (response.ok) {
+            const data = await response.json();
+            setCurrencyInfo(data);
+            const tokenOnePrice = data[tokenOneAddr];
+            const tokenTwoPrice = data[tokenTwoAddr];
+            setTokenOnePrice(tokenOnePrice);
+            setTokenTwoPrice(tokenTwoPrice);
+          } else {
+            console.error('Failed to fetch currency info:', response.status);
+          }
+        } catch (error) {
+          console.error('Failed to fetch currency info:', error);
+        }
+      };
+    
+      useEffect(() => {
+       {
+          fetchPrice();
+        }
+      }, [tokenOneAddr,tokenTwoAddr]);
+    
   
       const handleImport = () => {
         
@@ -221,6 +259,21 @@ const Swap = () => {
           }
           setIsPopupVisible(false);
         }
+
+        const handleInputAmount = (event) => {
+          const inputValue = event.target.value;
+          setInputOneValue(inputValue);
+          setInputTwoValue(calculateEquivalentValue(inputValue));
+        };
+      
+        const calculateEquivalentValue = (inputValue) => {
+          if (inputValue === '') {
+            return '';
+          }
+          const amountTokenOne = parseFloat(inputValue);
+          const amountTokenTwo = amountTokenOne * parseFloat(tokenTwoPrice) / parseFloat(tokenOnePrice);
+          return amountTokenTwo.toFixed(2); // Adjust decimal places as needed
+        };
 ////////////////////////////////////////////////////////////////////////
 //                 /         /                                         //
 //  ///////   ///////  ///////   ////////   ///////  ///////  ///////  //
@@ -458,7 +511,12 @@ const getBalance2 = async(addr) => {
                     <h3 className="font-Inter font-bold">Venom</h3>
                 </div>
                 <div className=" bg-[#1D1D21] rounded-[1rem] p-[1rem]"  >
-                    <p className="font-poppins">Pay with</p>
+                    <div className="flex  justify-between"><p className="font-poppins">Pay with</p>
+                    {tokenOnePrice &&(
+                    <p className="font-poppins text-[0.8rem] text-[#808080]">
+                      1{tokenOne} = ${tokenOnePrice}</p>)}
+                      </div>
+
                     <div className="flex justify-between" >
                         <div className="flex cursor-pointer items-center" onClick={() => openPopup(1)} >
                             <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
@@ -466,7 +524,7 @@ const getBalance2 = async(addr) => {
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                         </div>
                         <div className="pr-[1rem]">
-                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[5rem] md:w-[16rem] text-right font-Oswald text-[#808080]" />
+                            <input type="text" value={inputOneValue} onChange={handleInputAmount} placeholder="0" className="bg-transparent outline-none font-[700] w-[5rem] md:w-[16rem] text-right font-Oswald text-[#808080]" />
                         </div>
                     </div>
                     
@@ -478,7 +536,15 @@ const getBalance2 = async(addr) => {
                     </button>
                 </div>
                 <div className="bg-[#1D1D21] rounded-[1rem] mt-[4px] mb-[.5rem] p-[1rem]" > 
-                    <p className="font-poppins">Receive</p>
+                <div className="flex justify-between" >
+                  <p className="font-poppins">Receive</p>
+                  <p>{tokenTwoPrice && (
+                      <p className="font-poppins text-[0.8rem] text-[#808080]" >
+                        1{tokenTwo} = ${tokenTwoPrice}
+                      </p>
+                    )}
+                    </p>
+                 </div> 
                     <div className="flex justify-between" >
                         <div className="flex cursor-pointer items-center" onClick={() => openPopup(2)}>
                             <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
@@ -486,7 +552,7 @@ const getBalance2 = async(addr) => {
                             <Image src= "/images/angle-down.svg" alt ="gas"  height={1} width={30}/>
                         </div>
                         <div className="pr-[1rem]">
-                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[5rem] md:w-[16rem] text-right font-Oswald text-[#808080]" />
+                            <input type="text" value={inputTwoValue}  readOnly placeholder="0" className="bg-transparent outline-none font-[700] w-[5rem] md:w-[16rem] text-right font-Oswald text-[#808080]" />
                         </div>
                     </div>
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">{tokenTwoBalance}</span></p>
@@ -497,7 +563,8 @@ const getBalance2 = async(addr) => {
             <button className="w-full mt-[1rem] hover:bg-[#00800045] transition-[.5s] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold" disabled={isLoadingpairs} > <div className="flex justify-center">{renderButtonContent()}</div></button>
           )}
             </div>
-            
+
+    
           {/* BIG MODAL */}
           {/* BIG MODAL */}
           {/* BIG MODAL */}
@@ -529,24 +596,6 @@ const getBalance2 = async(addr) => {
             </div>
             <ul className="px-4">
                   <div className="cursor-pointer font-poppins" onClick={handleCancel}>Clear</div>
-                    {savedTokens.map((token, index) => (
-                  <li key={index} className="shadow-md py-2 cursor-pointer"
-                  onClick={() => handleSavedData (token.symbol, token.decimals,token.rootAddress)}>
-
-                    <div className="flex justify-between hover:bg-green-700 rounded">
-                      <div>
-                      <div className="p-4"> 
-                    <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
-                    </div>
-                      </div>
-                      <div className="ml-[8px]">
-                      <span className="font-Inter font-bold">{token.symbol}</span>
-                        <br/>
-                        <span className="font-poppins">{token.symbol}</span>
-                      </div>
-                    </div>
-                  </li>
-                ))}
                 <div className="overflow-y-auto h-[30vh]">
                   {tokenList.map((token) => (
                     <li
@@ -565,6 +614,24 @@ const getBalance2 = async(addr) => {
                       </div>
                     </li>
                   ))}
+                  {savedTokens.map((token, index) => (
+                  <li key={index} className="shadow-md py-2 cursor-pointer"
+                  onClick={() => handleSavedData (token.symbol, token.decimals,token.rootAddress)}>
+
+                    <div className="flex justify-between hover:bg-green-700 rounded">
+                      <div>
+                      <div className="p-4"> 
+                    <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/>
+                    </div>
+                      </div>
+                      <div className="ml-[8px]">
+                      <span className="font-Inter font-bold pl-4">{token.symbol}</span>
+                        <br/>
+                        <span className="font-poppins pl-4">{token.symbol}</span>
+                      </div>
+                    </div>
+                  </li>
+                ))}
                 </div>
       
             </ul>
