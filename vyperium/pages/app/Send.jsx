@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, use } from 'react';
 import HeadComp from '@/layout/HeadComp';
 import Image from 'next/image';
@@ -363,13 +364,13 @@ const [pubkey, setPubkey] = useState();
             <input
               type="text"
               placeholder="0:343....."
-              className={`bg-transparent outline-none font-[700] w-[32rem] font-Oswald text-[#808080] ${
+              className={`bg-transparent outline-none font-[700] md:w-[32rem] font-Oswald text-[#808080] ${
                 isInvalid ? 'border-red-500' : ''
               }`}
               value={customAsset}
               onChange={handleImport}
             />
-            <button onClick={handleButtonClick} class="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Import Token</button>
+            <button onClick={handleButtonClick} class="bg-green-500 font-poppins hover:bg-green-700 text-white font-bold py-2 px-4 ml-4 rounded">Import Token</button>
           </div>
 
           <ul class="mt-4">
@@ -392,7 +393,7 @@ const [pubkey, setPubkey] = useState();
           <div className='flex justify-between text-[12px]'>
           <button
             onClick={handleNextClick}
-            className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded mr-2"
+            className="bg-green-500 hover:bg-green-700 cursor-pointer font-poppins text-white font-bold py-2 px-4 rounded mr-2"
           >
         Next
       </button>
@@ -400,68 +401,68 @@ const [pubkey, setPubkey] = useState();
       <button
         onClick={handlePrevClick}
         disabled={offset === 0}
-        className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded "
+        className="bg-green-500 hover:bg-green-700 cursor-pointer font-poppins text-white font-bold py-2 px-4 rounded "
       >
         Previous
       </button>
           </div>
-        </div>
-
-       <div className="relative inline-block">
-        <div>
-          <span className="rounded-md shadow-sm">
-            <button
-              type="button"
-              onClick={toggleDropdown}
-              className="inline-flex justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
-              id="ordering-options"
-              aria-haspopup="true"
-              aria-expanded={isDropdownOpen ? 'true' : 'false'}
-            >
-              Ordering
-              <svg
-                className="-mr-1 ml-2 h-5 w-5"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 20 20"
-                fill="currentColor"
-                aria-hidden="true"
+        <div className=" md:w-[20%] w-full mt-[1rem]">
+          <div>
+            <span className="rounded-md shadow-sm">
+              <button
+                type="button"
+                onClick={toggleDropdown}
+                className="inline-flex font-poppins justify-center w-full rounded-md border border-gray-300 px-4 py-2 bg-white text-sm font-medium text-gray-700 hover:bg-gray-50"
+                id="ordering-options"
+                aria-haspopup="true"
+                aria-expanded={isDropdownOpen ? 'true' : 'false'}
               >
-                <path
-                  fillRule="evenodd"
-                  d="M7 7l3-3 3 3m0 6l-3 3-3-3"
-                />
-              </svg>
-            </button>
-          </span>
-        </div>
-
-        {/* Dropdown options */}
-        {isDropdownOpen && (
-          <div
-            className="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100"
-            role="menu"
-            aria-orientation="vertical"
-            aria-labelledby="ordering-options"
-          >
-            {orderingOptions.map((option) => (
-              <label
-                key={option.value}
-                className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 cursor-pointer"
-                role="menuitem"
-              >
-                <input
-                  type="checkbox"
-                  value={option.value}
-                  checked={ordering === option.value}
-                  onChange={() => handleOrderingChange(option.value)}
-                  className="form-checkbox focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
-                />
-                <span className="ml-2">{option.label}</span>
-              </label>
-            ))}
+                Ordering
+                <svg
+                  className="-mr-1 ml-2 h-5 w-5"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 20 20"
+                  fill="currentColor"
+                  aria-hidden="true"
+                >
+                  <path
+                    fillRule="evenodd"
+                    d="M7 7l3-3 3 3m0 6l-3 3-3-3"
+                  />
+                </svg>
+              </button>
+            </span>
           </div>
-        )}
-      </div>
+
+          {/* Dropdown options */}
+          {isDropdownOpen && (
+            <div
+              className="origin-top-right absolute mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5 divide-y divide-gray-100"
+              role="menu"
+              aria-orientation="vertical"
+              aria-labelledby="ordering-options"
+            >
+              {orderingOptions.map((option) => (
+                <label
+                  key={option.value}
+                  className="flex items-center justify-between px-4 py-2 text-sm text-gray-700 cursor-pointer"
+                  role="menuitem"
+                >
+                  <input
+                    type="checkbox"
+                    value={option.value}
+                    checked={ordering === option.value}
+                    onChange={() => handleOrderingChange(option.value)}
+                    className="form-checkbox focus:ring-indigo-500 h-4 w-4 text-indigo-600 border-gray-300 rounded"
+                  />
+                  <span className="ml-2">{option.label}</span>
+                </label>
+              ))}
+            </div>
+          )}
+        </div>
+        </div>
+
     </div>
       )
     }   
@@ -480,18 +481,17 @@ const [pubkey, setPubkey] = useState();
   return (
     <>
       <HeadComp title="Vyperium - Send" />
-      <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem] text-white">
+      <section className="md:ml-[22%] mx-[2%] md:w-[71%] pt-[1rem] md:mr-[7%] mt-[4rem] md:mt-[5rem] text-white">
         <h2 className="font-Oswald text-[2rem] font-[600]">Send</h2>
-        <p className="font-Inter text-[rgb(128,128,128)] text-[.9rem]">Send any token on Venom Blockchain to any Venom wallet</p>
-        <div className="relative border-[2px] border-[#1D1D21] mt-[2rem] w-[80%] rounded-[1rem] p-[2rem]">
+        <p className="font-Inter w-[90%] text-[rgb(128,128,128)] text-[.9rem]">Send any token on Venom Blockchain to any Venom wallet</p>
+        <div className="relative border-[2px] border-[#1D1D21] mt-[2rem] mx-auto md:mx-0 w-[95%] md:w-[80%] py-[2rem] px-[1rem] md:p-[2rem] rounded-[1rem] p-[2rem]">
           <ul className="font-poppins font-bold flex justify-around border-b-[1px] border-b-[#808080] pb-[1rem] mb-[1rem]">
             <li className="transition-[.5s] cursor-pointer text-[#008000] hover:text-[#008000]">Token</li>
             <li className="transition-[.5s] cursor-pointer hover:text-[#008000]">NFT</li>
           </ul>
           <div className="flex items-center mb-[1rem]">
-            <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1} />
+            <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1} />
             <h3 className="font-Inter font-bold">Venom</h3>
-            <Image src="/images/angle-down.svg" alt="gas" height={1} width={30} />
           </div>
           <div className=" bg-[#1D1D21] rounded-[1rem] p-[1rem]">
             <p className="font-poppins">Recipient</p>
@@ -500,23 +500,23 @@ const [pubkey, setPubkey] = useState();
                 <input
                   type="text"
                   placeholder="Address, domain or identity"
-                  className="bg-transparent outline-none font-[700] w-[32rem] font-Oswald text-[#808080]"
+                  className="bg-transparent outline-none font-[700] w-[10rem] md:w-[32rem] font-Oswald text-[#808080]"
                   value={recipient}
                   onChange={(e) => setRecipient(e.target.value)}
                 />
               </div>
               <div className="flex items-center">
-                <Image src="/images/user.svg" className="rounded-[50%] " width={30} height={1} />
+                <Image alt="userImg" src="/images/user.svg" className="rounded-[50%] " width={30} height={1} />
                 <Image src="/images/angle-down.svg" alt="gas" height={1} width={30} />
               </div>
             </div>
             <p className="font-poppins text-[#808080] mt-[2px]">0x0000...</p>
           </div>
-          <div className="bg-[#1D1D21] rounded-[1rem] mt-[4px] p-[1rem]">
+          <div className="bg-[#1D1D21] mb-[.5rem] rounded-[1rem] mt-[4px] p-[1rem]">
             <p className="font-poppins">Asset</p>
             <div className="flex justify-between">
               <div className="flex items-center">
-                <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px] cursor-pointer" width={30} height={1} onClick={openPopup} />
+                <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px] cursor-pointer" width={30} height={1} onClick={openPopup} />
                 <h3 className="font-Inter font-bold" onClick={openPopup}>{asset}</h3>
                 <div>
                 <Image src="/images/angle-down.svg" alt="gas" height={1} width={30} onClick={openPopup} className='cursor-pointer' />
@@ -527,7 +527,7 @@ const [pubkey, setPubkey] = useState();
                 <input
                   type="text"
                   placeholder="0"
-                  className="bg-transparent outline-none font-[700] w-[16rem] text-right font-Oswald text-[#808080]"
+                  className="bg-transparent outline-none font-[700] w-[5rem] md:w-[16rem] text-right font-Oswald text-[#808080]"
                   value={tokenAmount}
                   onChange={(e) => setTokenAmount(e.target.value)}
                 />
@@ -541,14 +541,9 @@ const [pubkey, setPubkey] = useState();
               <span className="">{rootAddress ? `${rootAddress.slice(0, 7)}....${rootAddress.slice(40, -20)}...${rootAddress.slice(-4)}` : ''}</span>
 
             </p>
-            <div>
-      
-    </div>
           </div>
           {addr == null ? (
-            <div className="w-full mt-[1rem] bg-[#008000] cursor-pointer font-raleway py-[1rem] rounded-[1rem] font-bold flex justify-center items-center">
               <Button onAddrChange={handleAddrChange} />
-            </div>
           ) : (
             <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold" onClick={send}>Send</button>
           )}
