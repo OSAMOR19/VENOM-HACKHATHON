@@ -17,7 +17,7 @@ import { useData } from "@/context/DataContext";
 
 const Swap = () => {
   const {setIsOnApp} = useData()
-  setIsOnApp(false)
+  setIsOnApp(true)
 
     const btnRef = useRef()
     const [addr, setAddr] = useState();
