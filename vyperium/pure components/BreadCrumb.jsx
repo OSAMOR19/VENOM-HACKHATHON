@@ -92,7 +92,7 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
           <div className="font-Inter flex gap-5">
                 <Image src= "/images/user_img.svg" alt ="user_img" height={1} width={100}/>
             {/**This is the input section */}                
-                <div className="">
+                <div className="pr-[1rem]">
                     
                         <div className="flex items-center">
                         <div>
@@ -101,12 +101,6 @@ const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedB
                         ))}
 
                         </div>
-          
-                        <Image 
-                            src= "/images/angle-down.svg" 
-                            alt ="svg" height={1} width={30}
-                            onClick={getResult}
-                            className="cursor-pointer"/>
                         </div>
                     <p className="text-[2.6rem] font-poppins font-[600]">${Math.floor(clickedBalance  / 1000000000)}</p>
                     <p className="text-[.9rem] font-Inter text-[#01A643]">+0% ($0.00)</p>

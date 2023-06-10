@@ -12,7 +12,7 @@ const Bridge = () => {
                 <div className="flex items-center justify-between">
                     <div className="flex w-[40%] bg-[#1D1D21] py-[2px] px-[5px] rounded-[.7rem] items-center mb-[1rem] justify-between">
                         <div className="flex items-center">
-                            <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
+                            <Image alt="venomimg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                             <h3 className="font-Inter font-bold">
                                 <span className="font-poppins font-[300] text-[#808080]">From</span> <br />
                                 Venom
@@ -25,9 +25,9 @@ const Bridge = () => {
                     </button>
                     <div className="flex w-[40%] bg-[#1D1D21] py-[2px] px-[5px] rounded-[.7rem] items-center mb-[1rem] justify-between">
                         <div className="flex items-center">
-                            <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
+                            <Image alt="venomimg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                             <h3 className="font-Inter font-bold">
-                                <span className="font-poppins font-[300] text-[#808080]">From</span> <br />
+                                <span className="font-poppins font-[300] text-[#808080]">To</span> <br />
                                 Venom
                             </h3>
                         </div>
@@ -38,8 +38,8 @@ const Bridge = () => {
                     <p className="font-poppins">Send</p>
                     <div className="flex justify-between">
                         <div className="flex items-center">
-                            <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
-                            <h3 className="font-Inter font-bold">TOKEN1</h3>
+                            <Image alt="venomimg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
+                            <h3 className="font-Inter font-bold">Select a token</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                         </div>
                         <div className="pr-[1rem]">
@@ -52,8 +52,8 @@ const Bridge = () => {
                     <p className="font-poppins">Receive</p>
                     <div className="flex justify-between">
                         <div className="flex items-center">
-                            <Image src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
-                            <h3 className="font-Inter font-bold">Token2</h3>
+                            <Image alt="venomimg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
+                            <h3 className="font-Inter font-bold">Select a token</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                         </div>
                         <div className="pr-[1rem]">
@@ -62,7 +62,7 @@ const Bridge = () => {
                     </div>
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
                 </div>
-                <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold">Bridge Asset</button>
+                <button className="w-full mt-[1rem] bg-[#00800045] font-raleway py-[1rem] rounded-[1rem] font-bold">Coming Soon</button>
             </div>
         </section>
     </>

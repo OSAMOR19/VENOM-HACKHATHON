@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, { useState, useEffect, useRef } from 'react'
 import { AreaChart,  Area , Tooltip ,XAxis ,YAxis, ResponsiveContainer } from 'recharts';
 import Image from "next/image"
@@ -390,7 +391,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
               </table>
               <div className=" border-t mt-3 flex items-center justify-center">
                 <Link href="/app/History">
-                  <button className="mt-[.6rem] hover:bg-[#000] transition-[.5s] py-[.35rem] text-[.8rem] px-3 border-[1px] rounded-[.3rem]">See More</button>
+                  <button className="mt-[.6rem] hover:bg-[#ffffff45] transition-[.5s] py-[.35rem] text-[.8rem] px-3 border-[1px] rounded-[.3rem]">See More</button>
                 </Link>
               </div>
                     {/* {dataTest.list.map((transaction, index) => (
