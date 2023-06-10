@@ -9,6 +9,7 @@ import Button from "@/pages/venom-connect/button";
 
 const AppNav = () => {
     const navRef = useRef()
+    const burgerRef = useRef()
     const router = useRouter();
     const navLinks = [
 		{ key: 1, title: "Your Wallet", path: "/app/Wallet", iconSrc: "/images/wallet.svg"},
@@ -31,6 +32,7 @@ const AppNav = () => {
 	));
 
     const showNav = () => {
+        burgerRef.current.classList.toggle("burgerNav")	
         if (navRef.current.classList.contains("translate-x-[-20rem]")) {
             navRef.current.classList.remove("translate-x-[-20rem]")
         }
@@ -63,7 +65,7 @@ const AppNav = () => {
                 <Image src= "/images/vyperiumlogo.jpeg" alt ="gas" height={1} width={30}/>
                 <h1 className="text-[1.5rem] font-instrumentSerif font-[500]">Vyperium</h1>
             </div>
-            <div className=" hidden md:block">
+            <div className=" hidden">
                 <div className=" flex items-center gap-2">
                     <div className="font-poppins flex gap-1 items-center">
                         <Image src= "/images/gas.svg" alt ="gas" height={1} width={20}/>
@@ -83,7 +85,17 @@ const AppNav = () => {
                     </div>
                 </div>
             </div>
-            <svg onClick={showNav} className=" md:hidden" width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M4 24h24v-2.667H4V24zm0-6.667h24v-2.666H4v2.666zM4 8v2.667h24V8H4z" fill="currentColor"></path></svg>
+            <div onClick={showNav} ref={burgerRef} className=" pr-4 space-y-1 block md:hidden z-[999] fixed right-0">
+                <svg width="21" className=" " height="2" viewBox="0 0 21 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.38647 1H19.3865" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <svg width="21" height="2" viewBox="0 0 21 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.38647 1H19.3865" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+                <svg width="21" height="2" viewBox="0 0 21 2" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M1.38647 1H19.3865" stroke="white" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+            </div>
         </header>
     </>
   )

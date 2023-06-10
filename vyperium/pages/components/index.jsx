@@ -30,9 +30,11 @@ const HomePage = () => {
                             Launch DApp
                         </div>
                     </Link>
-                    <div className="p-2 border hover:border-[#008000] rounded mr-2 cursor-pointer">
-                        Read Docs
-                    </div>
+                    <a href="https://drive.google.com/file/d/1ZlE8WZkXI6dWDOk9DZYnLH-F4HOUy_nE/view" target="blank">
+                        <div className="p-2 border hover:border-[#008000] rounded mr-2 cursor-pointer">
+                            Read Docs
+                        </div>
+                    </a>
                     </div>
                 </div>
                 <div className=" wow slideInLeft ">

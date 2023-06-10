@@ -164,7 +164,9 @@ const scaledData = dataTest.graph.map((transaction, index) => {
         <h3 className=" text-[1.5rem] mb-[4rem] text-white">
           Connect wallet to get started
         </h3>
-        <Button onAddrChange={handleAddrChange}/>
+        <div className="w-[60%] md:w-[30%] mx-auto">
+          <Button onAddrChange={handleAddrChange}/>
+        </div>
       </div> ):(    
       <div className="md:ml-[22%] mx-[2%] md:w-[71%] pt-[1rem] md:mr-[7%] mt-[5rem]">
         <div className="flex items-center md:justify-end pb-[2rem] text-white">
