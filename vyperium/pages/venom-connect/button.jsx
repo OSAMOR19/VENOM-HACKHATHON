@@ -115,13 +115,13 @@ function Button( { onAddrChange } ) {
     
     <div>
     {addr ? (
-   <button onClick={onDisconnect} className="bg-[#008000] px-4 py-2 rounded-[5px]">
+   <button onClick={onDisconnect} className="bg-[#008000] btn w-[100%] px-4 py-2 rounded-[5px]">
      <div className='flex justify-between align-center '>
      <div className='px-2'>{`${addr.slice(0, 6)}...${addr.slice(-4)}`}</div> <div className='bg-white rounded'><Image src= "/images/exit.png" alt ="gas" height={25} width={25}/></div>
      </div>
    </button>
    ) : (
-     <button onClick={login} className="font-raleway bg-[#008000] px-4 py-2 rounded-[5px]">
+     <button onClick={login} className="font-raleway btn w-[100%] bg-[#008000] px-4 py-2 rounded-[5px]">
        Connect Wallet
      </button>
    )}

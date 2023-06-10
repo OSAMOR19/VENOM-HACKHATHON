@@ -44,6 +44,26 @@ body {
     transform: scale(100%);
     transform: translateY(2px);
 }
+.btn:hover::before {
+    transform: translateX(0);
+}
+.btn::before {
+    content: "";
+    position: absolute;
+    left: 0;
+    width: 100%;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #00000045;
+    border-radius: 5px;
+    transform: translateX(-100%);
+    transition: .6s;
+}
+.btn {
+    position: relative;
+    overflow: hidden;
+}
 @media all and (max-width: 768px){
     .mainNav{
       position: fixed;

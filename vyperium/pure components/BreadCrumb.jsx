@@ -3,7 +3,7 @@ import Link from "next/link"
 import { CSSProperties, useState, useRef } from "react";
 import { PulseLoader } from "react-spinners";
 
-const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, topRef,getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, handleAddAddress, addresses, setIncludeAccounts}) => {
+const BreadCrumb = ({children, includeAccounts, clickedIncludeAccounts, clickedBalance, handleInputChange1, topRef ,getResult, renderOwnerAddresses, renderBalance, balance, textColor, textTColor, spinnerProp, spinnerSetter, handleAddAddress, addresses, setIncludeAccounts}) => {
     
     const [Lcolor, setColor] = useState("#008000");
     const [isExpanded, setIsExpanded] = useState(false);
