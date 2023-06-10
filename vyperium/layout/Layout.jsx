@@ -6,10 +6,10 @@ import Navigation from "./Navigation"
 const Layout = ({children}) => {
   return (
     <div>
-        {/* <Navigation /> */}
-        <AppNav />
+        <Navigation /> 
+       {/* <AppNav />*/}
         {children}
-        {/* <Footer /> */}
+         <Footer /> 
     </div>
   )
 }

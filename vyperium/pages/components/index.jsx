@@ -1,12 +1,9 @@
 import Image from "next/image"
 import React, { useEffect, useState } from 'react';
 import Accordion from "./Accordion";
-import { useData } from "../context/DataContext";
 
 
 const HomePage = () => {
-    const {setIsOnApp} = useData()
-    setIsOnApp(false)
     const items = [
         { title: 'How do i track my wallet on Vyperium ', content: 'Launch Vyperium App, When you launch the next thing you should do is to   connect your wallet then your activies would be returned on the dashboard.' },
         { title: 'How do i manage my assets on Vyperium', content: 'When you launch our Dapp and you connect your wallet. on the left top corner  of the dashboard you will find a my wallet menu . On my Wallet page there is a dedicated section  to assets where all your asset are managed. The My Wallet page provides users with an overview of their wallet addresses and associated tokens. Users can manage multiple wallets within the VYPERIUM app and easily switch between them. This page displays the wallet addresses, token balances, transaction history, and other wallet-specific information. It offers convenient management of multiple wallets in one place.' },
@@ -37,31 +34,44 @@ const HomePage = () => {
                 </div>
             </div>
         </section>
-        <section className="mt-[7rem] pb-[3rem] text-white">
+        <section className="mt-[0.5rem] bg-[#020202] mx-auto pt-[3rem] pb-[3rem] text-white">
+            <div className=" flex gap-10 md:gap-0 flex-col md:flex-row w-full items-center  justify-evenly">
+                <div className=" wow slideInLeft">
+                    <Image src = "/images/vyperiumipad.png" alt="landing-pageImg" height={300} width={600} />
+                </div>
+                <div className="md:w-[46%] w-[90%] justify-center">
+                <h3 className="text-[2rem] pb-[5px] wow slideInRight font-openSans font-[800] text-center">About <span className="text-[#008000]">Vyperium</span></h3>
+                <div className="px-5">
+                    <p className="wow slideInLeft font-openSans mb-[2rem] text-[1.2rem] px-10 leading-10 ">VYPERIUM is a decentralized application built on the Venom blockchain, offering a suite of essential features for secure and seamless token management. Our platform includes features such as token swapping, bridging, and sending tokens .</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+        <section className="mt-[3rem] bg-wp pb-[3rem] text-white">
             <h3 className="text-[2rem] pb-[5px] wow bounceInDown font-openSans font-[800] text-center">Scaling Venom Ecosystem</h3>
             <p className=" text-center text-[#808080] font-raleway">Life on the <span className="text-[#008000]"> Venom Blockchain</span> made simple and secure.</p>
-            <div className="px-5"><p className="wow slideInDown font-openSans mb-[2rem] text-[1.2rem]">VYPERIUM is a decentralized application built on the Venom blockchain, offering a suite of essential features for secure and seamless token management. Our platform includes features such as token swapping, bridging, and sending tokens .</p></div>
+            
             <div className="gap-[3rem]  mt-[4rem] flex flex-col md:flex-row w-[80%] mx-auto">
             <div className="p-4 flex-1 wow slideInUp flex flex-col items-center space-y-[1rem] border-[1px] rounded border-[#008000] ">
-                <Image src="/images/vyperium-logo.svg" width={40} height={40} alt="track" />
+                <Image src="/images/manage1.png" width={60} height={60} alt="track" />
                 <h3 className="w-[80%] text-[1rem] font-poppins font-[700] text-center">Manage and Track Assets</h3>
                 <p className="font-openSans text-center">Vyperium allows you manage your assets and tracks the performance of your wallet and any other wallet the on Venom Blockchain.</p>
             </div>
 
             <div className="p-4 flex-1  flex flex-col items-center space-y-[1rem] border-[1px] rounded border-[#008000]">
-                <Image src="/images/vyperium-logo.svg" alt="Trade" width={40} height={40} />
+                <Image src="/images/seam1.png" alt="Trade" width={60} height={60} />
                 <h3 className="w-[80%] text-[1rem] font-poppins font-[700] text-center">Trade seamlessly on Venom Blockchain with Vyperium</h3>
                 <p className="font-openSans text-center">Vyperium allows you trade on Venom Blockchain. With the speed of light, you can send,swap and bridge your assets .</p>
             </div>
 
             <div className="p-4 flex-1 wow slideInUp flex flex-col items-center space-y-[1rem] border-[1px] rounded border-[#008000]">
-                <Image src="/images/vyperium-logo.svg" width={40} height={40} alt="secure" />
+                <Image src="/images/secure1.png" width={60} height={60} alt="secure" />
                 <h3 className="w-[80%] text-[1rem] font-poppins font-[700] text-center">Stay safe on Venom Blockchain with Vyperium</h3>
                 <p className="font-openSans text-center">Vyperium keep you secure on venom blockchain by ensuring that you are interacting with the right source and right projects.</p>
             </div>
             </div>
         </section>
-        <section className="mt-5 bg-wp mx-auto pt-[8rem] pb-[3rem] text-white">
+        <section className="mt-5  mx-auto pt-[8rem] pb-[3rem] text-white">
             <div className=" flex gap-10 md:gap-0 flex-col md:flex-row w-full items-center  justify-evenly">
                 <div className=" wow slideInLeft">
                     <Image src = "/images/vyperhome.png" alt="landing-pageImg" height={200} width={500} />

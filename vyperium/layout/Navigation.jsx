@@ -30,12 +30,12 @@ const Navigation = () => {
         </ul>
         <div className="flex justify-center ">
           <div className="px-5">
-          <Link href=''>
+          <Link href='https://twitter.com/Vyperium_'>
           <FaTwitter className="w-5 h-5"/>
           </Link>
           </div>
           <div className="px-5">
-          <Link href=''>
+          <Link href='https://github.com/OSAMOR19/VENOM-HACKHATHON'>
           <FaGithub className="w-5 h-5"/>
           </Link>
           </div>
