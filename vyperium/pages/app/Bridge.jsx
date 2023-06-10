@@ -5,10 +5,10 @@ const Bridge = () => {
   return (
     <>
         <HeadComp title= "Vyperium - Bridge" />
-        <section className="ml-[22%] w-[71%] pt-[1rem] mr-[7%] mt-[5rem] text-white">
-            <h2 className="font-Oswald text-[2rem] font-[600]">Bridge</h2>
+        <section className="md:ml-[22%] mx-[2%] md:w-[71%] pt-[1rem] md:mr-[7%] mt-[4rem] md:mt-[5rem] text-white">
+            <h2 className="font-Oswald w-[90%] text-[2rem] font-[600]">Bridge</h2>
             <p className="font-Inter text-[rgb(128,128,128)] text-[.9rem]">Bridge from Venom to other Chains and vice versa</p>
-            <div className="relative border-[2px] border-[#1D1D21] mt-[2rem] w-[80%] rounded-[1rem] p-[2rem]">
+            <div className="relative border-[2px] border-[#1D1D21] mt-[2rem] mx-auto md:mx-0 w-[95%] md:w-[80%] rounded-[1rem] py-[2rem] px-[1rem]  md:p-[2rem]">
                 <div className="flex items-center justify-between">
                     <div className="flex w-[40%] bg-[#1D1D21] py-[2px] px-[5px] rounded-[.7rem] items-center mb-[1rem] justify-between">
                         <div className="flex items-center">
@@ -43,7 +43,7 @@ const Bridge = () => {
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                         </div>
                         <div className="pr-[1rem]">
-                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[16rem] text-right font-Oswald text-[#808080]" />
+                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[5rem] md:w-[16rem] text-right font-Oswald text-[#808080]" />
                         </div>
                     </div>
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
@@ -57,7 +57,7 @@ const Bridge = () => {
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
                         </div>
                         <div className="pr-[1rem]">
-                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[16rem] text-right font-Oswald text-[#808080]" />
+                            <input type="text" placeholder="0" className="bg-transparent outline-none font-[700] w-[5rem] md:w-[16rem] text-right font-Oswald text-[#808080]" />
                         </div>
                     </div>
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">0</span></p>
