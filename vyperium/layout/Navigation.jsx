@@ -16,7 +16,9 @@ const Navigation = () => {
   return (
     <header className="pt-[2rem] flex md:items-center md:w-[80%] w-[90%] justify-between text-white mx-auto">
       <div className="flex cursor-pointer font-instrumentSerif text-[1.7rem] items-center">
+        <Link href="/">
         <Image alt="vyperiumlogo" src="/images/vyperiumlogo.jpeg" width={40} height={0.8} className="rounded-md" />
+        </Link>
         <div className="px-5 font-bold text-3xl">
         Vyperium
         </div>
