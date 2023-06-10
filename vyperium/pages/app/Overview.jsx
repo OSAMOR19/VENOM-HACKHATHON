@@ -393,7 +393,10 @@ const scaledData = dataTest.graph.map((transaction, index) => {
                 </tbody>
               </table>
               <div className=" border-t mt-3 flex items-center justify-center">
-                <Link href="/app/History">
+                <Link href={{
+                      pathname: '/app/History',
+                      query: { clickedIncludeAccounts }
+                    }}>
                   <button className="mt-[.6rem] hover:bg-[#ffffff45] transition-[.5s] py-[.35rem] text-[.8rem] px-3 border-[1px] rounded-[.3rem]">See More</button>
                 </Link>
               </div>
