@@ -1,7 +1,8 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import HeadComp from "@/layout/HeadComp"
 import Image from "next/image"
 import Button from '../venom-connect/button';
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import tokenList from '@/constant/tokenList.json';
 import axios from 'axios';
 import Cookies from 'js-cookie';
@@ -14,7 +15,7 @@ import { ProviderRpcClient, Address, Contract } from 'everscale-inpage-provider'
 
 const Swap = () => {
 
-
+    const btnRef = useRef()
     const [addr, setAddr] = useState();
     const [rootAddress, setRootAddress] = useState('');
     const [isLoading, setIsLoading] = useState(false);
@@ -188,6 +189,7 @@ const Swap = () => {
           setTokenTwo(tokenOne);
           setTokenOneAddr(tokenTwoAddr);
           setTokenTwoAddr(tokenOneAddr);
+          btnRef.current.classList.toggle("rotate-[135deg]")
         }
 
         const handleItemClick = (name, address,decimal) => {
@@ -455,7 +457,7 @@ const getBalance2 = async(addr) => {
                 <div className=" bg-[#1D1D21] rounded-[1rem] p-[1rem]"  >
                     <p className="font-poppins">Pay with</p>
                     <div className="flex justify-between" >
-                        <div className="flex items-center" onClick={() => openPopup(1)} >
+                        <div className="flex cursor-pointer items-center" onClick={() => openPopup(1)} >
                             <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                             <h3 className="font-Inter font-bold">{tokenOne}</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas" height={1} width={30}/>
@@ -468,14 +470,14 @@ const getBalance2 = async(addr) => {
                     <p className="font-poppins text-[#808080] mt-[2px]">Balance:&nbsp;<span className="">{tokenOneBalance}</span></p>
                 </div>
                 <div className="flex justify-center translate-y-[-50%] left-0 right-0 absolute">
-                    <button className="bg-[#1D1D21] rounded-[50%] border-t-[#0C0C0C] border-r-[#0C0C0C] border-t-[3px] border-r-[3px] rotate-[-45deg] p-1">
-                        <Image src= "/images/up-and-down-arrows.svg" onClick={handleExchange} alt ="swap" height={1} width={30} />
+                    <button onClick={handleExchange} ref={btnRef} className="bg-[#1D1D21] transition-[1s] rounded-[50%] border-t-[#0C0C0C] border-r-[#0C0C0C] border-t-[3px] border-r-[3px] rotate-[-45deg] p-1">
+                        <Image src= "/images/up-and-down-arrows.svg" alt ="swap" height={1} width={30} />
                     </button>
                 </div>
                 <div className="bg-[#1D1D21] rounded-[1rem] mt-[4px] p-[1rem]" > 
                     <p className="font-poppins">Receive</p>
                     <div className="flex justify-between" >
-                        <div className="flex items-center" onClick={() => openPopup(2)}>
+                        <div className="flex cursor-pointer items-center" onClick={() => openPopup(2)}>
                             <Image alt="venomImg" src="/images/venomimg.jpg" className="rounded-[50%] mr-[8px]" width={30} height={1}/> 
                             <h3 className="font-Inter font-bold">{tokenTwo}</h3>
                             <Image src= "/images/angle-down.svg" alt ="gas"  height={1} width={30}/>
@@ -491,7 +493,7 @@ const getBalance2 = async(addr) => {
               <Button onAddrChange={handleAddrChange} />
             </div>
           ) : (
-            <button className="w-full mt-[1rem] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold" disabled={isLoadingpairs} > <div className="flex justify-center">{renderButtonContent()}</div></button>
+            <button className="w-full mt-[1rem] hover:bg-[#00800045] transition-[.5s] bg-[#008000] font-raleway py-[1rem] rounded-[1rem] font-bold" disabled={isLoadingpairs} > <div className="flex justify-center">{renderButtonContent()}</div></button>
           )}
             </div>
             

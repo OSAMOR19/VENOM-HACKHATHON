@@ -156,7 +156,7 @@ const scaledData = dataTest.graph.map((transaction, index) => {
     <>
       <HeadComp title="Vyperium - Your Wallet" />
       {addr == null ? (
-      <div className='font-[600] font-Oswald ml-[22%] w-[71%] pt-[4rem] mr-[7%] mt-[5rem] text-center'>
+      <div className='font-[600] font-Oswald md:ml-[22%] md:w-[71%] md:pt-[4rem] md:mr-[7%] mt-[20vh] text-center'>
         <h3 className=" text-[1.5rem] mb-[4rem] text-white">
           Connect wallet to get started
         </h3>
