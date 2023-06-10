@@ -109,9 +109,16 @@ const HomePage = () => {
         </section>
         <section className="pt-[8rem] pb-[5rem]">
             <div className=" md:w-[70%] w-[94%] mx-auto flex flex-col gap-10 items-center">
-                <div className="aspect-w-16 aspect-h-9 flex items-center wow flipInY border rounded border-[#008000]">
-                       <YouTube videoId="M9kMlf7hNhI" opts={{ playerVars: { autoplay: 1 } }} />
-                   </div>
+            <div className="aspect-w-16 aspect-h-9 sm:w-full">
+                <div className="relative pb-[56.25%]">
+                    <iframe
+                    className="absolute top-0 left-0 w-full h-full"
+                    src="https://www.youtube.com/embed/M9kMlf7hNhI?autoplay=1"
+                    title="YouTube video"
+                    allowFullScreen
+                    ></iframe>
+                </div>
+                </div>
                 <div className="md:w-[70%] overflow-x-auto justify-evenly flex gap-4">
                     <div className="wow bounceInDown p-3 bg-[#1A1A26]"><Image src = "/images/ptnr1.svg" alt="landing-pageImg" height={1} width={100} /></div>
                     <div data-wow-delay=".2s" className="wow bounceInDown p-3 bg-[#1A1A26]"><Image src = "/images/ptnr2.svg" alt="landing-pageImg" height={1} width={100} /></div>
