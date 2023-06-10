@@ -58,9 +58,9 @@ const projects =[
     {
         title:'Nümi Official',
         about:'Numi is the first anime metaverse on VenomFoundation blockchain 💫 Visit Numi Club now and get your rewards 💰',
-        twitter:'https://twitter.com/VenomPad',
+        twitter:'https://twitter.com/numi_verse',
         discord:'https://discord.com/invite/venompad',
-        website:'https://venompad.com/'
+        website:'https://club.numi.net/?utm_source=twitter&utm_medium=main_account'
     }
 ]
 export default projects
