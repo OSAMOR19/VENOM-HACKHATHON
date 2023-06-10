@@ -1,45 +1,48 @@
 # VYPERIUM
-![vyperiumlogo](https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/a32254e1-967d-4d92-8477-a89bce3aa8dc)
+
+![vyperiumlogo](https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/24a2efbe-2b6d-4f2a-ae91-18ea3c875c4c)
 
 ## OVERVIEW
 **VYPERIUM** is a decentralized application built on the Venom blockchain, offering a suite of essential features for secure and seamless token management. Our platform includes features such as token swapping, bridging, and sending tokens/coins, as well as Venom Scan, a powerful tool for tracking and analyzing blockchain data. With our user-friendly interface and robust security measures, **Vyperium** makes it easy for users to manage their digital assets with confidence.
 
 Below are the functionalities of this Application:
 
-
-
 ## Your Wallet: 
 The My Wallet page provides users with an overview of their wallet addresses and associated tokens. Users can manage multiple wallets within the VYPERIUM app and easily switch between them. This page displays the wallet addresses, token balances, transaction history, and other wallet-specific information. It offers convenient management of multiple wallets in one place.
 
-https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/21f46b4e-7aa7-4681-812d-8a5faa6aadd5
+
 
 ### Overview Page
 The Overview page provides users with a snapshot of their token holdings and key statistics. It displays the total value of their portfolio, individual token balances, recent transactions, and other relevant information. Users can quickly assess their asset allocation and monitor their overall performance.
 
-https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/5d780028-7a8a-44c5-bf8c-cd6394329371
+![vyperium screenshot](https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/791c8bb7-06db-4804-be75-7193bfe6ea21)
+
 
 ### Explore Page:
 The Explore page offers a comprehensive view of the Venom blockchain and its ecosystem. Users can browse and discover various tokens available on the network, including their market prices, trading volumes, and historical charts. It enables users to stay informed about the latest token trends and explore new investment opportunities.
 
+<img width="1268" alt="Screenshot 2023-06-10 at 21 06 45" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/722fdd53-a4b9-49b2-a7b7-3cd64531b0e4">
 
 ### Send Page:
 The Send page allows users to securely send tokens or coins to other users or external addresses. Users can specify the recipient's address, choose the desired token, and enter the amount to be sent. The app ensures the accuracy of the transaction details and prompts users to confirm before executing the transfer. It streamlines the process of sending digital assets while prioritizing security.
 
 
-https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/df3fda16-8ddb-4bbb-abba-767c50d3b9a4
+<img width="1206" alt="Screenshot 2023-06-10 at 21 07 00" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/e5eecf27-c406-44b5-8ea6-5d039933ed6c">
+
 
 
 ### Swap Page
 The Swap page facilitates instant token swapping within the VYPERIUM app. Users can select the tokens they want to exchange, specify the desired swap ratio or slippage tolerance, and execute the transaction. The app leverages decentralized exchanges or liquidity pools to provide users with competitive rates and seamless token swapping experiences.
 
+<img width="1138" alt="Screenshot 2023-06-04 at 00 43 58" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/2320ce13-20f1-4f75-923e-6f991894dd01">
 
-https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/8f9f7ff5-0a76-4dbf-ba26-0f5889add404
+
 
 
 ### Bridge Page
 The Bridge page enables users to transfer tokens between different blockchains. It acts as a bridge connecting multiple blockchain networks, allowing users to transfer assets across different ecosystems. Users can initiate cross-chain transactions, ensuring compatibility and interoperability between various tokens and blockchains.
 
-![Screenshot (23)](https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/114490070/5838f254-a4e9-4e15-a11c-670410de291f)
+
 
 ### Settings Page
 
@@ -47,7 +50,9 @@ The Settings page empowers users to customize and personalize their VYPERIUM app
 
 https://www.figma.com/file/U13MaTFy1wJqkfzHSRyIru/VENOM?type=design&t=0Ut3C33SLAanrOta-0
 
-<img width="1198" alt="Screenshot 2023-06-09 at 00 51 28" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/ba315f1d-a955-4b45-91f6-e9f43c4742b3">
+
+<img width="1198" alt="Screenshot 2023-06-09 at 00 51 28" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/6a531583-6264-4dee-812d-b4c87a883c8d">
+
 This is a screenshot of the figma file as designed by our Uidesigner
 
 ## Table of Contents
