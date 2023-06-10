@@ -16,7 +16,7 @@ const Navigation = () => {
   return (
     <header className="pt-[2rem] flex md:items-center md:w-[80%] w-[90%] justify-between text-white mx-auto">
       <div className="flex cursor-pointer font-instrumentSerif text-[1.7rem] items-center">
-        <Image src="/images/vyperiumlogo.jpeg" width={40} height={0.8} className="rounded-md" />
+        <Image alt="vyperiumlogo" src="/images/vyperiumlogo.jpeg" width={40} height={0.8} className="rounded-md" />
         <div className="px-5 font-bold text-3xl">
         Vyperium
         </div>
@@ -26,10 +26,13 @@ const Navigation = () => {
           <li className="hover:text-[#008000]">Home</li>
           <li className="hover:text-[#008000]">About</li>
           <li className="hover:text-[#008000]">Faqs</li>
-          <li className="hover:text-[#008000]">Docs</li>
+          <a href="https://drive.google.com/file/d/1ZlE8WZkXI6dWDOk9DZYnLH-F4HOUy_nE/view" target="blank">
+            <li className="hover:text-[#008000]">Docs</li>
+          </a>
         </ul>
         <div className="flex justify-center ">
           <div className="px-5">
+<<<<<<< HEAD
           <Link href='https://twitter.com/Vyperium_'>
           <FaTwitter className="w-5 h-5"/>
           </Link>
@@ -38,6 +41,16 @@ const Navigation = () => {
           <Link href='https://github.com/OSAMOR19/VENOM-HACKHATHON'>
           <FaGithub className="w-5 h-5"/>
           </Link>
+=======
+          <a href='https://twitter.com/Vyperium_' target="_self">
+            <FaTwitter className="w-5 h-5"/>
+          </a>
+          </div>
+          <div className="px-5">
+          <a href='https://github.com/OSAMOR19/VENOM-HACKHATHON' target="_self">
+            <FaGithub className="w-5 h-5"/>
+          </a>
+>>>>>>> 6cc4f48271d01272df80bb3b19cc08b4c31a87d1
           </div>
         </div>
       </nav>

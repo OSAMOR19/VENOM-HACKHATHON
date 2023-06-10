@@ -1,6 +1,12 @@
 import Image from "next/image"
+import Link from "next/link";
 import React, { useEffect, useState } from 'react';
+<<<<<<< HEAD
 import Accordion from "./Accordion";
+=======
+import Accordion from "../../pure components/Accordion";
+import { useData } from "@/context/DataContext";
+>>>>>>> 6cc4f48271d01272df80bb3b19cc08b4c31a87d1
 
 
 const HomePage = () => {
@@ -21,12 +27,16 @@ const HomePage = () => {
                     <p className=" text-[#808080] font-raleway">An Intuitive Token Wallet Tracker </p>
                     <p className="font-openSans mb-[2rem] text-[2rem]">Manage your Venom <span className="font-bold text-[#008000]">DeFi</span> and <span className="font-bold text-[#008000]">NFT</span> portfolios,trade seamlessly across Venom Blockchain and bridge your assets across other blockchains with <span className="font-bold text-[#008000]">Vyperium.</span></p>
                     <div className="flex  text-[1.2rem] font-medium ">
-                    <div className="p-2 bg-[#008000] rounded mr-2 cursor-pointer hover:bg-white hover:text-[#008000]">
-                        Launch DApp
-                    </div>
-                    <div className="p-2 border hover:border-[#008000] rounded mr-2 cursor-pointer">
-                        Read Docs
-                    </div>
+                    <Link href="/app/Wallet">
+                        <div className="p-2 bg-[#008000] rounded mr-2 cursor-pointer hover:bg-white hover:text-[#008000]">
+                            Launch DApp
+                        </div>
+                    </Link>
+                    <a href="https://drive.google.com/file/d/1ZlE8WZkXI6dWDOk9DZYnLH-F4HOUy_nE/view" target="blank">
+                        <div className="p-2 border hover:border-[#008000] rounded mr-2 cursor-pointer">
+                            Read Docs
+                        </div>
+                    </a>
                     </div>
                 </div>
                 <div className=" wow slideInLeft ">

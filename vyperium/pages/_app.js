@@ -1,7 +1,7 @@
 import React, { useState, useEffect} from 'react';
 import Layout from '@/layout/Layout';
 import '@/styles/globals.css';
-import { DataGet } from './context/DataContext';
+import { DataGet } from '@/context/DataContext';
 
 const isServer = typeof window === 'undefined'
 const WOW = !isServer ? require('wow.js') : null

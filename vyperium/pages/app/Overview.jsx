@@ -7,7 +7,7 @@ import Link from 'next/link';
 import BreadCrumb from '@/pure components/BreadCrumb';
 import HeadComp from '@/layout/HeadComp'
 import Cookies from 'js-cookie';
-import { useData } from "../context/DataContext";
+import { useData } from '@/context/DataContext';
 
 
 
