@@ -1,7 +1,10 @@
 import HeadComp from "@/layout/HeadComp"
 import Image from "next/image"
+import { useData } from "../context/DataContext";
 
 const Bridge = () => {
+    const {setIsOnApp} = useData()
+    setIsOnApp(true)
   return (
     <>
         <HeadComp title= "Vyperium - Bridge" />

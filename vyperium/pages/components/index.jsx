@@ -1,9 +1,12 @@
 import Image from "next/image"
 import React, { useEffect, useState } from 'react';
 import Accordion from "./Accordion";
+import { useData } from "../context/DataContext";
 
 
 const HomePage = () => {
+    const {setIsOnApp} = useData()
+    setIsOnApp(false)
     const items = [
         { title: 'How do i track my wallet on Vyperium ', content: 'Launch Vyperium App, When you launch the next thing you should do is to   connect your wallet then your activies would be returned on the dashboard.' },
         { title: 'How do i manage my assets on Vyperium', content: 'When you launch our Dapp and you connect your wallet. on the left top corner  of the dashboard you will find a my wallet menu . On my Wallet page there is a dedicated section  to assets where all your asset are managed. The My Wallet page provides users with an overview of their wallet addresses and associated tokens. Users can manage multiple wallets within the VYPERIUM app and easily switch between them. This page displays the wallet addresses, token balances, transaction history, and other wallet-specific information. It offers convenient management of multiple wallets in one place.' },

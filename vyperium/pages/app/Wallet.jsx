@@ -6,9 +6,13 @@ import Link from 'next/link';
 import BreadCrumb from '@/pure components/BreadCrumb';
 import HeadComp from '@/layout/HeadComp';
 import Button from '../venom-connect/button';
+import { useData } from "../context/DataContext";
+
 
 
 const Wallet = () => {
+  const {setIsOnApp} = useData()
+  setIsOnApp(true)
 //This is the begining of what Bernard.O Added 
 const [includeAccounts, setIncludeAccounts] = useState([]);
 const [balance, setBalance] = useState(null);

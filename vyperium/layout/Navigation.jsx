@@ -1,6 +1,6 @@
 import Image from "next/image"
-//import Connectwallet from "@/pages/venom-connect/connectwallet"
-import Button from "@/pages/venom-connect/button"
+import Link from "next/link";
+import { FaTwitter, FaGithub } from 'react-icons/fa';
 import { useRef } from "react"
 
 
@@ -16,17 +16,30 @@ const Navigation = () => {
   return (
     <header className="pt-[2rem] flex md:items-center md:w-[80%] w-[90%] justify-between text-white mx-auto">
       <div className="flex cursor-pointer font-instrumentSerif text-[1.7rem] items-center">
-        <Image src="/images/vyperium-logo.svg" width={47} height={1} />
+        <Image src="/images/vyperiumlogo.jpeg" width={40} height={0.8} className="rounded-md" />
+        <div className="px-5 font-bold text-3xl">
         Vyperium
+        </div>
       </div>
       <nav ref={navRef} className="mainNav font-raleway bg-[#0C0C0C] md:bg-transparent flex flex-col md:flex-row md:w-[60%] md:leading-[1.5rem] leading-[5rem] text-center items-center">
-        <ul className=" md:flex-1 md:justify-evenly flex flex-col md:flex-row">
-          <li>Careers</li>
-          <li>Blog</li>
-          <li>Help Center</li>
-          <li>Community</li>
+        <ul className=" md:flex-1 md:justify-evenly font-semibold flex flex-col md:flex-row cursor-pointer">
+          <li className="hover:text-[#008000]">Home</li>
+          <li className="hover:text-[#008000]">About</li>
+          <li className="hover:text-[#008000]">Faqs</li>
+          <li className="hover:text-[#008000]">Docs</li>
         </ul>
-        <Button/>
+        <div className="flex justify-center ">
+          <div className="px-5">
+          <Link href=''>
+          <FaTwitter className="w-5 h-5"/>
+          </Link>
+          </div>
+          <div className="px-5">
+          <Link href=''>
+          <FaGithub className="w-5 h-5"/>
+          </Link>
+          </div>
+        </div>
       </nav>
       <div onClick={handleClick} ref={burgerRef} className=" pr-4 space-y-1 block md:hidden z-[999] fixed right-0">
         <svg width="21" className=" " height="2" viewBox="0 0 21 2" fill="none" xmlns="http://www.w3.org/2000/svg">

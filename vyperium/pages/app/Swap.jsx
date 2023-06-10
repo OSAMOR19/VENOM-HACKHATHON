@@ -10,10 +10,14 @@ import { initVenomConnect } from "@/wallet-configure/configure";
 import { Token_Root } from "@/constant/abi/TokenRootAbi";
 import { Token_Wallet } from "@/constant/abi/TokenWalletAbi";
 import { ProviderRpcClient, Address, Contract } from 'everscale-inpage-provider';
+import { useData } from "../context/DataContext";
+
 
 
 
 const Swap = () => {
+  const {setIsOnApp} = useData()
+  setIsOnApp(false)
 
     const btnRef = useRef()
     const [addr, setAddr] = useState();
