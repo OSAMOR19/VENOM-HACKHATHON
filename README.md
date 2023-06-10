@@ -31,10 +31,24 @@ The Send page allows users to securely send tokens or coins to other users or ex
 
 
 
+
+https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/bd59f2a5-1561-49c7-8df6-086ef0b65395
+
+
+
+
 ### Swap Page
 The Swap page facilitates instant token swapping within the VYPERIUM app. Users can select the tokens they want to exchange, specify the desired swap ratio or slippage tolerance, and execute the transaction. The app leverages decentralized exchanges or liquidity pools to provide users with competitive rates and seamless token swapping experiences.
 
 <img width="1138" alt="Screenshot 2023-06-04 at 00 43 58" src="https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/2320ce13-20f1-4f75-923e-6f991894dd01">
+
+
+
+https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/846d847f-ecfd-41e2-b12c-4f4c66a8efc6
+
+
+
+https://github.com/OSAMOR19/VENOM-HACKHATHON/assets/107802364/705c9e37-611b-4cc4-9b6d-a77df80b092d
 
 
 
