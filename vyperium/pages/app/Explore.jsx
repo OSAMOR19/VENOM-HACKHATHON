@@ -1,5 +1,5 @@
 import HeadComp from "@/layout/HeadComp"
-import { useData } from "../context/DataContext";
+import { useData } from "@/context/DataContext";
 
 const Explore = () => {
   const {setIsOnApp} = useData()

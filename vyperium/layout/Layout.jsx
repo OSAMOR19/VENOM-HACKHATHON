@@ -1,15 +1,17 @@
 import AppNav from "./AppNav"
 import Footer from "./Footer"
 import Navigation from "./Navigation"
+import { useData } from "@/context/DataContext";
+
 
 
 const Layout = ({children}) => {
+  const {isOnApp} = useData()
   return (
     <div>
-        {/* <Navigation /> */}
-        <AppNav />
+        {isOnApp ? <AppNav /> : <Navigation />}
         {children}
-        {/* <Footer /> */}
+        {!isOnApp && <Footer />}
     </div>
   )
 }

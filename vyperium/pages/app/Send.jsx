@@ -9,7 +9,7 @@ import { Token_Root } from "@/constant/abi/TokenRootAbi";
 import { Token_Wallet } from '@/constant/abi/TokenWalletAbi';
 import { VenomConnect } from 'venom-connect';
 import { ProviderRpcClient, Address, Contract } from 'everscale-inpage-provider';
-import { useData } from "../context/DataContext";
+import { useData } from "@/context/DataContext";
 
 
 ////////////////////////////////////////////////////////////////////////

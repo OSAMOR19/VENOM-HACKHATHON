@@ -1,7 +1,8 @@
 import Image from "next/image"
+import Link from "next/link";
 import React, { useEffect, useState } from 'react';
 import Accordion from "./Accordion";
-import { useData } from "../context/DataContext";
+import { useData } from "@/context/DataContext";
 
 
 const HomePage = () => {
@@ -24,9 +25,11 @@ const HomePage = () => {
                     <p className=" text-[#808080] font-raleway">An Intuitive Token Wallet Tracker </p>
                     <p className="font-openSans mb-[2rem] text-[2rem]">Manage your Venom <span className="font-bold text-[#008000]">DeFi</span> and <span className="font-bold text-[#008000]">NFT</span> portfolios,trade seamlessly across Venom Blockchain and bridge your assets across other blockchains with <span className="font-bold text-[#008000]">Vyperium.</span></p>
                     <div className="flex  text-[1.2rem] font-medium ">
-                    <div className="p-2 bg-[#008000] rounded mr-2 cursor-pointer hover:bg-white hover:text-[#008000]">
-                        Launch DApp
-                    </div>
+                    <Link href="/app/Wallet">
+                        <div className="p-2 bg-[#008000] rounded mr-2 cursor-pointer hover:bg-white hover:text-[#008000]">
+                            Launch DApp
+                        </div>
+                    </Link>
                     <div className="p-2 border hover:border-[#008000] rounded mr-2 cursor-pointer">
                         Read Docs
                     </div>
